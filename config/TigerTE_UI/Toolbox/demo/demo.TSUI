@@ -1,0 +1,38 @@
+object frmVCLFormDesigner: TfrmVCLFormDesigner
+  Left = 130
+  Top = 130
+  ActiveControl = Button1
+  Caption = 
+    #21516#26143#24037#20855#31665#31383#20307#35774#35745#22120' - Button1: TButton; '#20301#32622' (80, 104, 155, 129); '#23485': 75, '#39640':' +
+    ' 25 [*demo.TSUI]'
+  ClientHeight = 502
+  ClientWidth = 786
+  Color = clBtnFace
+  DoubleBuffered = True
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  KeyPreview = True
+  Position = poDesigned
+  Visible = True
+  OnClick = FormClick
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnResize = FormResize
+  OnShow = FormShow
+  TextHeight = 15
+  object Button1: TButton
+    Left = 80
+    Top = 104
+    Width = 75
+    Height = 25
+    Cursor = crArrow
+    Caption = 'Button1'
+    Images = dmIcons.imgLstSmall
+    TabOrder = 0
+  end
+end
