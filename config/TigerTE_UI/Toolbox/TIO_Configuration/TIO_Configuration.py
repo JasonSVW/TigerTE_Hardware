@@ -360,8 +360,7 @@ class TIO_Configuration(frmTSForm):
             self.log_hint('On Draw Tab Index: ' + str(TabIndex) + ': ' + s + ', ' + str(self.pcMain.Canvas.Handle))
         self.pcMain.OnDrawTab = OnpcMainDrawTab
         def OnpcMainChange(sender):
-            
-        self.pcMain.OnChange = OnpcMainChange
+            self.pcMain.OnChange = OnpcMainChange
 # Auto Generated Python Code, do not modify START [MAIN] ------------
 if __name__ == "__main__":
     try:

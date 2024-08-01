@@ -1,0 +1,9 @@
+﻿[TSMaster]
+TSMasterVersion=2024.7.30.1156
+TSMasterArchitect=x64
+
+[Project]
+GUID=4DCD9566-54D3-49D5-967E-D89E776A5A00
+LoadCount=2
+TSAppVersion=100
+

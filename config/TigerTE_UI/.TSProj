@@ -1,8 +1,9 @@
 ﻿[Project]
-LoadCount=16
+LoadCount=17
 GUID=0EBE4D45-D895-4D4A-A46F-EAFC083F620A
 TSAppVersion=100
 
 [TSMaster]
-TSMasterVersion=2024.1.26.1051
+TSMasterVersion=2024.7.11.1145
+TSMasterArchitect=x64
 

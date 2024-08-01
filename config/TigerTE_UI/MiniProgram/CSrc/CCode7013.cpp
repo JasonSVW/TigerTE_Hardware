@@ -9,8 +9,8 @@
 
 // CODE BLOCK BEGIN Step_Function  NQ__
 // 主step函数，执行周期 5 ms
-void step(void) { __try { // 周期 = 5 ms
+void step(void) { try { // 周期 = 5 ms
 
-} __except (1) { log_nok("CRASH detected"); app.terminate_application(); }}
+} catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END Step_Function 
 
