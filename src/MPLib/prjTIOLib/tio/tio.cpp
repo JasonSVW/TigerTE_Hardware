@@ -79,6 +79,12 @@ void on_start_On_Start(void) { try { // 程序启动事件
 // CODE BLOCK BEGIN On_Stop On_Stop
 // 停止事件 "On_Stop"
 void on_stop_On_Stop(void) { try { // 程序停止事件
+    if (nullptr != vServoObj) {
+        app.ui_watchdog_enable(false);
+        delete vServoObj;
+        vServoObj = nullptr;
+        app.ui_watchdog_enable(true);
+    }
     //if (FS7Client != nullptr) {
     //    delete FS7Client;
     //    FS7Client = nullptr;

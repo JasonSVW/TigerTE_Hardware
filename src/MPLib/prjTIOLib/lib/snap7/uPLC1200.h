@@ -193,7 +193,7 @@ public:
 
 public:
     std::string FRemoteAddress;
-    bool FSnap7IsLoaded;
+    //bool FSnap7IsLoaded;
 
     TServo(bool AOnlyPedalServo);
     ~TServo();
@@ -301,4 +301,58 @@ public:
 };
 
 extern TServo* vServoObj;
+/*mp api function*/
+int servo_check();
+int servo_create();
+int servo_destroy();
+int servo_connect(const char* AIPAddr);
+int servo_disconnect();
+int servo_clear_fault();
+int pedal_servo_limit(float AMaxPositionMM, float AMinPositionMM, float AMaxSpeedMMpS);
+int pedal_servo_on(bool AEnable);
+int pedal_enable_run(bool AEnable);
+int pedal_go_step_syn(float ARelPositionMM, float ASpeedMMpS, int ATimeout);
+int pedal_go_step_asyn(float ARelPositionMM, float ASpeedMMpS);
+int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout);
+int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
+int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
+int pedal_go_step_percent_syn(float ARelPositionPercent, float ASpeedMMpS, int ATimeout);
+int pedal_go_step_percent_asyn(float ARelPositionPercent, float ASpeedMMpS);
+int pedal_go_position_percent_syn(float AAbsPositionPercent, float ASpeedMMpS, int ATimeout);
+int pedal_go_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS);
+int pedal_sys_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS);
+int pedal_go_home_syn(int ATimeout);
+int pedal_go_home_asyn();
+int pedal_set_home(int ATimeout);
+int pedal_go_auto_mode(bool AEanble);
+int rotate_servo_limit(float AMaxDegree, float AMinDegree, float AMaxSpeedDpS);
+int rotate_servo_on(bool AEnable);
+int rotate_enable_run(bool AEnable);
+int rotate_go_step_syn(float ARelDegree, float ASpeedDpS, int ATimeout);
+int rotate_go_step_asyn(float ARelDegree, float ASpeedDpS);
+int rotate_go_position_syn(float AAbsDegree, float ASpeedDpS, int ATimeout);
+int rotate_go_position_asyn(float AAbsDegree, float ASpeedDpS);
+int rotate_go_home_syn(int ATimeout);
+int rotate_go_home_asyn();
+int rotate_set_home(int ATimeout);
+int rotate_go_slope_step_syn(float ARelGradPercent, int ATimeout);
+int rotate_go_slope_step_asyn(float ARelGradPercent);
+int rotate_go_slope_syn(float AAbsGradPercent, int ATimeout);
+int rotate_go_slope_asyn(float AAbsGradPercent);
+int rotate_go_mount_position_syn(int ATimeout);
+int rotate_go_mount_position_asyn();
+int rotate_set_slope_speed(float ASpeedDpS);
+int air_cylinder_push_out();
+int air_cylinder_push_back();
+int air_cylinder_push_pressure(float ATargetPressureBar);
+int turntable_enable_control();
+int turntable_disable_control();
+int turntable_run_speed_rpm_asyn(float ATargetSpeedRPM);
+int turntable_run_speed_rpm_syn(float ATargetSpeedRPM, int ATimeout);
+int turntable_run_speed_dps_asyn(float ATargetSpeedDPS);
+int turntable_run_speed_dps_syn(float ATargetSpeedDPS, int ATimeout);
+int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLengthMM);
+int turntable_run_centrifugal_acc_syn(float ATargetAccelerationG, float AArmLengthMM, int ATimeout);
+int turntable_stop_run_asyn();
+int turntable_stop_run_syn(int ATimeout);
 

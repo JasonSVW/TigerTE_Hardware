@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <filesystem> // 需要包含filesystem头文件
 
 class TTIOConfig {
 public:
@@ -59,10 +60,10 @@ public:
     void SaveConfig();
 
 private:
-    void WriteBoolean(std::ofstream& file, const std::string& section, const std::string& key, bool value);
-    void WriteString(std::ofstream& file, const std::string& section, const std::string& key, const std::string& value);
-    void WriteInteger(std::ofstream& file, const std::string& section, const std::string& key, int32_t value);
-    void WriteFloat(std::ofstream& file, const std::string& section, const std::string& key, float value);
+    void WriteBoolean(std::ofstream& file, const std::string& section, const std::string& key, bool value, std::string& currentSection);
+    void WriteString(std::ofstream& file, const std::string& section, const std::string& key, const std::string& value, std::string& currentSection);
+    void WriteInteger(std::ofstream& file, const std::string& section, const std::string& key, int32_t value, std::string& currentSection);
+    void WriteFloat(std::ofstream& file, const std::string& section, const std::string& key, float value, std::string& currentSection);
     bool ReadBoolean(std::ifstream& file, const std::string& section, const std::string& key, bool defaultValue);
     std::string ReadString(std::ifstream& file, const std::string& section, const std::string& key, const std::string& defaultValue);
     int32_t ReadInteger(std::ifstream& file, const std::string& section, const std::string& key, int32_t defaultValue);

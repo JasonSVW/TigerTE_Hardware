@@ -2,8 +2,8 @@
 DebugMode=0
 DisableResize=0
 LogVerbose=6
-Bounds=2029,204,3411,982
-Maximized=0
+Bounds=1912,0,3848,1066
+Maximized=1
 AutoGenConstDef=0
 AutoGenDBConstDef=0
 DisableCrashDialog=0
@@ -46,17 +46,23 @@ Speed=1
 Step=0.1
 
 [MeasurementController]
-MCount=1
+MCount=7
 M0=0,1,131,-1,0,TfrmSystemMsgs,系统消息
+M1=0,1,146,-1,1,TfrmCCodeEditor,C 代码编辑器 [tio]
+M2=0,1,15,-1,2,TfrmSystemVarMgmt,系统变量管理器
+M3=-1,1,5,-1,3,TfrmStrEncoderDecoder,已删除: StrEncoderDecoder
+M4=0,1,180,-1,4,TfrmAutomationModule,图形程序 1764
+M5=-1,1,117,-1,5,TfrmServo,已删除: Servo
+M6=0,1,124,-1,6,TfrmGraphics,图形
 
 [SystemMsgOptions]
 MaxLines=100000
-UICommon=0,-1,0,0,z7XNs8/7z6I_,100,409,4788452324757911351
+UICommon=0,-1,0,0,z7XNs8/7z6I_,100,243,4788452324757911351
 UIFilter=
 
 [ChannelMappings]
-CANChnCount=6
-CAN0=0,0,3,0,0,8,0,500,2000,TSMaster,TC1014
+CANChnCount=1
+CAN0=0,0,2,0,0,1,0,500,2000,TSMaster,VIRTUAL
 CAN1=1,0,3,0,1,8,0,500,2000,TSMaster,TC1014
 CAN2=2,0,3,0,2,8,0,500,2000,TSMaster,TC1014
 CAN3=3,0,3,0,3,8,0,500,2000,TSMaster,TC1014
@@ -72,7 +78,11 @@ DOChnCount=0
 GPSChnCount=0
 
 [UserVariables]
-Count=0
+Count=4
+u0=PedalSpeed,tio,Servo Pedal Speed,MP,7,0,0,100,1.57000005245209,,-1,,,0,-1,
+u1=PedalPosition,tio,Servo Pedal Position,MP,7,0,0,100,1.55999994277954,,-1,,,0,-1,
+u2=RotateDegree,tio,Servo Slope Rotate Degree,MP,7,0,0,100,0,,-1,,,0,-1,
+u3=SlopeGrad,tio,Servo Slope Gradient,MP,7,0,0,100,0,,-1,,,0,-1,
 
 [PluginManager]
 ExternalCount=0
@@ -88,6 +98,8 @@ Signal Server=100
 MDI Manager=100
 CAN RBS=100
 J1939 TP=100
+TSMaster Main Application=100
+Graphics=100
 
 [app_conn_callback_after_connect]
 MP Library Manager=100
@@ -98,6 +110,8 @@ LIN RBS=100
 J1939 TP=100
 FlexRay RBS=100
 Measurement Comment Manager=100
+TSMaster Main Application=100
+Graphics=100
 
 [app_conn_callback_before_disconnect]
 Signal Server=100
@@ -113,16 +127,48 @@ CAN RBS=100
 Measurement Controller=100
 Ribbon Manager=100
 MDI Manager=100
+TSMaster Main Application=100
+Graphics=100
 
 [app_hw_selector_conf]
 FActiveWirelessOBD=
 FEnableTSWirelessOBD=0
 DeviceCount=0
 
+[MPLibrary]
+UICommon=0,0,0,0,0KGzzNDyv+I_,100,183,6218063910063365607
+UIFilter=
+
+[MPLibraryMgmt]
+tio=
+MPsCount=0
+
+[SysVarMgmt]
+UICommon=0,-1,0,0,z7XNs7Hkwb+53MDtxvc_,100,167,3055692389547924782
+UIFilter=
+
+[TfrmStrEncoderDecoder]
+UICommon=0,-1,0,0,U3RyaW5nIEVuY29kZXIgRGVjb2Rlcg__,100,84,5850738923180861359
+UIFilter=
+
+[TfrmMPFunctionList]
+scroll_1=0
+
+[SoftwareConf]
+UICommon=0,0,0,0,z7XNs9DFz6I_,100,244,4173711198097439028
+UIFilter=
+
+[TfrmServo]
+UICommon=0,-1,0,0,VGlnZXJURSBTZXJ2byBDb250cm9s,100,146,5133822341114344546
+UIFilter=
+
+[hw_app_chn_0]
+VIRTUAL_CAN_conf={"FControllerType":1,"FClockMHz":80,"FTSeg1Abr":119,"FTSeg2Abr":40,"FSjwAbr":40,"FPrescalerAbr":1,"FTSeg1Dbr":29,"FTSeg2Dbr":10,"FSjwDbr":10,"FPrescalerDbr":1,"FArbitrationBaudrateBps":500000,"FDataBaudrateBps":2000000,"FSamplingPointMul10Percent":750}
+
 [MDIInstances]
 TfrmBasePluginSingle.TfrmLicenseClient=0
 TfrmSystemMsgs=1
-TfrmGraphics=0
+TfrmGraphics=1
 TfrmCANStatistics=0
 TfrmCANDatabase=0
 TfrmHardware=0
@@ -159,24 +205,35 @@ TfrmDeployTSMaster=0
 TfrmTC1005DFU=0
 TfrmTSInspector=0
 TfrmInternalTest=0
-TfrmStrEncoderDecoder=1
+TfrmStrEncoderDecoder=0
+TfrmAutomationModule=1
+TfrmGPBuilder=0
 
 [Pg0]
-Count=1
+Count=5
 HiddenCount=2
-f0=TfrmCCodeEditor,0,32,0,1560,846,32,32,1040,703,1
+f0=TfrmSystemMsgs,0,0,1,1240,829,0,0,1294,328,1
 h0=TfrmSystemVarMgmt,0,96,96,802,747,96,96,802,747,1
 h1=TfrmStrEncoderDecoder,0,887,174,658,456,64,64,658,456,1
+f1=TfrmSystemVarMgmt,0,96,96,802,747,96,96,802,747,1
+f2=TfrmAutomationModule,0,956,1,920,553,160,160,1254,748,1
+f3=TfrmCCodeEditor,0,956,390,877,440,32,32,1040,703,1
+f4=TfrmGraphics,0,0,0,1088,606,0,0,1088,606,1
 
 [RTL_Form_Position_MDI]
-TfrmSystemMsgs=0,0,1294,328
-CCodeEditor=32,0,1592,846
+TfrmSystemMsgs=0,1,1240,830
+CCodeEditor=956,390,1833,830
 TfrmSystemVarMgmt=96,96,898,843
 TfrmStrEncoderDecoder=887,174,1545,630
+TfrmAutomationModule=956,1,1876,554
+TfrmServo=32,32,1371,484
+Graphics=0,0,1088,606
 
 [RTL_Form_Position]
-TfrmTSMaster_0=2029,204,3411,982
-TfrmMPLibrary=2398,283,3361,767
+TfrmTSMaster_0=1912,0,3848,1066
+TfrmMPLibrary=2371,434,3334,918
+TfrmSettings=2520,261,3387,796
+TfrmSystemVarMgmt1=2479,151,3281,898
 
 [PageLayouts]
 DisableResize=0

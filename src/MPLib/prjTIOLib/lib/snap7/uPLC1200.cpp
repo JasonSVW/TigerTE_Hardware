@@ -57,6 +57,654 @@ const TDataRecord AddrSetS3GoOut = {S7AreaDB, 50, 11, 1, S7WLBit};
 const TDataRecord AddrSetS3GoIn = {S7AreaDB, 50, 12, 1, S7WLBit};
 const TDataRecord AddrSetS3Current = {S7AreaDB, 50, 18, 1, S7WLReal};
 
+/*export function*/
+
+/* export function */
+int servo_check() {
+    if (vServoObj == nullptr) {
+        log_nok("Created servo object failed");
+        return -1;
+    }
+    return 0;
+}
+
+int servo_create() {
+    if (vServoObj == nullptr) {
+        vServoObj = new TServo(true);
+    }
+
+    //if(!vServoObj->FSnap7IsLoaded) {
+    //    delete vServoObj;
+    //    vServoObj = nullptr;
+    //    log_nok("Servo DLL Load Failed");
+    //    return -3;
+    //}
+    return 0;
+}
+
+int servo_destroy() {
+    if (vServoObj == nullptr) {
+        log("no servo object existed");
+        return 0;
+    }
+    else {
+        delete vServoObj;
+        vServoObj = nullptr;
+        log("Servo object destroyed");
+        return 0;
+    }
+}
+
+int servo_connect(const char* AIPAddr) {
+    //vServoObj->FRemoteAddress = AIPAddr;
+    vServoObj->FRemoteAddress = "192.168.1.1";
+
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    if (vServoObj->S7_Connection() != 0) {
+        log_nok("can not connect with servo system, check IP Address");
+        return -3;
+    }
+    if (vServoObj->S7_HandsShake(true, 10000) != 0) {
+        log_nok("handshake with servo system failed");
+        return -4;
+    }
+
+    log_ok("MP API: Servo connected successfully");
+    return 0;
+}
+
+int servo_disconnect() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FS7IsConnected) {
+        result = vServoObj->S7_Disconnection();
+        if (result != 0)
+            log("disconnect succeffully failed");
+        else
+            log("disconnect succeffully");
+        return result;
+    }
+    else {
+        log("no connection with servo system");
+        return 0;
+    }
+}
+
+int servo_clear_fault() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S7_ClearFault();
+}
+
+int pedal_servo_limit(float AMaxPositionMM, float AMinPositionMM, float AMaxSpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    vServoObj->FS1MaxPosition = AMaxPositionMM;
+    vServoObj->FS1MinPosition = AMinPositionMM;
+    vServoObj->FS1MaxSpeed = AMaxSpeedMMpS;
+    return 0;
+}
+
+int pedal_servo_on(bool AEnable) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (!vServoObj->FS7IsAutoMode) {
+        log_nok("Servo control mode is manual mode, switch the mode on the door first");
+        return -3;
+    }
+
+    if (AEnable) {
+        if (vServoObj->S1_ServoON(true, 5000) != 0) {
+            log_nok("Pedal Servo On Failed");
+            return -4;
+        }
+    }
+    else {
+        if (vServoObj->S1_ServoON(false, 5000) != 0) {
+            log_nok("Pedal Servo On Failed");
+            return -4;
+        }
+    }
+    return 0;
+}
+
+int pedal_enable_run(bool AEnable) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    if (!vServoObj->FS7IsAutoMode) {
+        log_nok("Servo control mode is manual mode, switch the mode on the door first");
+        return -3;
+    }
+
+    if (AEnable) {
+        if (vServoObj->S1_Run_On() != 0) {
+            log_nok("Pedal Servo Enable Run Failed");
+            return -4;
+        }
+    }
+    else {
+        if (vServoObj->S1_Run_Off() != 0) {
+            log_nok("Pedal Servo Disable Run Failed");
+            return -5;
+        }
+    }
+    return 0;
+}
+
+int pedal_go_step_syn(float ARelPositionMM, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_step_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoRelPos_AutoMode_Syn(ARelPositionMM, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_go_step_asyn(float ARelPositionMM, float ASpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_step_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoRelPos_AutoMode_Asyn(ARelPositionMM, ASpeedMMpS);
+    }
+}
+
+int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoAbsPos_AutoMode_Syn(AAbsPositionMM, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
+    vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    //int result = servo_check();
+    //if (result != 0)
+    //    return result;
+    //if (vServoObj->FPedalIsSysMode) {
+    //    log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+    //    return -20;
+    //}
+    //else {
+    //    return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    //}
+    return 0;
+}
+
+int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode)
+        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    else {
+        log_nok("pedal_sys_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent is not actived, using pedal_position_auto_mode(true) to enable first");
+        return -20;
+    }
+}
+
+int pedal_go_step_percent_syn(float ARelPositionPercent, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    float AStepMM = ARelPositionPercent * vServoObj->FS1MaxPosition / 100;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_step_percent_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoRelPos_AutoMode_Syn(AStepMM, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_go_step_percent_asyn(float ARelPositionPercent, float ASpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    float AStepMM = ARelPositionPercent * vServoObj->FS1MaxPosition / 100;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_step_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoRelPos_AutoMode_Asyn(AStepMM, ASpeedMMpS);
+    }
+}
+
+int pedal_go_position_percent_syn(float AAbsPositionPercent, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_percent_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoAbsPos_AutoMode_Syn(AAbsPositionMM, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_go_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    }
+}
+
+int pedal_sys_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
+    if (vServoObj->FPedalIsSysMode)
+        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    else {
+        log_nok("pedal_sys_position_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent is not actived, using pedal_position_auto_mode(true) to enable first");
+        return -20;
+    }
+}
+
+int pedal_go_home_syn(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_home_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoZero_Syn(ATimeout);
+    }
+}
+
+int pedal_go_home_asyn() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_home_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoZero_Asyn();
+    }
+}
+
+int pedal_set_home(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S1_SetZero(ATimeout);
+}
+
+int pedal_go_auto_mode(bool AEanble) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    vServoObj->FPedalIsSysMode = AEanble;
+    return 0;
+}
+
+int rotate_servo_limit(float AMaxDegree, float AMinDegree, float AMaxSpeedDpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+
+    vServoObj->FS2MaxPosition = AMaxDegree;
+    vServoObj->FS2MinPosition = AMinDegree;
+    vServoObj->FS2MaxSpeed = AMaxSpeedDpS;
+    return 0;
+}
+
+int rotate_servo_on(bool AEnable) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (!vServoObj->FS7IsAutoMode) {
+        log_nok("Servo control mode is manual mode, switch the mode on the door first");
+        return -3;
+    }
+
+    if (AEnable) {
+        if (vServoObj->S2_ServoON(true, 5000) != 0) {
+            log_nok("slope Servo On Failed");
+            return -4;
+        }
+    }
+    else {
+        if (vServoObj->S2_ServoON(false, 5000) != 0) {
+            log_nok("slope Servo On Failed");
+            return -4;
+        }
+    }
+    return 0;
+}
+
+int rotate_enable_run(bool AEnable) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (!vServoObj->FS7IsAutoMode) {
+        log_nok("Servo control mode is manual mode, switch the mode on the door first");
+        return -3;
+    }
+
+    if (AEnable) {
+        if (vServoObj->S2_Run_On() != 0) {
+            log_nok("slope Servo Enable Run Failed");
+            return -4;
+        }
+    }
+    else {
+        if (vServoObj->S2_Run_Off() != 0) {
+            log_nok("slope Servo Disable Run Failed");
+            return -5;
+        }
+    }
+    return 0;
+}
+
+int rotate_go_step_syn(float ARelDegree, float ASpeedDpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoRelPos_AutoMode_Syn(ARelDegree, ASpeedDpS, ATimeout);
+}
+
+int rotate_go_step_asyn(float ARelDegree, float ASpeedDpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoRelPos_AutoMode_Asyn(ARelDegree, ASpeedDpS);
+}
+
+int rotate_go_position_syn(float AAbsDegree, float ASpeedDpS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoAbsPos_AutoMode_Syn(AAbsDegree, ASpeedDpS, ATimeout);
+}
+
+int rotate_go_position_asyn(float AAbsDegree, float ASpeedDpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoAbsPos_AutoMode_Asyn(AAbsDegree, ASpeedDpS);
+}
+
+int rotate_go_home_syn(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoZero_Syn(ATimeout);
+}
+
+int rotate_go_home_asyn() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoZero_Asyn();
+}
+
+int rotate_set_home(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_SetZero(ATimeout);
+}
+
+int rotate_go_slope_step_syn(float ARelGradPercent, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoRelSlopGrad_AutoMode_Syn(ARelGradPercent, ATimeout);
+}
+
+int rotate_go_slope_step_asyn(float ARelGradPercent) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoRelSlopGrad_AutoMode_Asyn(ARelGradPercent);
+}
+
+int rotate_go_slope_syn(float AAbsGradPercent, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoAbsSlopGrad_AutoMode_Syn(AAbsGradPercent, ATimeout);
+}
+
+int rotate_go_slope_asyn(float AAbsGradPercent) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoRelSlopGrad_AutoMode_Asyn(AAbsGradPercent);
+}
+
+int rotate_go_mount_position_syn(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoMountPos_AutoMode_Syn(ATimeout);
+}
+
+int rotate_go_mount_position_asyn() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S2_GoMountPos_AutoMode_Asyn();
+}
+
+int rotate_set_slope_speed(float ASpeedDpS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if ((ASpeedDpS < 0) || (ASpeedDpS > 10)) {
+        log_nok("The rotate servo slope run speed need in range [0,10], current setting is %f deg/s", ASpeedDpS);
+        return -2;
+    }
+
+    vServoObj->FS2SlopSpeed = ASpeedDpS;
+    return 0;
+}
+
+int air_cylinder_push_out() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S3_Go_Out();
+}
+
+int air_cylinder_push_back() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S3_Go_In();
+}
+
+int air_cylinder_push_pressure(float ATargetPressureBar) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S3_Set_Target_Pressure(ATargetPressureBar);
+}
+
+int turntable_enable_control() {
+    if (vServoObj == nullptr) {
+        vServoObj = new TServo(true);
+    }
+
+    //if(!vServoObj->FSnap7IsLoaded) {
+    //    delete vServoObj;
+    //    vServoObj = nullptr;
+    //    log_nok("Servo DLL Load Failed");
+    //    return -1;
+    //}
+
+    if (vServoObj->S7_Connection() != 0) {
+        log_nok("can not connect with servo system");
+        return -2;
+    }
+
+    if (vServoObj->S7_HandsShake(true, 10000) != 0) {
+        log_nok("handshake with servo system failed");
+        return -3;
+    }
+
+    if (vServoObj->S1_ServoON(true, 5000) != 0) {
+        log_nok("servo on failed");
+        return -4;
+    }
+
+    if (vServoObj->S1_Run_On() != 0) {
+        log_nok("servo on failed");
+        return -5;
+    }
+    log_ok("enable turntable successfully");
+    return 0;
+}
+
+int turntable_disable_control() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if (vServoObj->FS7IsConnected) {
+        if (vServoObj->FS7IsFault) {
+            if (vServoObj->S7_ClearFault() != 0)
+                log_nok("Servo has fault and cannot be cleared");
+        }
+
+        if (vServoObj->FS1IsServoOn) {
+            if (vServoObj->S1_RunSpd_AutoMode_Syn(0, 2000) != 0)
+                log_nok("set speed zero failed");
+
+            if (vServoObj->S1_ServoON(false, 5000) != 0)
+                log_nok("servo off failed");
+        }
+        if (vServoObj->S7_Disconnection() != 0)
+            log_nok("disconnection wit servo failed");
+    }
+    if (vServoObj != nullptr) {
+        delete vServoObj;
+        vServoObj = nullptr;
+    }
+    log_ok("disable turntable successfully");
+    return 0;
+}
+
+int turntable_run_speed_rpm_asyn(float ATargetSpeedRPM) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S1_RunSpd_AutoMode_Asyn(ATargetSpeedRPM);
+}
+
+int turntable_run_speed_rpm_syn(float ATargetSpeedRPM, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S1_RunSpd_AutoMode_Syn(ATargetSpeedRPM, ATimeout);
+}
+
+int turntable_run_speed_dps_asyn(float ATargetSpeedDPS) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    float ASpeedRPM = ATargetSpeedDPS / 6.0;
+    return vServoObj->S1_RunSpd_AutoMode_Asyn(ASpeedRPM);
+}
+
+int turntable_run_speed_dps_syn(float ATargetSpeedDPS, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    float ASpeedRPM = ATargetSpeedDPS / 6.0;
+    return vServoObj->S1_RunSpd_AutoMode_Syn(ASpeedRPM, ATimeout);
+}
+
+int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLengthMM) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if ((AArmLengthMM < 90) || (AArmLengthMM > 160)) {
+        log_nok("the arm lengthen should in rang [90, 160]mm");
+        return -10;
+    }
+    if (ATargetAccelerationG < 0) {
+        log_nok("the set g should greater than zero");
+        return -10;
+    }
+
+    float ASpeedRPM = sqrt(ATargetAccelerationG * 9.8 / (AArmLengthMM / 1000.0)) * 30.0 / pi;
+    return vServoObj->S1_RunSpd_AutoMode_Asyn(ASpeedRPM);
+}
+
+int turntable_run_centrifugal_acc_syn(float ATargetAccelerationG, float AArmLengthMM, int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    if ((AArmLengthMM < 90) || (AArmLengthMM > 160)) {
+        log_nok("the arm lengthen should in rang [90, 160]mm");
+        return -10;
+    }
+    if (ATargetAccelerationG < 0) {
+        log_nok("the set g should greater than zero");
+        return -10;
+    }
+
+    float ASpeedRPM = sqrt(ATargetAccelerationG * 9.8 / (AArmLengthMM / 1000.0)) * 30.0 / pi;
+    return vServoObj->S1_RunSpd_AutoMode_Syn(ASpeedRPM, ATimeout);
+}
+
+int turntable_stop_run_asyn() {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S1_RunSpd_AutoMode_Asyn(0);
+}
+
+int turntable_stop_run_syn(int ATimeout) {
+    int result = servo_check();
+    if (result != 0)
+        return result;
+    return vServoObj->S1_RunSpd_AutoMode_Syn(0, ATimeout);
+}
+
 
 void ProcessMessages() {
     MSG msg;
@@ -124,46 +772,55 @@ std::tm TS7Helper::GetDateTime(void* pval) {
 int32_t TS7Helper::GetDInt(void* pval) {
     int32_t result;
     uint8_t* DW = reinterpret_cast<uint8_t*>(&result);
-    DW[0] = *static_cast<uint8_t*>(pval);
-    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
-    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
-    DW[3] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
+    DW[3] = *static_cast<uint8_t*>(pval);
+    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
+    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
+    DW[0] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
     return result;
 }
 
 uint32_t TS7Helper::GetDWord(void* pval) {
     uint32_t result;
     uint8_t* DW = reinterpret_cast<uint8_t*>(&result);
-    DW[0] = *static_cast<uint8_t*>(pval);
-    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
-    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
-    DW[3] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
+    DW[3] = *static_cast<uint8_t*>(pval);
+    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
+    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
+    DW[0] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
     return result;
 }
 
 int16_t TS7Helper::GetInt(void* pval) {
     int16_t result;
     uint8_t* BW = reinterpret_cast<uint8_t*>(&result);
-    BW[0] = *static_cast<uint8_t*>(pval);
-    BW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
+    BW[1] = *static_cast<uint8_t*>(pval);
+    BW[0] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
     return result;
 }
 
 float TS7Helper::GetReal(void* pval) {
     float result;
     uint8_t* DW = reinterpret_cast<uint8_t*>(&result);
-    DW[0] = *static_cast<uint8_t*>(pval);
-    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
-    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
-    DW[3] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
+    DW[3] = *static_cast<uint8_t*>(pval);
+    DW[2] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
+    DW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 2);
+    DW[0] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 3);
     return result;
 }
+//float TS7Helper::GetReal(void* pval) {
+//    float result = 0;
+//    uint8_t* dw = reinterpret_cast<uint8_t*>(&result);
+//    dw[0] = *reinterpret_cast<uint8_t*>(reinterpret_cast<uintptr_t>(pval) + 3);
+//    dw[1] = *reinterpret_cast<uint8_t*>(reinterpret_cast<uintptr_t>(pval) + 2);
+//    dw[2] = *reinterpret_cast<uint8_t*>(reinterpret_cast<uintptr_t>(pval) + 1);
+//    dw[3] = *reinterpret_cast<uint8_t*>(pval);
+//    return result;
+//}
 
 uint16_t TS7Helper::GetWord(void* pval) {
     uint16_t result;
     uint8_t* BW = reinterpret_cast<uint8_t*>(&result);
-    BW[0] = *static_cast<uint8_t*>(pval);
-    BW[1] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
+    BW[1] = *static_cast<uint8_t*>(pval);
+    BW[0] = *static_cast<uint8_t*>(static_cast<uint8_t*>(pval) + 1);
     return result;
 }
 
@@ -285,7 +942,7 @@ TThreadHeartbeat::TThreadHeartbeat() : terminated(false), suspended(false), erro
 
 TThreadHeartbeat::~TThreadHeartbeat() {
     {
-        std::unique_lock<std::mutex> lock(mutex);
+        //std::unique_lock<std::mutex> lock(mutex);
         terminated = true;
         condition.notify_all();
     }
@@ -295,7 +952,7 @@ TThreadHeartbeat::~TThreadHeartbeat() {
 }
 
 void TThreadHeartbeat::HeartbeatResume() {
-    std::unique_lock<std::mutex> lock(mutex);
+    //std::unique_lock<std::mutex> lock(mutex);
     if(suspended) {
         suspended = false;
         condition.notify_all();
@@ -307,7 +964,7 @@ void TThreadHeartbeat::HeartbeatResume() {
 }
 
 void TThreadHeartbeat::HeartbeatSuspend() {
-    std::unique_lock<std::mutex> lock(mutex);
+    //std::unique_lock<std::mutex> lock(mutex);
     if(suspended) {
         log("HeartbeatSuspend: Heartbeat thread already suspended.");
     }
@@ -319,7 +976,7 @@ void TThreadHeartbeat::HeartbeatSuspend() {
 
 void TThreadHeartbeat::Heartbeatexit() {
     {
-        std::unique_lock<std::mutex> lock(mutex);
+        //std::unique_lock<std::mutex> lock(mutex);
         terminated = true;
         condition.notify_all();
     }
@@ -336,8 +993,8 @@ void TThreadHeartbeat::Heartbeatexit() {
 
 void TThreadHeartbeat::Execute() {
     while(!terminated) {
-        std::unique_lock<std::mutex> lock(mutex);
-        condition.wait(lock, [this] { return !suspended || terminated; });
+        //std::unique_lock<std::mutex> lock(mutex);
+        //condition.wait(lock, [this] { return !suspended || terminated; });
         if(terminated) break;
 
         if(S7_Heartbeat() == 0) {
@@ -385,7 +1042,7 @@ TThreadGetData::TThreadGetData() : terminated(false), suspended(false), errorCou
 
 TThreadGetData::~TThreadGetData() {
     {
-        std::unique_lock<std::mutex> lock(mutex);
+        //std::unique_lock<std::mutex> lock(mutex);
         terminated = true;
         condition.notify_all();
     }
@@ -395,7 +1052,7 @@ TThreadGetData::~TThreadGetData() {
 }
 
 void TThreadGetData::GetDataResume() {
-    std::unique_lock<std::mutex> lock(mutex);
+    //std::unique_lock<std::mutex> lock(mutex);
     if(suspended) {
         suspended = false;
         condition.notify_all();
@@ -407,7 +1064,7 @@ void TThreadGetData::GetDataResume() {
 }
 
 void TThreadGetData::GetDataSuspend() {
-    std::unique_lock<std::mutex> lock(mutex);
+    //std::unique_lock<std::mutex> lock(mutex);
     if(suspended) {
         log("GetDataSuspend: Getdata thread already suspended");
     }
@@ -419,7 +1076,7 @@ void TThreadGetData::GetDataSuspend() {
 
 void TThreadGetData::GetDataexit() {
     {
-        std::unique_lock<std::mutex> lock(mutex);
+        //std::unique_lock<std::mutex> lock(mutex);
         terminated = true;
         condition.notify_all();
     }
@@ -436,8 +1093,8 @@ void TThreadGetData::GetDataexit() {
 
 void TThreadGetData::Execute() {
     while(!terminated) {
-        std::unique_lock<std::mutex> lock(mutex);
-        condition.wait(lock, [this] { return !suspended || terminated; });
+        //std::unique_lock<std::mutex> lock(mutex);
+        //condition.wait(lock, [this] { return !suspended || terminated; });
         if(terminated) break;
 
         if(S7_GetData() == 0) {
@@ -450,7 +1107,7 @@ void TThreadGetData::Execute() {
                 GetDataSuspend();
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
     log("TThreadGetData Execute: Getdata thread exit.");
     finished = true;
@@ -464,653 +1121,9 @@ int TThreadGetData::S7_GetData() {
     return vServoObj->S7_GetAllData();
 }
 
-
-
-/* export function */
-int servo_check() {
-    if(vServoObj == nullptr) {
-        log_nok("Created servo object failed");
-        return -1;
-    }
-    return 0;
-}
-
-int servo_create() {
-    if(vServoObj == nullptr) {
-        vServoObj = new TServo(true);
-    }
-
-    if(!vServoObj->FSnap7IsLoaded) {
-        delete vServoObj;
-        vServoObj = nullptr;
-        log_nok("Servo DLL Load Failed");
-        return -3;
-    }
-    return 0;
-}
-
-int servo_destroy() {
-    if(vServoObj == nullptr) {
-        log("no servo object existed");
-        return 0;
-    }
-    else {
-        delete vServoObj;
-        vServoObj = nullptr;
-        log("Servo object destroyed");
-        return 0;
-    }
-}
-
-int servo_connect(const char* AIPAddr) {
-    vServoObj->FRemoteAddress = AIPAddr;
-
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    if(vServoObj->S7_Connection() != 0) {
-        log_nok("can not connect with servo system, check IP Address");
-        return -3;
-    }
-    if(vServoObj->S7_HandsShake(true, 10000) != 0) {
-        log_nok("handshake with servo system failed");
-        return -4;
-    }
-
-    log_ok("MP API: Servo connected successfully");
-    return 0;
-}
-
-int servo_disconnect() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FS7IsConnected) {
-        result = vServoObj->S7_Disconnection();
-        if(result != 0)
-            log("disconnect succeffully failed");
-        else
-            log("disconnect succeffully");
-        return result;
-    }
-    else {
-        log("no connection with servo system");
-        return 0;
-    }
-}
-
-int servo_clear_fault() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S7_ClearFault();
-}
-
-int pedal_servo_limit(float AMaxPositionMM, float AMinPositionMM, float AMaxSpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    vServoObj->FS1MaxPosition = AMaxPositionMM;
-    vServoObj->FS1MinPosition = AMinPositionMM;
-    vServoObj->FS1MaxSpeed = AMaxSpeedMMpS;
-    return 0;
-}
-
-int pedal_servo_on(bool AEnable) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(!vServoObj->FS7IsAutoMode) {
-        log_nok("Servo control mode is manual mode, switch the mode on the door first");
-        return -3;
-    }
-
-    if(AEnable) {
-        if(vServoObj->S1_ServoON(true, 5000) != 0) {
-            log_nok("Pedal Servo On Failed");
-            return -4;
-        }
-    }
-    else {
-        if(vServoObj->S1_ServoON(false, 5000) != 0) {
-            log_nok("Pedal Servo On Failed");
-            return -4;
-        }
-    }
-    return 0;
-}
-
-int pedal_enable_run(bool AEnable) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    if(!vServoObj->FS7IsAutoMode) {
-        log_nok("Servo control mode is manual mode, switch the mode on the door first");
-        return -3;
-    }
-
-    if(AEnable) {
-        if(vServoObj->S1_Run_On() != 0) {
-            log_nok("Pedal Servo Enable Run Failed");
-            return -4;
-        }
-    }
-    else {
-        if(vServoObj->S1_Run_Off() != 0) {
-            log_nok("Pedal Servo Disable Run Failed");
-            return -5;
-        }
-    }
-    return 0;
-}
-
-int pedal_go_step_syn(float ARelPositionMM, float ASpeedMMpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_step_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoRelPos_AutoMode_Syn(ARelPositionMM, ASpeedMMpS, ATimeout);
-    }
-}
-
-int pedal_go_step_asyn(float ARelPositionMM, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_step_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoRelPos_AutoMode_Asyn(ARelPositionMM, ASpeedMMpS);
-    }
-}
-
-int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoAbsPos_AutoMode_Syn(AAbsPositionMM, ASpeedMMpS, ATimeout);
-    }
-}
-
-int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
-    }
-}
-
-int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode)
-        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
-    else {
-        log_nok("pedal_sys_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent is not actived, using pedal_position_auto_mode(true) to enable first");
-        return -20;
-    }
-}
-
-int pedal_go_step_percent_syn(float ARelPositionPercent, float ASpeedMMpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    float AStepMM = ARelPositionPercent * vServoObj->FS1MaxPosition / 100;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_step_percent_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoRelPos_AutoMode_Syn(AStepMM, ASpeedMMpS, ATimeout);
-    }
-}
-
-int pedal_go_step_percent_asyn(float ARelPositionPercent, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    float AStepMM = ARelPositionPercent * vServoObj->FS1MaxPosition / 100;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_step_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoRelPos_AutoMode_Asyn(AStepMM, ASpeedMMpS);
-    }
-}
-
-int pedal_go_position_percent_syn(float AAbsPositionPercent, float ASpeedMMpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_position_percent_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoAbsPos_AutoMode_Syn(AAbsPositionMM, ASpeedMMpS, ATimeout);
-    }
-}
-
-int pedal_go_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_position_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
-    }
-}
-
-int pedal_sys_position_percent_asyn(float AAbsPositionPercent, float ASpeedMMpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    float AAbsPositionMM = AAbsPositionPercent * vServoObj->FS1MaxPosition / 100;
-    if(vServoObj->FPedalIsSysMode)
-        return vServoObj->S1_GoAbsPos_AutoMode_Asyn(AAbsPositionMM, ASpeedMMpS);
-    else {
-        log_nok("pedal_sys_position_percent_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent is not actived, using pedal_position_auto_mode(true) to enable first");
-        return -20;
-    }
-}
-
-int pedal_go_home_syn(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_home_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoZero_Syn(ATimeout);
-    }
-}
-
-int pedal_go_home_asyn() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FPedalIsSysMode) {
-        log_nok("pedal_go_home_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
-        return -20;
-    }
-    else {
-        return vServoObj->S1_GoZero_Asyn();
-    }
-}
-
-int pedal_set_home(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S1_SetZero(ATimeout);
-}
-
-int pedal_go_auto_mode(bool AEanble) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    vServoObj->FPedalIsSysMode = AEanble;
-    return 0;
-}
-
-int rotate_servo_limit(float AMaxDegree, float AMinDegree, float AMaxSpeedDpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-
-    vServoObj->FS2MaxPosition = AMaxDegree;
-    vServoObj->FS2MinPosition = AMinDegree;
-    vServoObj->FS2MaxSpeed = AMaxSpeedDpS;
-    return 0;
-}
-
-int rotate_servo_on(bool AEnable) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(!vServoObj->FS7IsAutoMode) {
-        log_nok("Servo control mode is manual mode, switch the mode on the door first");
-        return -3;
-    }
-
-    if(AEnable) {
-        if(vServoObj->S2_ServoON(true, 5000) != 0) {
-            log_nok("slope Servo On Failed");
-            return -4;
-        }
-    }
-    else {
-        if(vServoObj->S2_ServoON(false, 5000) != 0) {
-            log_nok("slope Servo On Failed");
-            return -4;
-        }
-    }
-    return 0;
-}
-
-int rotate_enable_run(bool AEnable) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(!vServoObj->FS7IsAutoMode) {
-        log_nok("Servo control mode is manual mode, switch the mode on the door first");
-        return -3;
-    }
-
-    if(AEnable) {
-        if(vServoObj->S2_Run_On() != 0) {
-            log_nok("slope Servo Enable Run Failed");
-            return -4;
-        }
-    }
-    else {
-        if(vServoObj->S2_Run_Off() != 0) {
-            log_nok("slope Servo Disable Run Failed");
-            return -5;
-        }
-    }
-    return 0;
-}
-
-int rotate_go_step_syn(float ARelDegree, float ASpeedDpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoRelPos_AutoMode_Syn(ARelDegree, ASpeedDpS, ATimeout);
-}
-
-int rotate_go_step_asyn(float ARelDegree, float ASpeedDpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoRelPos_AutoMode_Asyn(ARelDegree, ASpeedDpS);
-}
-
-int rotate_go_position_syn(float AAbsDegree, float ASpeedDpS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoAbsPos_AutoMode_Syn(AAbsDegree, ASpeedDpS, ATimeout);
-}
-
-int rotate_go_position_asyn(float AAbsDegree, float ASpeedDpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoAbsPos_AutoMode_Asyn(AAbsDegree, ASpeedDpS);
-}
-
-int rotate_go_home_syn(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoZero_Syn(ATimeout);
-}
-
-int rotate_go_home_asyn() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoZero_Asyn();
-}
-
-int rotate_set_home(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_SetZero(ATimeout);
-}
-
-int rotate_go_slope_step_syn(float ARelGradPercent, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoRelSlopGrad_AutoMode_Syn(ARelGradPercent, ATimeout);
-}
-
-int rotate_go_slope_step_asyn(float ARelGradPercent) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoRelSlopGrad_AutoMode_Asyn(ARelGradPercent);
-}
-
-int rotate_go_slope_syn(float AAbsGradPercent, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoAbsSlopGrad_AutoMode_Syn(AAbsGradPercent, ATimeout);
-}
-
-int rotate_go_slope_asyn(float AAbsGradPercent) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoRelSlopGrad_AutoMode_Asyn(AAbsGradPercent);
-}
-
-int rotate_go_mount_position_syn(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoMountPos_AutoMode_Syn(ATimeout);
-}
-
-int rotate_go_mount_position_asyn() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S2_GoMountPos_AutoMode_Asyn();
-}
-
-int rotate_set_slope_speed(float ASpeedDpS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if((ASpeedDpS < 0) || (ASpeedDpS > 10)) {
-        log_nok("The rotate servo slope run speed need in range [0,10], current setting is %f deg/s", ASpeedDpS);
-        return -2;
-    }
-
-    vServoObj->FS2SlopSpeed = ASpeedDpS;
-    return 0;
-}
-
-int air_cylinder_push_out() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S3_Go_Out();
-}
-
-int air_cylinder_push_back() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S3_Go_In();
-}
-
-int air_cylinder_push_pressure(float ATargetPressureBar) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S3_Set_Target_Pressure(ATargetPressureBar);
-}
-
-int turntable_enable_control() {
-    if(vServoObj == nullptr) {
-        vServoObj = new TServo(true);
-    }
-
-    if(!vServoObj->FSnap7IsLoaded) {
-        delete vServoObj;
-        vServoObj = nullptr;
-        log_nok("Servo DLL Load Failed");
-        return -1;
-    }
-
-    if(vServoObj->S7_Connection() != 0) {
-        log_nok("can not connect with servo system");
-        return -2;
-    }
-
-    if(vServoObj->S7_HandsShake(true, 10000) != 0) {
-        log_nok("handshake with servo system failed");
-        return -3;
-    }
-
-    if(vServoObj->S1_ServoON(true, 5000) != 0) {
-        log_nok("servo on failed");
-        return -4;
-    }
-
-    if(vServoObj->S1_Run_On() != 0) {
-        log_nok("servo on failed");
-        return -5;
-    }
-    log_ok("enable turntable successfully");
-    return 0;
-}
-
-int turntable_disable_control() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if(vServoObj->FS7IsConnected) {
-        if(vServoObj->FS7IsFault) {
-            if(vServoObj->S7_ClearFault() != 0)
-                log_nok("Servo has fault and cannot be cleared");
-        }
-
-        if(vServoObj->FS1IsServoOn) {
-            if(vServoObj->S1_RunSpd_AutoMode_Syn(0, 2000) != 0)
-                log_nok("set speed zero failed");
-
-            if(vServoObj->S1_ServoON(false, 5000) != 0)
-                log_nok("servo off failed");
-        }
-        if(vServoObj->S7_Disconnection() != 0)
-            log_nok("disconnection wit servo failed");
-    }
-    if(vServoObj != nullptr) {
-        delete vServoObj;
-        vServoObj = nullptr;
-    }
-    log_ok("disable turntable successfully");
-    return 0;
-}
-
-int turntable_run_speed_rpm_asyn(float ATargetSpeedRPM) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S1_RunSpd_AutoMode_Asyn(ATargetSpeedRPM);
-}
-
-int turntable_run_speed_rpm_syn(float ATargetSpeedRPM, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S1_RunSpd_AutoMode_Syn(ATargetSpeedRPM, ATimeout);
-}
-
-int turntable_run_speed_dps_asyn(float ATargetSpeedDPS) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    float ASpeedRPM = ATargetSpeedDPS / 6.0;
-    return vServoObj->S1_RunSpd_AutoMode_Asyn(ASpeedRPM);
-}
-
-int turntable_run_speed_dps_syn(float ATargetSpeedDPS, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    float ASpeedRPM = ATargetSpeedDPS / 6.0;
-    return vServoObj->S1_RunSpd_AutoMode_Syn(ASpeedRPM, ATimeout);
-}
-
-int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLengthMM) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if((AArmLengthMM < 90) || (AArmLengthMM > 160)) {
-        log_nok("the arm lengthen should in rang [90, 160]mm");
-        return -10;
-    }
-    if(ATargetAccelerationG < 0) {
-        log_nok("the set g should greater than zero");
-        return -10;
-    }
-
-    float ASpeedRPM = sqrt(ATargetAccelerationG * 9.8 / (AArmLengthMM / 1000.0)) * 30.0 / pi;
-    return vServoObj->S1_RunSpd_AutoMode_Asyn(ASpeedRPM);
-}
-
-int turntable_run_centrifugal_acc_syn(float ATargetAccelerationG, float AArmLengthMM, int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    if((AArmLengthMM < 90) || (AArmLengthMM > 160)) {
-        log_nok("the arm lengthen should in rang [90, 160]mm");
-        return -10;
-    }
-    if(ATargetAccelerationG < 0) {
-        log_nok("the set g should greater than zero");
-        return -10;
-    }
-
-    float ASpeedRPM = sqrt(ATargetAccelerationG * 9.8 / (AArmLengthMM / 1000.0)) * 30.0 / pi;
-    return vServoObj->S1_RunSpd_AutoMode_Syn(ASpeedRPM, ATimeout);
-}
-
-int turntable_stop_run_asyn() {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S1_RunSpd_AutoMode_Asyn(0);
-}
-
-int turntable_stop_run_syn(int ATimeout) {
-    int result = servo_check();
-    if(result != 0)
-        return result;
-    return vServoObj->S1_RunSpd_AutoMode_Syn(0, ATimeout);
-}
 /* class TServo */
 TServo::TServo(bool AOnlyPedalServo)
-    : FS7IsOnlyPedal(AOnlyPedalServo), FSnap7IsLoaded(false), FS7IsConnected(false), FS7IsHandShaked(false), FS7IsPowerOn(false), FS7IsAutoMode(false), FS7IsFault(false), FS7WithAirCylinder(false), FS1IsServoOn(false), FS1ZeroExisted(false), FS1IsReady(false), FS1RunFinished(false), FS1IsFault(false), FS2IsServoOn(false), FS2ZeroExisted(false), FS2IsReady(false), FS2RunFinished(false), FS2IsFault(false), FS1ActPosition(0.0f), FS1ActSpeed(0.0f), FS2ActPosition(0.0f), FS2ActPositionGrad(0.0f), FS2ActSpeed(0.0f), FS1MaxSpeed(500.0f), FS1MaxPosition(60.0f), FS1MinPosition(-10.0f), FS2MaxSpeed(10.0f), FS2MaxPosition(20.0f), FS2MinPosition(-20.0f), FS2MountPosition(0.0f), FS2SlopSpeed(0.0f), FS3TargetCurrent(0.0f), FS1TargetPositionManual(0.0f), FS1TargetSpeedManual(0.0f), FS2TargetPositionManual(0.0f), FS2TargetSpeedManual(0.0f), FS1TargetPositionAuto(0.0f), FS1TargetSpeedAuto(0.0f), FS2TargetPositionAuto(0.0f), FS2TargetSpeedAuto(0.0f), FPedalIsSysMode(false), FS3MCMaxPressure(0.0f), FS3P2AFactor(0.0f), FS3P2AOffset(0.0f) {
+    : FS7IsOnlyPedal(AOnlyPedalServo), FS7IsConnected(false), FS7IsHandShaked(false), FS7IsPowerOn(false), FS7IsAutoMode(false), FS7IsFault(false), FS7WithAirCylinder(false), FS1IsServoOn(false), FS1ZeroExisted(false), FS1IsReady(false), FS1RunFinished(false), FS1IsFault(false), FS2IsServoOn(false), FS2ZeroExisted(false), FS2IsReady(false), FS2RunFinished(false), FS2IsFault(false), FS1ActPosition(0.0f), FS1ActSpeed(0.0f), FS2ActPosition(0.0f), FS2ActPositionGrad(0.0f), FS2ActSpeed(0.0f), FS1MaxSpeed(500.0f), FS1MaxPosition(60.0f), FS1MinPosition(-10.0f), FS2MaxSpeed(10.0f), FS2MaxPosition(20.0f), FS2MinPosition(-20.0f), FS2MountPosition(0.0f), FS2SlopSpeed(0.0f), FS3TargetCurrent(0.0f), FS1TargetPositionManual(0.0f), FS1TargetSpeedManual(0.0f), FS2TargetPositionManual(0.0f), FS2TargetSpeedManual(0.0f), FS1TargetPositionAuto(0.0f), FS1TargetSpeedAuto(0.0f), FS2TargetPositionAuto(0.0f), FS2TargetSpeedAuto(0.0f), FPedalIsSysMode(false), FS3MCMaxPressure(0.0f), FS3P2AFactor(0.0f), FS3P2AOffset(0.0f) {
     // if(InitializeSnap7Api()) {
     //     log_ok("Load Snap7 successful");
     //     FSnap7IsLoaded = true;
@@ -1129,25 +1142,25 @@ TServo::TServo(bool AOnlyPedalServo)
     // FMonitorObj: = TObject.Create;
     vHeartbeatThread = new TThreadHeartbeat();
     log("TServo.Create: Servo Object is created");
-    FS1MaxSpeed = 500.0f;
-    FS1MaxPosition = 60.0f;
-    FS1MinPosition = -10.0f;
-    FS2MaxSpeed = 10.0f;
-    FS2MaxPosition = 20.0f;
-    FS2MinPosition = -20.0f;
-    FS2SlopSpeed = 0.0f;
-    FS2MountPosition = 0.0f;
-    // todo: vTIOConfig
-    // FS2MountPosition: = vTIOConfig.FServo2MountAngle;
-    FRemoteAddress = "192.168.1.1";
+
+    SetFS1MaxSpeed(500.0f);
+    SetFS1MaxPosition(60.0f);
+    SetFS1MinPosition(-10.0f);
+    SetFS2MaxSpeed(10.0f);
+    SetFS2MaxPosition(20.0f);
+    SetFS2MinPosition(-20.0f);
+    FS2SlopSpeed = vTIOConfig.FServo2Speed;
+    //FS2MountPosition = 0.0f;
+    FS2MountPosition = vTIOConfig.FServo2MountAngle;
+    //FRemoteAddress = "192.168.1.1";
+    FRemoteAddress = vTIOConfig.FS7IPAddress;
     FPedalIsSysMode = false;
-    // todo:vTIOConfig
-    // S3MCMaxPressure: = vTIOConfig.FMCMaxPressure;
-    // S3P2AFactor: = vTIOConfig.FPressure2CurrentFactor;
-    // S3P2AOffset: = vTIOConfig.FPressure2CurrentOffset;
-    FS3MCMaxPressure = 0.0f;
-    FS3P2AFactor = 0.0f;
-    FS3P2AOffset = 0.0f;
+    SetFS3MCMaxPressure(vTIOConfig.FMCMaxPressure);
+    SetFS3P2AFactor(vTIOConfig.FPressure2CurrentFactor);
+    SetFS3P2AOffset(vTIOConfig.FPressure2CurrentOffset);
+    //FS3MCMaxPressure = 0.0f;
+    //FS3P2AFactor = 0.0f;
+    //FS3P2AOffset = 0.0f;
 
     // vGetDataThread = new TThreadGetData();
 }
@@ -1247,22 +1260,22 @@ int TServo::S7_ClearFault(int ATimeout) {
 
 int TServo::S7_Connection() {
     int PingTime = 0;
-    FS7LastError = FS7Client.SetParam(p_i32_PingTimeout, &PingTime);
+    SetFS7LastError(FS7Client.SetParam(p_i32_PingTimeout, &PingTime));
     if(FS7LastError != 0) {
         return -1;
     }
 
     FS7Client.SetConnectionType(1);
-    FS7LastError = FS7Client.ConnectTo(FRemoteAddress.c_str(), 0, 0);
+    SetFS7LastError(FS7Client.ConnectTo(FRemoteAddress.c_str(), 0, 0));
     Sleep(50);
     if(FS7LastError != 0) {
         log_nok("S7_Connection: Servo Connect error, can not find device under IP: ");
-        FS7IsConnected = false;
+        SetFS7IsConnected(false);
     }
     else {
-        log_ok("S7_Connection: Servo Connect Successful, device IP is: ");
+        log_ok("S7_Connection: Servo Connect Successful, device IP is: %s", FRemoteAddress.c_str());
         vGetDataThread = new TThreadGetData();
-        FS7IsConnected = true;
+        SetFS7IsConnected(true);
     }
     return FS7LastError;
 }
@@ -1273,54 +1286,55 @@ int TServo::S7_Disconnection() {
         delete vGetDataThread;
         vGetDataThread = nullptr;
     }
-    FS7LastError = FS7Client.Disconnect();
+    SetFS7LastError(FS7Client.Disconnect());
     if(FS7LastError != 0) {
         log_nok("S7_Disconnection: Servo disconnect error");
     }
     else {
-        log_ok("S7_Disconnection: Servo disconnect Successful. Device IP is:");
+        log_ok("S7_Disconnection: Servo disconnect Successful. Device IP is: %s", FRemoteAddress.c_str());
     }
 
-    FS7IsConnected = false;
+    SetFS7IsConnected(false);
     return FS7LastError;
 }
 
 int TServo::S7_GetAllData() {
+
     if(!FS7IsConnected) {
         log_nok("S7_GetAllData: Connected is needed");
         return -1;
     }
 
     if(S7Read(AddrGetAllData, &FS7Buffer, false) == 0) {
-
-        FS7IsHandShaked = S7.ValBit(&FS7Buffer[0], 0);
-        FS7IsPowerOn = S7.ValBit(&FS7Buffer[0], 1);
-        FS7IsAutoMode = S7.ValBit(&FS7Buffer[0], 2);
-        FS7IsFault = S7.ValBit(&FS7Buffer[0], 3);
-        FS1IsServoOn = S7.ValBit(&FS7Buffer[0], 4);
-        FS1ZeroExisted = S7.ValBit(&FS7Buffer[0], 5);
-        FS1IsReady = S7.ValBit(&FS7Buffer[0], 6);
+        //log_ok("S7_GetAllData:enter");
+        SetFS7IsHandShaked(S7.ValBit(&FS7Buffer[0], 0));
+        SetFS7IsPowerOn(S7.ValBit(&FS7Buffer[0], 1));
+        SetFS7IsAutoMode(S7.ValBit(&FS7Buffer[0], 2));
+        SetFS7IsFault(S7.ValBit(&FS7Buffer[0], 3));
+        SetFS1IsServoOn(S7.ValBit(&FS7Buffer[0], 4));
+        SetFS1ZeroExisted(S7.ValBit(&FS7Buffer[0], 5));
+        SetFS1IsReady(S7.ValBit(&FS7Buffer[0], 6));
         // FS1Running = S7.ValBit(&FS7Buffer[2], 6);
-        FS1RunFinished = S7.ValBit(&FS7Buffer[0], 7);
-        FS1IsFault = S7.ValBit(&FS7Buffer[1], 0);
+        SetFS1RunFinished(S7.ValBit(&FS7Buffer[0], 7));
+        SetFS1IsFault(S7.ValBit(&FS7Buffer[1], 0));
         // todo check the address
         // FS1AutoMode = S7.ValBit(&FS7Buffer[3], 7);
         // FS2AutoMode = S7.ValBit(&FS7Buffer[3], 8);
 
-        FS1ActPosition = S7.ValReal(&FS7Buffer[2]);
-        FS1ActSpeed = S7.ValReal(&FS7Buffer[6]);
+        SetFS1ActPosition(S7.ValReal(&FS7Buffer[2]));
+        SetFS1ActSpeed(S7.ValReal(&FS7Buffer[6]));
         if(!FS7IsOnlyPedal) {
-            FS2IsServoOn = S7.ValBit(&FS7Buffer[1], 1);
-            FS2ZeroExisted = S7.ValBit(&FS7Buffer[1], 2);
-            FS2IsReady = S7.ValBit(&FS7Buffer[1], 3);
+            SetFS2IsServoOn(S7.ValBit(&FS7Buffer[1], 1));
+            SetFS2ZeroExisted(S7.ValBit(&FS7Buffer[1], 2));
+            SetFS2IsReady(S7.ValBit(&FS7Buffer[1], 3));
             // FS2Running = S7.ValBit(&FS7Buffer[3], 4);
-            FS2RunFinished = S7.ValBit(&FS7Buffer[1], 4);
-            FS2IsFault = S7.ValBit(&FS7Buffer[1], 5);
-            FS2ActPosition = S7.ValReal(&FS7Buffer[10]);
-            FS2ActSpeed = S7.ValReal(&FS7Buffer[14]);
+            SetFS2RunFinished(S7.ValBit(&FS7Buffer[1], 4));
+            SetFS2IsFault(S7.ValBit(&FS7Buffer[1], 5));
+            SetFS2ActPosition(S7.ValReal(&FS7Buffer[10]));
+            SetFS2ActSpeed(S7.ValReal(&FS7Buffer[14]));
         }
-        // FS7IsHandShaked = (FS7Buffer[0] & 0x01) != 0;
-        // FS7IsPowerOn = (FS7Buffer[0] & 0x02) != 0;
+        // SetFS7IsHandShaked(0);
+        // SetFS7IsPowerOn(0);
         // FS7IsAutoMode = (FS7Buffer[0] & 0x04) != 0;
         // FS7IsFault = (FS7Buffer[0] & 0x08) != 0;
         // FS1IsServoOn = (FS7Buffer[0] & 0x10) != 0;
@@ -1340,6 +1354,7 @@ int TServo::S7_GetAllData() {
         return 0;
     }
     else {
+        log_nok("S7_GetAllData:faied");
         return -1;
     }
 }
@@ -1390,9 +1405,9 @@ int TServo::S7_HandsShake(bool AEnable, int ATimeout) {
 int TServo::S7Read(const TDataRecord& AField, void* pData, bool Async) {
     std::lock_guard<std::mutex> lock(FMonitorObj);
     if(Async)
-        FS7LastError = FS7Client.AsReadArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData);
+        SetFS7LastError(FS7Client.AsReadArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData));
     else
-        FS7LastError = FS7Client.ReadArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData);
+        SetFS7LastError(FS7Client.ReadArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData));
 
     if(FS7LastError == 0) {
         if(Async)
@@ -1407,41 +1422,43 @@ int TServo::S7Read(const TDataRecord& AField, void* pData, bool Async) {
 int TServo::S1_GoAbsPos_AutoMode_Asyn(float AAbsPosMM, float ASpeedMMS) {
     std::array<unsigned char, 8> AWriteByte = {0};
 
-    if(!FS1IsReady) {
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo 1 is not ready");
-        return -1;
-    }
+    //if(!FS1IsReady) {
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo 1 is not ready");
+    //    return -1;
+    //}
 
-    if(!FS7IsAutoMode) {
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo is in manual mode, switch to auto first");
-        return -1;
-    }
+    //if(!FS7IsAutoMode) {
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo is in manual mode, switch to auto first");
+    //    return -1;
+    //}
 
-    float ASetPosition = AAbsPosMM;
-    if(AAbsPosMM > FS1MaxPosition) {
-        ASetPosition = FS1MaxPosition;
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%f), and the target value used the max value instead", FS1MaxPosition);
-    }
-    else if(AAbsPosMM < FS1MinPosition) {
-        ASetPosition = FS1MinPosition;
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(%f), and the target value used the min value instead", FS1MinPosition);
-    }
+    //float ASetPosition = AAbsPosMM;
+    //if(AAbsPosMM > FS1MaxPosition) {
+    //    ASetPosition = FS1MaxPosition;
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%f), and the target value used the max value instead", FS1MaxPosition);
+    //}
+    //else if(AAbsPosMM < FS1MinPosition) {
+    //    ASetPosition = FS1MinPosition;
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(%f), and the target value used the min value instead", FS1MinPosition);
+    //}
 
-    float ASetSpeed = ASpeedMMS;
-    if(ASpeedMMS > FS1MaxSpeed) {
-        ASetSpeed = FS1MaxSpeed;
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%f), and the target value used the max value instead", FS1MaxSpeed);
-    }
-    else if(ASpeedMMS < 0) {
-        ASetSpeed = 0;
-        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
-    }
+    //float ASetSpeed = ASpeedMMS;
+    //if(ASpeedMMS > FS1MaxSpeed) {
+    //    ASetSpeed = FS1MaxSpeed;
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%f), and the target value used the max value instead", FS1MaxSpeed);
+    //}
+    //else if(ASpeedMMS < 0) {
+    //    ASetSpeed = 0;
+    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
+    //}
 
-    FS1TargetPositionAuto = ASetPosition;
-    FS1TargetSpeedAuto = ASetSpeed;
-
-    S7.ValReal(&AWriteByte[0], ASetPosition);
-    S7.ValReal(&AWriteByte[4], ASetSpeed);
+    //SetFS1TargetPositionAuto(ASetPosition);
+    //SetFS1TargetSpeedAuto(ASetSpeed);
+//    float AAbsPosMM, float ASpeedMMS
+    /*SetFS1TargetPositionAuto(ASetPosition);
+    SetFS1TargetSpeedAuto(ASetSpeed);*/
+    S7.ValReal(&AWriteByte[0], AAbsPosMM);
+    S7.ValReal(&AWriteByte[4], ASpeedMMS);
 
     // *(float*) AWriteByte.data() = ASetPosition;
     // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
@@ -1491,8 +1508,8 @@ int TServo::S1_GoAbsPos_AutoMode_Syn(float AAbsPosMM, float ASpeedMMS, int ATime
         log_nok("S1_GoAbsPos_AutoMode_Syn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionAuto = ASetPosition;
-    FS1TargetSpeedAuto = ASetSpeed;
+    SetFS1TargetPositionAuto(ASetPosition);
+    SetFS1TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -1506,7 +1523,7 @@ int TServo::S1_GoAbsPos_AutoMode_Syn(float AAbsPosMM, float ASpeedMMS, int ATime
         return -2;
     }
 
-    FS1RunFinished = false;
+    SetFS1RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS1RunFinished && fabs(FS1TargetPositionAuto - FS1ActPosition) < PositionMaxTol) {
@@ -1546,8 +1563,8 @@ int TServo::S1_RunSpd_AutoMode_Asyn(float ASpeedRPM) {
         log_nok("S1_RunSpd_AutoMode_Asyn: S1 Set positon is smaller than the min value(-450 rpm), and the target value used the min value instead");
     }
 
-    FS1TargetPositionAuto = 0;
-    FS1TargetSpeedAuto = ASetSpeed;
+    SetFS1TargetPositionAuto(0);
+    SetFS1TargetSpeedAuto(ASetSpeed);
 
     // *(float*) AWriteByte.data() = 0;
     // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
@@ -1585,8 +1602,8 @@ int TServo::S1_RunSpd_AutoMode_Syn(float ASpeedRPM, int ATimeout) {
         log_nok("S1_RunSpd_AutoMode_Syn: S1 Set speed is smaller than the min value(-450 rpm), and the target value used the min value instead");
     }
 
-    FS1TargetPositionAuto = 0;
-    FS1TargetSpeedAuto = ASetSpeed;
+    SetFS1TargetPositionAuto(0);
+    SetFS1TargetSpeedAuto(ASetSpeed);
 
     // *(float*) AWriteByte.data() = 0;
     // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
@@ -1648,8 +1665,8 @@ int TServo::S1_GoAbsPos_MMode_Asyn(float AAbsPosMM, float ASpeedMMS) {
         log_nok("S1_GoAbsPostion_MMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionManual = ASetPosition;
-    FS1TargetSpeedManual = ASetSpeed;
+    SetFS1TargetPositionManual(ASetPosition);
+    SetFS1TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -1700,8 +1717,8 @@ int TServo::S1_GoAbsPos_MMode_Syn(float AAbsPosMM, float ASpeedMMS, int ATimeout
         log_nok("S1_GoAbsPostion_MMode_Syn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionManual = ASetPosition;
-    FS1TargetSpeedManual = ASetSpeed;
+    SetFS1TargetPositionManual(ASetPosition);
+    SetFS1TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -1714,7 +1731,7 @@ int TServo::S1_GoAbsPos_MMode_Syn(float AAbsPosMM, float ASpeedMMS, int ATimeout
         return -2;
     }
 
-    FS1RunFinished = false;
+    SetFS1RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS1RunFinished && fabs(FS1TargetPositionManual - FS1ActPosition) < PositionMaxTol) {
@@ -1766,7 +1783,7 @@ int TServo::S1_GoZero_Syn(int ATimeout) {
         return -2;
     }
 
-    FS1RunFinished = false;
+    SetFS1RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS1RunFinished && fabs(FS1ActPosition) < PositionMaxTol)
@@ -1856,8 +1873,8 @@ int TServo::S1_GoRelPos_AutoMode_Asyn(float ARelPosMM, float ASpeedMMS) {
         log_nok("S1_GoRelPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionAuto = ASetPosition;
-    FS1TargetSpeedAuto = ASetSpeed;
+    SetFS1TargetPositionAuto(ASetPosition);
+    SetFS1TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -1910,8 +1927,8 @@ int TServo::S1_GoRelPos_AutoMode_Syn(float ARelPosMM, float ASpeedMMS, int ATime
         log_nok("S1_GoRelPos_AutoMode_Syn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionAuto = ASetPosition;
-    FS1TargetSpeedAuto = ASetSpeed;
+    SetFS1TargetPositionAuto(ASetPosition);
+    SetFS1TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -1925,7 +1942,7 @@ int TServo::S1_GoRelPos_AutoMode_Syn(float ARelPosMM, float ASpeedMMS, int ATime
         return -2;
     }
 
-    FS1RunFinished = false;
+    SetFS1RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS1RunFinished && fabs(FS1TargetPositionAuto - FS1ActPosition) < PositionMaxTol) {
@@ -1976,8 +1993,8 @@ int TServo::S1_GoRelPos_MMode_Asyn(float ARelPosMM, float ASpeedMMS) {
         log_nok("S1_GoRelPos_MMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionManual = ASetPosition;
-    FS1TargetSpeedManual = ASetSpeed;
+    SetFS1TargetPositionManual(ASetPosition);
+    SetFS1TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2029,8 +2046,8 @@ int TServo::S1_GoRelPos_MMode_Syn(float ARelPosMM, float ASpeedMMS, int ATimeout
         log_nok("S1_GoRelPos_MMode_Syn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS1TargetPositionManual = ASetPosition;
-    FS1TargetSpeedManual = ASetSpeed;
+    SetFS1TargetPositionManual(ASetPosition);
+    SetFS1TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2043,7 +2060,7 @@ int TServo::S1_GoRelPos_MMode_Syn(float ARelPosMM, float ASpeedMMS, int ATimeout
         return -2;
     }
 
-    FS1RunFinished = false;
+    SetFS1RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS1RunFinished && fabs(FS1TargetPositionManual - FS1ActPosition) < PositionMaxTol) {
@@ -2067,7 +2084,7 @@ int TServo::S1_Run_On(int ATimeout) {
         return -1;
     }
 
-    FPedalIsSysMode = false;
+    SetFPedalIsSysMode(false);
 
     // AWriteByte |= 0x01;
     S7.ValBit(&AWriteByte, 0, true);
@@ -2152,7 +2169,7 @@ int TServo::S1_SetZero(int ATimeout) {
         return -2;
     }
 
-    FS1ZeroExisted = false;
+    SetFS1ZeroExisted(false);
 
     int ATime = 0;
     while(true) {
@@ -2234,8 +2251,8 @@ int TServo::S2_GoAbsPos_AutoMode_Asyn(float AAbsPosDeg, float ASpeedDegS) {
         log_nok("S2_GoAbsPos_AutoMode_Asyn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionAuto = ASetPosition;
-    FS2TargetSpeedAuto = ASetSpeed;
+    SetFS2TargetPositionAuto(ASetPosition);
+    SetFS2TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2290,8 +2307,8 @@ int TServo::S2_GoAbsPos_AutoMode_Syn(float AAbsPosDeg, float ASpeedDegS, int ATi
         log_nok("S2_GoAbsPos_AutoMode_Syn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionAuto = ASetPosition;
-    FS2TargetSpeedAuto = ASetSpeed;
+    SetFS2TargetPositionAuto(ASetPosition);
+    SetFS2TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2304,7 +2321,7 @@ int TServo::S2_GoAbsPos_AutoMode_Syn(float AAbsPosDeg, float ASpeedDegS, int ATi
         return -2;
     }
 
-    FS2RunFinished = false;
+    SetFS2RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS2RunFinished && fabs(FS2TargetPositionAuto - FS2ActPosition) < PositionMaxTol) {
@@ -2358,8 +2375,8 @@ int TServo::S2_GoAbsPos_MMode_Asyn(float AAbsPosDeg, float ASpeedDegS) {
         log_nok("S2_GoAbsPostion_MMode_Asyn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionManual = ASetPosition;
-    FS2TargetSpeedManual = ASetSpeed;
+    SetFS2TargetPositionManual(ASetPosition);
+    SetFS2TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2467,8 +2484,8 @@ int TServo::S2_GoAbsPos_MMode_Syn(float AAbsPosDeg, float ASpeedDegS, int ATimeo
         log_nok("S2_GoAbsPostion_MMode_Syn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionManual = ASetPosition;
-    FS2TargetSpeedManual = ASetSpeed;
+    SetFS2TargetPositionManual(ASetPosition);
+    SetFS2TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2481,7 +2498,7 @@ int TServo::S2_GoAbsPos_MMode_Syn(float AAbsPosDeg, float ASpeedDegS, int ATimeo
         return -2;
     }
 
-    FS2RunFinished = false;
+    SetFS2RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS2RunFinished && fabs(FS2TargetPositionManual - FS2ActPosition) < PositionMaxTol) {
@@ -2541,7 +2558,7 @@ int TServo::S2_GoZero_Syn(int ATimeout) {
         return -2;
     }
 
-    FS2RunFinished = false;
+    SetFS2RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS2RunFinished && fabs(FS2ActPosition) < PositionMaxTol)
@@ -2642,8 +2659,8 @@ int TServo::S2_GoRelPos_AutoMode_Asyn(float ARelPosDeg, float ASpeedDegS) {
         log_nok("S2_GoRelPos_AutoMode_Asyn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionAuto = ASetPosition;
-    FS2TargetSpeedAuto = ASetSpeed;
+    SetFS2TargetPositionAuto(ASetPosition);
+    SetFS2TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2699,8 +2716,8 @@ int TServo::S2_GoRelPos_AutoMode_Syn(float ARelPosDeg, float ASpeedDegS, int ATi
         log_nok("S2_GoRelPos_AutoMode_Syn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionAuto = ASetPosition;
-    FS2TargetSpeedAuto = ASetSpeed;
+    SetFS2TargetPositionAuto(ASetPosition);
+    SetFS2TargetSpeedAuto(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2713,7 +2730,7 @@ int TServo::S2_GoRelPos_AutoMode_Syn(float ARelPosDeg, float ASpeedDegS, int ATi
         return -2;
     }
 
-    FS2RunFinished = false;
+    SetFS2RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS2RunFinished && fabs(FS2TargetPositionAuto - FS2ActPosition) < PositionMaxTol) {
@@ -2768,8 +2785,8 @@ int TServo::S2_GoRelPos_MMode_Asyn(float ARelPosDeg, float ASpeedDegS) {
         log_nok("S2_GoRelPos_MMode_Asyn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionManual = ASetPosition;
-    FS2TargetSpeedManual = ASetSpeed;
+    SetFS2TargetPositionManual(ASetPosition);
+    SetFS2TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2825,8 +2842,8 @@ int TServo::S2_GoRelPos_MMode_Syn(float ARelPosDeg, float ASpeedDegS, int ATimeo
         log_nok("S2_GoRelPos_MMode_Syn: S2 Set positon is smaller than the min value(0), and the target value used the min value instead");
     }
 
-    FS2TargetPositionManual = ASetPosition;
-    FS2TargetSpeedManual = ASetSpeed;
+    SetFS2TargetPositionManual(ASetPosition);
+    SetFS2TargetSpeedManual(ASetSpeed);
 
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
@@ -2839,7 +2856,7 @@ int TServo::S2_GoRelPos_MMode_Syn(float ARelPosDeg, float ASpeedDegS, int ATimeo
         return -2;
     }
 
-    FS2RunFinished = false;
+    SetFS2RunFinished(false);
     int ATime = 0;
     while(true) {
         if(FS2RunFinished && fabs(FS2TargetPositionManual - FS2ActPosition) < PositionMaxTol) {
@@ -2999,7 +3016,7 @@ int TServo::S2_SetZero(int ATimeout) {
         return -2;
     }
 
-    FS2ZeroExisted = false;
+    SetFS2ZeroExisted(false);
 
     int ATime = 0;
     while(true) {
@@ -3055,9 +3072,7 @@ int TServo::S3_Go_Out() {
 float TServo::S3_Pressure_Current(float APressure) {
     float ACurrent;
     log("Target Pressure is %f Bar.", APressure);
-    // vLog("S3P2AFactor is " + std::to_string(S3P2AFactor) + ", S3P2AOffset is " + std::to_string(S3P2AOffset));
     ACurrent = FS3P2AFactor * APressure + FS3P2AOffset;
-    // todo: vTIOConfig 限制
     if(ACurrent < vTIOConfig.FAirValveMinCurrent)
         ACurrent = vTIOConfig.FAirValveMinCurrent;
     else if(ACurrent > vTIOConfig.FAirValveMaxCurrent)
@@ -3081,7 +3096,6 @@ int TServo::S3_Set_Current(float ACurrentA) {
         return -1;
     }
     ASetCurrent = ACurrentA;
-    // todo:  vTIOConfig 限制
     if(ACurrentA > vTIOConfig.FAirValveMaxCurrent) {
         ASetCurrent = vTIOConfig.FAirValveMaxCurrent;
         log_warning("S3_Set_Push_Force: Set Force is greater than 20 mA, and the target value used the max value instead"); // LVL_WARNING
@@ -3161,6 +3175,7 @@ int TServo::S2_Run_Off(const int ATimeout) {
 void TServo::SetFS1ActPosition(float Value) {
     FS1ActPosition = Value;
     app.set_system_var_double("tio.PedalPosition", Value);
+    
 }
 
 void TServo::SetFS1ActSpeed(float Value) {
@@ -3322,12 +3337,12 @@ void TServo::SetFS2RunFinished(bool Value) {
 
 void TServo::SetFS2SlopSpeed(float Value) {
     if(Value > FS2MaxSpeed || Value < 0) {
-        log_nok("SetFS2SlopSpeed: Servo 2 slop run speed is set value not in valid range: [0, %f] °/s", FS2MaxSpeed); // LVL_ERROR
+        log_nok("SetFS2SlopSpeed: Servo 2 slop run speed is set value not in valid range: [0, %f] deg/s", FS2MaxSpeed); // LVL_ERROR
         return;
     }
     FS2SlopSpeed = Value;
     vTIOConfig.FServo2Speed = FS2SlopSpeed;
-    log("SetFS2SlopSpeed: Servo 2 slop run speed is set to: %f °/s", Value); // LVL_INFO
+    log("SetFS2SlopSpeed: Servo 2 slop run speed is set to: %f deg/s", Value); // LVL_INFO
 }
 
 void TServo::SetFS2IsServoOn(bool Value) {
@@ -3342,23 +3357,23 @@ void TServo::SetFS2IsServoOn(bool Value) {
 
 void TServo::SetFS2MaxPosition(float Value) {
     FS2MaxPosition = Value;
-    log("SetFS2MaxPosition: Servo 2 maxium set position is: %f °", Value); // LVL_INFO
+    log("SetFS2MaxPosition: Servo 2 maxium set position is: %f deg", Value); // LVL_INFO
 }
 
 void TServo::SetFS2MaxSpeed(float Value) {
     FS2MaxSpeed = Value;
-    log("SetFS2MaxSpeed: Servo 2 maxium set slope is: %f °", Value); // LVL_INFO
+    log("SetFS2MaxSpeed: Servo 2 maxium set slope is: %f deg", Value); // LVL_INFO
 }
 
 void TServo::SetFS2MinPosition(float Value) {
     FS2MinPosition = Value;
-    log("SetFS2MinPosition: Servo 2 min set slope is: %f °", Value); // LVL_INFO
+    log("SetFS2MinPosition: Servo 2 min set slope is: %f deg", Value); // LVL_INFO
 }
 
 void TServo::SetFS2MountPosition(float Value) {
     FS2MountPosition = Value;
     vTIOConfig.FServo2MountAngle = Value;
-    log("SetFS2MountPosition: Servo 2 DUT Mounting Angle is set: %f °", Value); // LVL_INFO
+    log("SetFS2MountPosition: Servo 2 DUT Mounting Angle is set: %f deg", Value); // LVL_INFO
 }
 
 void TServo::SetFS2TargetPositionAuto(float Value) {
@@ -3528,9 +3543,9 @@ void TServo::SetFS7IsConnected(bool Value) {
 int TServo::S7Write(const TDataRecord& AField, void* pData, bool Async) {
     std::lock_guard<std::mutex> lock(FMonitorObj);
     if(Async)
-        FS7LastError = FS7Client.AsWriteArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData);
+        SetFS7LastError(FS7Client.AsWriteArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData));
     else
-        FS7LastError = FS7Client.WriteArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData);
+        SetFS7LastError(FS7Client.WriteArea(AField.Area, AField.DBNum, AField.Start, AField.Amount, AField.WordLen, pData));
 
     if(FS7LastError == 0) {
         if(Async)

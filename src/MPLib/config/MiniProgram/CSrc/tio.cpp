@@ -77,6 +77,7 @@ void on_stop_On_Stop(void) { try { // 程序停止事件
 // 自定义函数 "demo_function"
 s32 demo_function(s32 A1, s32 A2) { try { // 自定义函数: new demo
   return IDX_ERR_OK;
+
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); return(IDX_ERR_MP_CODE_CRASH); }}
 // CODE BLOCK END Custom_Function demo_function
 

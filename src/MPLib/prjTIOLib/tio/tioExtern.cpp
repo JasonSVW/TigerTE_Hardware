@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "uPLC1200.h"
 
 // Variables definition
 TTSApp app;
@@ -177,7 +178,63 @@ DLLEXPORT s32 __stdcall retrieve_mp_abilities(const void* AObj, const TRegTSMast
   if (!AReg(AObj, "on_start_callback", "on_start_On_Start", "", reinterpret_cast<const void*>(&on_start_On_Start), "")) return -1;
   if (!AReg(AObj, "on_stop_callback", "on_stop_On_Stop", "", reinterpret_cast<const void*>(&on_stop_On_Stop), "")) return -1;
   if (!AReg(AObj, "on_custom_callback", "demo_function", "s32 A1, s32 A2", reinterpret_cast<const void*>(&demo_function), "new demo")) return -1;
+
+  // servo
+  if (!AReg(AObj, "on_custom_callback", "servo_create", "void", reinterpret_cast<const void*>(&servo_create), "create servo object"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "servo_destroy", "void", reinterpret_cast<const void*>(&servo_destroy), "destroy servo object"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "servo_connect", "const char* AIPAddr", reinterpret_cast<const void*>(&servo_connect), "connect with servo device"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "servo_disconnect", "void", reinterpret_cast<const void*>(&servo_disconnect), "disconnect with servo device"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "servo_clear_fault", "void", reinterpret_cast<const void*>(&servo_clear_fault), "clear servo fault"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_servo_limit", "const float AMaxPositionMM, const float AMinPositionMM, const float AMaxSpeedMMpS", reinterpret_cast<const void*>(&pedal_servo_limit), "set servo limit"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_servo_on", "const bool AEnable", reinterpret_cast<const void*>(&pedal_servo_on), "enable/disable pedal servo"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_enable_run", "const bool AEnable", reinterpret_cast<const void*>(&pedal_enable_run), "enable/disable pedal servo run"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_step_syn", "const float ARelPositionMM, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_step_syn), "pedal step synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_step_asyn", "const float ARelPositionMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_step_asyn), "pedal step asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_position_syn", "const float AAbsPositionMM, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_position_syn), "pedal go synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_position_asyn", "const float AAbsPositionMM, const float ASpeedMMpS ", reinterpret_cast<const void*>(&pedal_go_position_asyn), "pedal go asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_step_percent_syn", "const float ARelPositionPercent, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_step_percent_syn), "pedal percent step synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_step_percent_asyn", "const float ARelPositionPercent, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_step_percent_asyn), "pedal percent step asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_position_percent_syn", "const float AAbsPositionPercent, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_position_percent_syn), "pedal go percent position synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_position_percent_asyn", "const float AAbsPositionPercent, const float ASpeedMMpS ", reinterpret_cast<const void*>(&pedal_go_position_percent_asyn), "pedal go percent position asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_home_syn", "const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_home_syn), "pedal go to zero synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_home_asyn", "void", reinterpret_cast<const void*>(&pedal_go_home_asyn), "pedal go to zero synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_set_home", "const u32 ATimeout", reinterpret_cast<const void*>(&pedal_set_home), "set pedal zero position synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "pedal_go_auto_mode", "const bool AEnable", reinterpret_cast<const void*>(&pedal_go_auto_mode), "enable/disable pedal controlled by system varialbe tio.PedalTargetPosition or tio.PedalTargetPercent and tio.PedalTargetSpeed"))  return -1;
+
+  if (!AReg(AObj, "on_custom_callback", "rotate_servo_limit", "const float AMaxDegree, const float AMinDegree, const float AMaxSpeedDpS", reinterpret_cast<const void*>(&rotate_servo_limit), "set servo limit"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_servo_on", "const bool AEnable", reinterpret_cast<const void*>(&rotate_servo_on), "enable/disable rotate servo"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_enable_run", "const bool AEnable", reinterpret_cast<const void*>(&rotate_enable_run), "enable/disable rotate servo run"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_step_syn", "const float ARelDegree, const float ASpeedDpS, const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_step_syn), "rotate step synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_step_asyn", "const float ARelDegree, const float ASpeedDpS", reinterpret_cast<const void*>(&rotate_go_step_asyn), "rotate step asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_position_syn", "const float AAbsDegree, const float ASpeedDpS, const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_position_syn), "rotate go synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_position_asyn", "const float AAbsDegree, const float ASpeedDpS ", reinterpret_cast<const void*>(&rotate_go_position_asyn), "rotate go asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_home_syn", "const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_home_syn), "rotate go to zero synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_home_asyn", "void", reinterpret_cast<const void*>(&rotate_go_home_asyn), "rotate go to zero synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_set_home", "const u32 ATimeout", reinterpret_cast<const void*>(&rotate_set_home), "set rotate zero position synchronouslly"))  return -1;
+
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_slope_step_syn", "const float ARelGradPercent,const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_slope_step_syn), "go a step slope relatively synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_slope_step_asyn", "const float ARelGradPercent", reinterpret_cast<const void*>(&rotate_go_slope_step_asyn), "go a step slope relatively asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_slope_syn", "const float AAbsGradPercent,const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_slope_syn), "go to absolutley slope synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_slope_asyn", "const float AAbsGradPercent", reinterpret_cast<const void*>(&rotate_go_slope_asyn), "go to absolutley slope asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_mount_position_syn", "const u32 ATimeout", reinterpret_cast<const void*>(&rotate_go_mount_position_syn), "go to the mounting position synchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_go_mount_position_asyn", "void", reinterpret_cast<const void*>(&rotate_go_mount_position_asyn), "go to the mounting position asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "rotate_set_slope_speed", "const float ASpeedDpS", reinterpret_cast<const void*>(&rotate_set_slope_speed), "set the running speed of rotate servo in slope set mode"))  return -1;
+
+  if (!AReg(AObj, "on_custom_callback", "air_cylinder_push_out", "void", reinterpret_cast<const void*>(&air_cylinder_push_out), "air cylinder push out"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "air_cylinder_push_back", "void", reinterpret_cast<const void*>(&air_cylinder_push_back), "air cylinder push back"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "air_cylinder_push_pressure", "const float ATargetPressureBar", reinterpret_cast<const void*>(&air_cylinder_push_pressure), "set air cylinder pressure"))  return -1;
+
+  if (!AReg(AObj, "on_custom_callback", "turntable_enable_control", "void", reinterpret_cast<const void*>(&turntable_enable_control), "enable turntable controlled by api"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_disable_control", "void", reinterpret_cast<const void*>(&turntable_disable_control), "disable turntable controlled by api"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_speed_rpm_asyn", "const float ATargetSpeedRPM", reinterpret_cast<const void*>(&turntable_run_speed_rpm_asyn), "set and run turntable with target speed asynchronouslly, unit: rpm"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_speed_rpm_syn", "const float ATargetSpeedRPM, const u32 ATimeout", reinterpret_cast<const void*>(&turntable_run_speed_rpm_syn), "set and run turntable with target speed synchronouslly, unit: rpm"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_speed_dps_asyn", "const float ATargetSpeedDPS", reinterpret_cast<const void*>(&turntable_run_speed_dps_asyn), "set and run turntable with target speed asynchronouslly, unit: deg/s"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_speed_dps_syn", "const float ATargetSpeedDPS, const u32 ATimeout", reinterpret_cast<const void*>(&turntable_run_speed_dps_syn), "set and run turntable with target speed synchronouslly, unit: deg/s"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_centrifugal_acc_asyn", "const float ATargetAccG, const float AArmLengthMM", reinterpret_cast<const void*>(&turntable_run_centrifugal_acc_asyn), "set and run turntable with target acc asynchronouslly, unit: g"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_run_centrifugal_acc_syn", "const float ATargetAccG, const float AArmLengthMM, const u32 ATimeout", reinterpret_cast<const void*>(&turntable_run_centrifugal_acc_syn), "set and run turntable with target acc synchronouslly, unit: g"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_stop_run_asyn", "void", reinterpret_cast<const void*>(&turntable_stop_run_asyn), "set turntable speed to zero asynchronouslly"))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "turntable_stop_run_syn", "const u32 ATimeout", reinterpret_cast<const void*>(&turntable_stop_run_syn), "set turntable speed to zero synchronouslly"))  return -1;
   // MP library functions
 
-  return 11;
+  return 61;
 }
