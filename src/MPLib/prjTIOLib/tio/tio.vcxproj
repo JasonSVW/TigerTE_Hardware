@@ -81,12 +81,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir).\common\;$(SolutionDir);$(IncludePath)</IncludePath>
     <TargetExt>.mp64</TargetExt>
-    <OutDir>D:\Projects\TigerTe\Projects\2023-12_TigerTE_Hardware\src\MPLib\config\bin\\</OutDir>
+    <OutDir>D:\Projects\TigerTe\Projects\2023-12_TigerTE_Hardware\src\MPLib\config\bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir).\common\;$(SolutionDir);$(IncludePath)</IncludePath>
     <TargetExt>.mp64</TargetExt>
-    <OutDir>D:\Projects\TigerTe\Projects\2023-12_TigerTE_Hardware\src\MPLib\config\bin\\</OutDir>
+    <OutDir>D:\Projects\TigerTe\Projects\2023-12_TigerTE_Hardware\src\MPLib\config\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -106,7 +106,7 @@
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>mp.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\lib\snap7\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>snap7.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>snap7.lib;ws2_32.lib;winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,7 @@
       <EnableUAC>false</EnableUAC>
       <ModuleDefinitionFile>mp.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\lib\snap7\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>snap7.lib;ws2_32.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>snap7.lib;ws2_32.lib;winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

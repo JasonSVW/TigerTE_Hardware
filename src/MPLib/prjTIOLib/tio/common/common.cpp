@@ -121,7 +121,7 @@ void TTIOConfig::LoadConfigValue() {
         FServo1MinPosition = ReadFloat(file, "SERVO_CONFIG", "SERVO1_MIN_POSITION", 0);
         FS7IPAddress = ReadString(file, "SERVO_CONFIG", "S7_IP", "192.168.1.1");
         FMCMaxPressure = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_MAX", 150);
-        FPressure2CurrentFactor = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", 0.0597);
+        FPressure2CurrentFactor = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", 0.0597f);
         FPressure2CurrentOffset = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", 0);
         FAirValveMaxCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20);
         FAirValveMinCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0);
@@ -248,7 +248,7 @@ void TTIOConfig::InitIniFile() {
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_MAX"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_MAX", 150, currentSection);
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR"))
-            WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", 0.0597, currentSection);
+            WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", 0.0597f, currentSection);
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", 4, currentSection);
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX"))

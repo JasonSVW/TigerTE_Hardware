@@ -8,21 +8,19 @@
 #include <iostream>
 #include <cmath>
 #include <array>
-#include "snap7.h"
 #include <cstddef> 
 #include <chrono>
 // for std::size_t
-
 #include <cstdint>
 #include <cstring>
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include "snap7.h"
 
 
 
-
-const double pi = 3.14159265358979323846;
+const double pi = 3.14159265358979323846f;
 const std::size_t TS7BufferSize = 0xFFFF + 1;
 
 typedef unsigned char TS7Buffer[TS7BufferSize];
@@ -32,7 +30,7 @@ const int amPolling = 0;
 const int amEvent = 1;
 const int amCallBack = 2;
 const int DefaultTimeout = 1000;
-const float PositionMaxTol = 0.1;
+const float PositionMaxTol = 0.1f;
 
 struct TDataRecord {
     int Area;
@@ -77,76 +75,17 @@ public:
     void ValDateTime(void* pval, const std::tm& value) { SetDateTime(pval, value); }
 };
 
-class TThreadHeartbeat {
-public:
-    TThreadHeartbeat();
-    ~TThreadHeartbeat();
-
-    void HeartbeatResume();
-    void HeartbeatSuspend();
-    void Heartbeatexit();
-
-private:
-    void Execute();
-    int S7_Heartbeat();
-
-    std::thread heartbeatThread;
-    std::mutex mutex;
-    std::condition_variable condition;
-    std::atomic<bool> terminated;
-    std::atomic<bool> suspended;
-    std::atomic<bool> finished;
-    std::atomic<int> errorCount;
-    std::atomic<int> exitCount;
-    // Assuming vServoObj and other dependencies are defined elsewhere
-    // Example:
-    // TServo* vServoObj;
-    // int AddrSetHandShake;
-};
-
-
-
-class TThreadGetData {
-public:
-    TThreadGetData();
-    ~TThreadGetData();
-
-    void GetDataResume();
-    void GetDataSuspend();
-    void GetDataexit();
-
-private:
-    void Execute();
-    int S7_GetData();
-
-    std::thread getDataThread;
-    std::mutex mutex;
-    std::condition_variable condition;
-    std::atomic<bool> terminated;
-    std::atomic<bool> suspended;
-    std::atomic<bool> finished;
-    std::atomic<int> errorCount;
-    std::atomic<int> exitCount;
-    // Assuming vServoObj and other dependencies are defined elsewhere
-    // Example:
-    // TServo* vServoObj;
-};
-
 class TServo {
-public:
+private:
     std::mutex FMonitorObj;
     TS7Client FS7Client;
     TS7Helper S7;
     TS7Buffer FS7Buffer;
     int FS7LastError;
-    bool FS7IsConnected;
     bool FS7IsHandShaked;
     bool FS7IsPowerOn;
-    bool FS7IsAutoMode;
-    bool FS7IsFault;
     bool FS7IsOnlyPedal;
     bool FS7WithAirCylinder;
-    bool FS1IsServoOn;
     bool FS1ZeroExisted;
     bool FS1IsReady;
     bool FS1RunFinished;
@@ -161,14 +100,7 @@ public:
     float FS2ActPosition;
     float FS2ActPositionGrad;
     float FS2ActSpeed;
-    float FS1MaxSpeed;
-    float FS1MaxPosition;
-    float FS1MinPosition;
-    float FS2MaxSpeed;
-    float FS2MaxPosition;
-    float FS2MinPosition;
     float FS2MountPosition;
-    float FS2SlopSpeed;
     float FS3TargetCurrent;
     float FS1TargetPositionManual;
     float FS1TargetSpeedManual;
@@ -178,25 +110,52 @@ public:
     float FS1TargetSpeedAuto;
     float FS2TargetPositionAuto;
     float FS2TargetSpeedAuto;
-    bool FPedalIsSysMode;
     float FS3MCMaxPressure;
     float FS3P2AFactor;
     float FS3P2AOffset;
+    // related with multithread
+    std::thread HeartbeatThread;
+    std::atomic<bool> HeartbeatRunning;
+    //std::atomic<bool> HeartbeatConnected;
+    std::atomic<int> HeartbeatFailedReads;
+    std::mutex heartbeat_mutex;
+    std::condition_variable heartbeat_cv;
+    std::thread GetDataThread;
+    std::atomic<bool> GetDataRunning;
+    //std::atomic<bool> GetDataConnected;
+    std::atomic<int> GetDataFailedReads;
+    std::mutex getdata_mutex;
+    std::condition_variable getdata_cv;
 
+public:
+    //bool FSnap7IsLoaded;
+    std::string FRemoteAddress;
+    bool FS7IsConnected;
+    float FS1MaxSpeed;
+    float FS1MaxPosition;
+    float FS1MinPosition;
+    float FS2MaxSpeed;
+    float FS2MaxPosition;
+    float FS2MinPosition;
+    bool FPedalIsSysMode;
+    bool FS7IsAutoMode;
+    bool FS7IsFault;
+    float FS2SlopSpeed;
+    bool FS1IsServoOn;
+
+private:
     //int S7Write(const TDataRecord& AField, const void* pData, bool Async);
+    void HeartbeatStartThread();
+    void HeartbeatStopThread();
+    void HeartbeatThreadProcess();
+    void GetDataStartThread();
+    void GetDataStopThread();
+    void GetDataThreadProcess();
     int S7Write(const TDataRecord& AField, void* pData, bool Async);
     int S7Read(const TDataRecord& AField, void* pData, bool Async);
     void S7WaitCompletion(int ATimeout = DefaultTimeout);
     void RegisterSystemVars(void);
     void UnregisterSystemVars(void);
-
-
-public:
-    std::string FRemoteAddress;
-    //bool FSnap7IsLoaded;
-
-    TServo(bool AOnlyPedalServo);
-    ~TServo();
     void SetFS7LastError(int Value);
     void SetFS7IsConnected(bool Value);
     void SetFS1IsFault(bool Value);
@@ -242,6 +201,10 @@ public:
     void SetFS3P2AOffset(float Value);
     void SetFS3TargetCurrent(float Value);
 
+
+public:
+    TServo(bool AOnlyPedalServo);
+    ~TServo();
     int S7_Connection();
     int S7_Disconnection();
     int S7_ClearFault(int ATimeout = DefaultTimeout);
