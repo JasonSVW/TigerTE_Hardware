@@ -98,6 +98,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/execution-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>..\lib\snap7;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
