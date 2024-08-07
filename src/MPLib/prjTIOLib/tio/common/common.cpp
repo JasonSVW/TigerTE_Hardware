@@ -52,7 +52,7 @@ void TTIOConfig::SaveConfig() {
         WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", FPressure2CurrentFactor, currentSection);
         WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", FPressure2CurrentOffset, currentSection);
         WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", FAirValveMaxCurrent, currentSection);
-        WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", FAirValveMinCurrent, currentSection);
+        WriteFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", FPSMaxPressure, currentSection);
     }
     catch (const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
@@ -125,6 +125,7 @@ void TTIOConfig::LoadConfigValue() {
         FPressure2CurrentOffset = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", 0);
         FAirValveMaxCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20);
         FAirValveMinCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0);
+        FPSMaxPressure = ReadFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 0);
     }
     catch (const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
@@ -255,7 +256,10 @@ void TTIOConfig::InitIniFile() {
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20, currentSection);
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0, currentSection);
+        if (!ValueExists(readFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX"))
+            WriteFloat(writeFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300, currentSection);
     }
+
     catch (const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
     }

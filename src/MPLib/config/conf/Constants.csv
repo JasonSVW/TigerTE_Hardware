@@ -1,0 +1,5 @@
+1;TIO.SERVO_TYPE_PEDAL;used to create a pedal control servo object.
+2;TIO.SERVO_TYPE_PEDAL_SLOPE;used to create a pedal and slope control servo object.
+3;TIO.SERVO_TYPE_PEDAL_CYLINDER;used to create a pedal with cylinder servo object.
+4;TIO.SERVO_TYPE_TURNTABLE;used to create a truntable control servo object.
+5;TIO.SERVO_TYPE_PUMP;used to create a pump servo control servo object.

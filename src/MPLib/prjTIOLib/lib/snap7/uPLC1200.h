@@ -18,8 +18,6 @@
 #include <sstream>
 #include "snap7.h"
 
-
-
 const double pi = 3.14159265358979323846f;
 const std::size_t TS7BufferSize = 0xFFFF + 1;
 
@@ -31,6 +29,8 @@ const int amEvent = 1;
 const int amCallBack = 2;
 const int DefaultTimeout = 1000;
 const float PositionMaxTol = 0.1f;
+
+typedef enum { plcPedal = 1, plcPedalSlope = 2, plcPedalCylinder = 3, plcTurnTable = 4, plcPumpStation = 5 } TPLCType;
 
 struct TDataRecord {
     int Area;
@@ -81,6 +81,7 @@ private:
     TS7Client FS7Client;
     TS7Helper S7;
     TS7Buffer FS7Buffer;
+    TPLCType FPLCType;
     int FS7LastError;
     bool FS7IsHandShaked;
     bool FS7IsPowerOn;
@@ -113,6 +114,20 @@ private:
     float FS3MCMaxPressure;
     float FS3P2AFactor;
     float FS3P2AOffset;
+    //add for pump station
+    float FPSTargetPressure;
+    float FPSMaxPressure;
+    float FPSActPressure;
+    float FPSActFlow;
+    float FPSPumpPressure;
+    float FPSReserviorPressure;
+    bool FPSIsPowerOn;
+    bool FPSIsFault;
+    bool FPSIsPumpRunning;
+    bool FPSIsReliefValvePowerOn;
+    bool FPSIsReserviorValvePowerOn;
+    bool FPSIsProportionalValvePowerOn;
+    bool FPSIsFanRunning;
     // related with multithread
     std::thread HeartbeatThread;
     std::atomic<bool> HeartbeatRunning;
@@ -200,10 +215,24 @@ private:
     void SetFS3P2AFactor(float Value);
     void SetFS3P2AOffset(float Value);
     void SetFS3TargetCurrent(float Value);
+    //add for Pump Control
+    void SetFPSTargetPressure(float Value);
+    void SetFPSMaxPressure(float Value);
+    void SetFPSActPressure(float Value);
+    void SetFPSActFlow(float Value);
+    void SetFPSPumpPressure(float Value);
+    void SetFPSReserviorPressure(float Value);
+    void SetFPSIsPowerOn(bool AEnable);
+    void SetFPSIsFault(bool AEnable);
+    void SetFPSIsPumpRunning(bool AEnable);
+    void SetFPSIsReliefValvePowerOn(bool AEnable);
+    void SetFPSIsReserviorValvePowerOn(bool AEnable);
+    void SetFPSIsProportionalValvePowerOn(bool AEnable);
+    void SetFPSIsFanRunning(bool AEnable);
 
 
 public:
-    TServo(bool AOnlyPedalServo);
+    TServo(TPLCType APLCType, bool AOnlyPedalServo);
     ~TServo();
     int S7_Connection();
     int S7_Disconnection();
@@ -260,10 +289,20 @@ public:
     int S3_Set_Current(float ACurrentA);
     int S3_Set_Target_Pressure(float ATargetPressureBar);
     float S3_Pressure_Current(float APressure);
+    //add for pump servo
+    int PS_Set_Pressure_Asyn(float APressureBar);
+    int PS_Set_Pressure_Syn(float APressureBar, float AMaxTol, int ATimeout);
+    int PS_PowerOn(int ATimeout);
+    int PS_PowerOff(int ATimeout);
+    int PS_Reset();
+
     int S7_GetAllData();
 };
 
 extern TServo* vServoObj;
+/*mp run initialize function*/
+void mp_initialize_servo_lib_initialize(void);
+
 /*mp api function*/
 int servo_check();
 int servo_create();
@@ -318,4 +357,10 @@ int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLen
 int turntable_run_centrifugal_acc_syn(float ATargetAccelerationG, float AArmLengthMM, int ATimeout);
 int turntable_stop_run_asyn();
 int turntable_stop_run_syn(int ATimeout);
+//add for pump servo
+int ps_power_on(int ATimeout);
+int ps_power_off(int ATimeout);
+int ps_reset();
+int ps_set_pressure_asyn(float APressureBar);
+int ps_set_pressure_syn(float APressureBar, float AMaxTol, int ATimeout);
 

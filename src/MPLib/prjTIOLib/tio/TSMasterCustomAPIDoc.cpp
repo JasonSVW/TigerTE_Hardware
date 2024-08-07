@@ -25,6 +25,7 @@ std::string base64_encode(const std::string& input) {
 }
 
 DLLEXPORT void __stdcall write_api_document_auto(const void* AOpaque, const TWriteAPIDocumentFunc AAPIFunc, const TWriteAPIParaFunc AParaFunc){
+  //test_log("mp write_api_document_auto");
   AAPIFunc(AOpaque, "demo_function", "tio", "bmV3IGRlbW8_", "", 2);
   AParaFunc(AOpaque, 0, "demo_function", "A1", false, "s32", "czMyIGlucHV0MSBmb3IgbmV3IGRlbW8_");
   AParaFunc(AOpaque, 1, "demo_function", "A2", false, "s32", "czMyIGlucHV0MiBmb3IgbmV3IGRlbW8_");
@@ -194,5 +195,22 @@ DLLEXPORT void __stdcall write_api_document_auto(const void* AOpaque, const TWri
 
   AAPIFunc(AOpaque, "turntable_stop_run_syn", MP_NAME, base64_encode("set turntable speed to zero synchronouslly").c_str(), base64_encode("tio.turntable_stop_run_syn(); //set turntable speed to zero synchronouslly").c_str(), 1);
   AParaFunc(AOpaque, 0, "turntable_stop_run_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
+
+  //add for pump station
+  AAPIFunc(AOpaque, "ps_power_on", MP_NAME, base64_encode("synchronouslly set pump servo system to power on.").c_str(), base64_encode("tio.ps_power_on(2000); //set pump servo system to power on, timeout is 2000ms").c_str(), 1);
+  AParaFunc(AOpaque, 0, "ps_power_on", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
+
+  AAPIFunc(AOpaque, "ps_power_off", MP_NAME, base64_encode("synchronouslly set pump servo system to power off.").c_str(), base64_encode("tio.ps_power_off(2000); //set pump servo system to power off, timeout is 2000ms").c_str(), 1);
+  AParaFunc(AOpaque, 0, "ps_power_off", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
+
+  AAPIFunc(AOpaque, "ps_reset", MP_NAME, base64_encode("reset pump servo control system.").c_str(), base64_encode("tio.ps_reset(); //send out command to reset system.").c_str(), 0);
+
+  AAPIFunc(AOpaque, "ps_set_pressure_asyn", MP_NAME, base64_encode("set out pressure to target asynchronouslly.").c_str(), base64_encode("tio.ps_set_pressure_asyn(20.5); //send out command to set out pressure to 20.5bar").c_str(), 1);
+  AParaFunc(AOpaque, 0, "ps_set_pressure_asyn", "APressureBar", true, "float", base64_encode("target output pressure(bar)").c_str());
+
+  AAPIFunc(AOpaque, "ps_set_pressure_syn", MP_NAME, base64_encode("set out pressure to target pressure with tolerance synchronouslly.").c_str(), base64_encode("tio.ps_set_pressure_asyn(20.5, 0.5, 2000); //set out pressure to 20.5bar with tolerance of 0.5bar, timeout is 2000ms.").c_str(), 3);
+  AParaFunc(AOpaque, 0, "ps_set_pressure_syn", "APressureBar", true, "float", base64_encode("target output pressure(bar)").c_str());
+  AParaFunc(AOpaque, 1, "ps_set_pressure_syn", "AMaxTolBar", true, "float", base64_encode("tolerance(bar)").c_str());
+  AParaFunc(AOpaque, 2, "ps_set_pressure_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
 
 }

@@ -72,7 +72,6 @@ void on_start_On_Start(void) { try { // 程序启动事件
     vTIOConfig.GetConfigFile();
     vTIOConfig.InitIniFile();
     vTIOConfig.LoadConfigValue();
-
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Start On_Start
 

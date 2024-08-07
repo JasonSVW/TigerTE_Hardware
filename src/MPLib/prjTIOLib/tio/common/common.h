@@ -53,6 +53,7 @@ public:
     float FPressure2CurrentOffset;
     float FAirValveMaxCurrent;
     float FAirValveMinCurrent;
+    float FPSMaxPressure;
 
     bool GetConfigFile();
     void InitIniFile();
