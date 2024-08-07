@@ -69,9 +69,6 @@ void on_timer_On_DemoTimer(void) { try { // 定时器 = DemoTimer
 // 启动事件 "On_Start"
 void on_start_On_Start(void) { try { // 程序启动事件
 	//FS7Client = new TS7Client();
-    vTIOConfig.GetConfigFile();
-    vTIOConfig.InitIniFile();
-    vTIOConfig.LoadConfigValue();
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Start On_Start
 

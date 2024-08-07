@@ -7,6 +7,10 @@ TTIOConfig vTIOConfig;
 
 
 void TTIOConfig::SaveConfig() {
+    if (FConfigIniFile.empty()) {
+        log_nok("Configuration file is not specified.");
+        return;
+    }
     std::ofstream file(FConfigIniFile);
     if (!file.is_open()) {
         log_nok("Failed to open config file for writing"); // LVL_ERROR
@@ -75,6 +79,10 @@ bool TTIOConfig::GetConfigFile() {
 }
 
 void TTIOConfig::LoadConfigValue() {
+    if (FConfigIniFile.empty()) {
+        log_nok("Configuration file is not specified.");
+        return;
+    }
     std::ifstream file(FConfigIniFile);
     if (!file.is_open()) {
         log_nok("Failed to open config file for reading"); // LVL_ERROR
@@ -125,7 +133,7 @@ void TTIOConfig::LoadConfigValue() {
         FPressure2CurrentOffset = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", 0);
         FAirValveMaxCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20);
         FAirValveMinCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0);
-        FPSMaxPressure = ReadFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 0);
+        FPSMaxPressure = ReadFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300.0f);
     }
     catch (const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
@@ -135,6 +143,10 @@ void TTIOConfig::LoadConfigValue() {
 }
 
 void TTIOConfig::InitIniFile() {
+    if (!GetConfigFile()) {
+        log_nok("Can not get TSMaster project configuration path.");
+        return;
+    }
     std::ifstream readFile(FConfigIniFile);
     if (!readFile.is_open()) {
         log_hint("Failed to open config file for initialization, new config file will be created."); // LVL_ERROR
@@ -257,7 +269,7 @@ void TTIOConfig::InitIniFile() {
         if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0, currentSection);
         if (!ValueExists(readFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX"))
-            WriteFloat(writeFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300, currentSection);
+            WriteFloat(writeFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300.0f, currentSection);
     }
 
     catch (const std::exception& e) {

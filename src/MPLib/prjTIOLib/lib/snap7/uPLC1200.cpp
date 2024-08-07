@@ -3,7 +3,7 @@
 #include "common.h"
 #include <windows.h>
 TServo* vServoObj = nullptr;
-TServo* vServoObj2 = nullptr;
+//TServo* vServoObj2 = nullptr;
 
 const TDataRecord AddrSetHandShake = {S7AreaDB, 50, 0, 1, S7WLBit};
 const TDataRecord AddrSetS1ServoOn = {S7AreaDB, 50, 1, 1, S7WLBit};
@@ -57,24 +57,24 @@ const TDataRecord AddrSetS3GoOut = {S7AreaDB, 50, 11, 1, S7WLBit};
 const TDataRecord AddrSetS3GoIn = {S7AreaDB, 50, 12, 1, S7WLBit};
 const TDataRecord AddrSetS3Current = {S7AreaDB, 50, 18, 1, S7WLReal};
 //add for valve control
-const TDataRecord AddrSetPSPowerOn = { S7AreaDB, 50, 1, 1, S7WLBit };
-const TDataRecord AddrSetPSPowerOff = { S7AreaDB, 50, 2, 1, S7WLBit };
-const TDataRecord AddrSetPSReset= { S7AreaDB, 50, 3, 1, S7WLBit };
-const TDataRecord AddrSetPSPressure = { S7AreaDB, 50, 4, 1, S7WLReal };
-const TDataRecord AddrSetPSFlow = { S7AreaDB, 50, 8, 1, S7WLReal };
+const TDataRecord AddrSetPSPowerOn = {S7AreaDB, 50, 1, 1, S7WLBit};
+const TDataRecord AddrSetPSPowerOff = {S7AreaDB, 50, 2, 1, S7WLBit};
+const TDataRecord AddrSetPSReset = {S7AreaDB, 50, 3, 1, S7WLBit};
+const TDataRecord AddrSetPSPressure = {S7AreaDB, 50, 4, 1, S7WLReal};
+const TDataRecord AddrSetPSFlow = {S7AreaDB, 50, 8, 1, S7WLReal};
 
-const TDataRecord AddrGetPSIsHandShake = { S7AreaDB, 51, 0, 1, S7WLBit };
-const TDataRecord AddrGetPSIsPowerOn = { S7AreaDB, 51, 1, 1, S7WLBit };
-const TDataRecord AddrGetPSIsFault = { S7AreaDB, 51, 2, 1, S7WLBit };
-const TDataRecord AddrGetPSIsPumpRunning = { S7AreaDB, 51, 3, 1, S7WLBit };
-const TDataRecord AddrGetPSIsPumpValveOpen = { S7AreaDB, 51, 4, 1, S7WLBit };
-const TDataRecord AddrGetPSIsReservoirValveOpen = { S7AreaDB, 51, 5, 1, S7WLBit };
-const TDataRecord AddrGetPSIsControlValveOpen = { S7AreaDB, 51, 6, 1, S7WLBit };
-const TDataRecord AddrGetPSIsFanRunning = { S7AreaDB, 51, 7, 1, S7WLBit };
-const TDataRecord AddrGetPSOutputPressure = { S7AreaDB, 50, 8, 1, S7WLReal };
-const TDataRecord AddrGetPSOutputFlow = { S7AreaDB, 50, 8, 1, S7WLReal };
-const TDataRecord AddrGetPSPumpStationPressure = { S7AreaDB, 50, 8, 1, S7WLReal };
-const TDataRecord AddrGetPSReservoirPressure = { S7AreaDB, 50, 8, 1, S7WLReal };
+const TDataRecord AddrGetPSIsHandShake = {S7AreaDB, 51, 0, 1, S7WLBit};
+const TDataRecord AddrGetPSIsPowerOn = {S7AreaDB, 51, 1, 1, S7WLBit};
+const TDataRecord AddrGetPSIsFault = {S7AreaDB, 51, 2, 1, S7WLBit};
+const TDataRecord AddrGetPSIsPumpRunning = {S7AreaDB, 51, 3, 1, S7WLBit};
+const TDataRecord AddrGetPSIsPumpValveOpen = {S7AreaDB, 51, 4, 1, S7WLBit};
+const TDataRecord AddrGetPSIsReservoirValveOpen = {S7AreaDB, 51, 5, 1, S7WLBit};
+const TDataRecord AddrGetPSIsControlValveOpen = {S7AreaDB, 51, 6, 1, S7WLBit};
+const TDataRecord AddrGetPSIsFanRunning = {S7AreaDB, 51, 7, 1, S7WLBit};
+const TDataRecord AddrGetPSOutputPressure = {S7AreaDB, 50, 8, 1, S7WLReal};
+const TDataRecord AddrGetPSOutputFlow = {S7AreaDB, 50, 8, 1, S7WLReal};
+const TDataRecord AddrGetPSPumpStationPressure = {S7AreaDB, 50, 8, 1, S7WLReal};
+const TDataRecord AddrGetPSReservoirPressure = {S7AreaDB, 50, 8, 1, S7WLReal};
 //const TDataRecord AddrGetOutputPressure = { S7AreaDB, 50, 8, 1, S7WLReal };
 
 
@@ -84,7 +84,7 @@ void mp_initialize_servo_lib_initialize(void) {
     app.add_system_constant("TIO.SERVO_TYPE_PEDAL_SLOPE", int(plcPedalSlope), "used to create a pedal and slope control servo object.");
     app.add_system_constant("TIO.SERVO_TYPE_PEDAL_CYLINDER", int(plcPedalCylinder), "used to create a pedal with cylinder servo object.");
     app.add_system_constant("TIO.SERVO_TYPE_TURNTABLE", int(plcTurnTable), "used to create a truntable control servo object.");
-    app.add_system_constant("TIO.SERVO_TYPE_PUMP", int(plcPumpStation), "used to create a pump servo control servo object.");
+    app.add_system_constant("TIO.SERVO_TYPE_PUMP", int(plcPumpStation), "used to create a pump station control servo object.");
 }
 
 
@@ -119,7 +119,7 @@ int servo_destroy() {
 
 int servo_connect(const char* AIPAddr) {
     vServoObj->FRemoteAddress = AIPAddr;
-    vServoObj2->FRemoteAddress = "192.168.1.2";
+    //vServoObj2->FRemoteAddress = "192.168.1.2";
 
     int result = servo_check();
     if(result != 0)
@@ -133,14 +133,14 @@ int servo_connect(const char* AIPAddr) {
         log_nok("handshake with servo system failed");
         return -4;
     }
-    if (vServoObj2->S7_Connection() != 0) {
-        log_nok("can not connect with servo2 system, check IP Address");
-        return -3;
-    }
-    if (vServoObj2->S7_HandsShake(true, 10000) != 0) {
-        log_nok("handshake with servo2 system failed");
-        return -4;
-    }
+    //if(vServoObj2->S7_Connection() != 0) {
+    //    log_nok("can not connect with servo2 system, check IP Address");
+    //    return -3;
+    //}
+    //if(vServoObj2->S7_HandsShake(true, 10000) != 0) {
+    //    log_nok("handshake with servo2 system failed");
+    //    return -4;
+    //}
 
     log_ok("MP API: Servo connected successfully");
     return 0;
@@ -271,9 +271,9 @@ int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout) 
 
 int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
-    if (vServoObj->FPedalIsSysMode) {
+    if(vServoObj->FPedalIsSysMode) {
         log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
         return -20;
     }
@@ -692,11 +692,11 @@ int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLen
     if(result != 0)
         return result;
     if((AArmLengthMM < 90) || (AArmLengthMM > 160)) {
-        log_nok("the arm lengthen should in rang [90, 160]mm");
+        log_nok("the arm lengthen should in rang [90, 160]mm.");
         return -10;
     }
     if(ATargetAccelerationG < 0) {
-        log_nok("the set g should greater than zero");
+        log_nok("the set g should greater than zero.");
         return -10;
     }
 
@@ -736,36 +736,36 @@ int turntable_stop_run_syn(int ATimeout) {
 }
 
 
-//add for pump servo
+//add for pump station
 int ps_power_on(int ATimeout) {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
     return vServoObj->PS_PowerOn(ATimeout);
 }
 int ps_power_off(int ATimeout) {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
     return vServoObj->PS_PowerOff(ATimeout);
 }
 int ps_reset() {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
     return vServoObj->PS_Reset();
 }
 
 int ps_set_pressure_asyn(float APressureBar) {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
     return vServoObj->PS_Set_Pressure_Asyn(APressureBar);
 }
 
 int ps_set_pressure_syn(float APressureBar, float AMaxTol, int ATimeout) {
     int result = servo_check();
-    if (result != 0)
+    if(result != 0)
         return result;
     return vServoObj->PS_Set_Pressure_Syn(APressureBar, AMaxTol, ATimeout);
 }
@@ -1045,49 +1045,29 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo)
 }
 
 TServo::~TServo() {
-    //HeartbeatStopThread();
-    //GetDataStopThread();
     if(FS7IsConnected) {
-        if(FS1IsReady)
-            S1_Run_Off();
-        if(FS1IsServoOn)
-            S1_ServoON(false, 2000);
-        if(!FS7IsOnlyPedal) {
-            if(FS2IsReady)
+        if (plcPedal == FPLCType || plcPedalCylinder == FPLCType || plcTurnTable == FPLCType) {
+            if (FS1IsReady)
+                S1_Run_Off();
+            if (FS1IsServoOn)
+                S1_ServoON(false, 2000);
+        }
+        else if (plcPedalSlope == FPLCType) {
+            if (FS2IsReady)
                 S2_Run_Off();
-            if(FS2IsServoOn)
+            if (FS2IsServoOn)
                 S2_ServoON(false, 2000);
+        }
+        else if (plcPumpStation == FPLCType) {
+            // todo: add finialize process
         }
         if(FS7IsHandShaked)
             S7_HandsShake(false, 2000);
         S7_Disconnection();
     }
-
-    //if(S7 != nullptr) {
-    //    delete S7;
-    //    S7 = nullptr;
-    //}
-
-    //if(FS7Client != nullptr) {
-    //    delete FS7Client;
-    //    FS7Client = nullptr;
-    //}
-
-    //if(vHeartbeatThread != nullptr) {
-    //    vHeartbeatThread->Heartbeatexit();
-    //    delete vHeartbeatThread;
-    //    vHeartbeatThread = nullptr;
-    //}
-
-    //if(vGetDataThread != nullptr) {
-    //    vGetDataThread->GetDataexit();
-    //    delete vGetDataThread;
-    //    vGetDataThread = nullptr;
-    //}
-
+    HeartbeatStopThread();
+    GetDataStopThread();
     UnregisterSystemVars();
-
-    // FinalizeSnap7Api();
 }
 
 void TServo::HeartbeatThreadProcess() {
@@ -1157,7 +1137,7 @@ void TServo::GetDataThreadProcess() {
                 }
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -1182,7 +1162,17 @@ void TServo::GetDataStopThread() {
 
 void TServo::RegisterSystemVars() {
     // todo: need set property or not
-    if (plcPumpStation == FPLCType) {
+    if (plcPedal == FPLCType || plcPedal == FPLCType) {
+        app.create_system_var("tio.pedal_speed", svtDouble, 0, "Servo Pedal Speed");
+        app.create_system_var("tio.pedal_position", svtDouble, 0, "Servo Pedal Position");
+    }
+    else if (plcPedalSlope == FPLCType) {
+        app.create_system_var("tio.pedal_speed", svtDouble, 0, "Servo Pedal Speed");
+        app.create_system_var("tio.pedal_position", svtDouble, 0, "Servo Pedal Position");
+        app.create_system_var("tio.rotate_degree", svtDouble, 0, "Servo Slope Rotate Degree");
+        app.create_system_var("tio.slope_grad", svtDouble, 0, "Servo Slope Gradient");
+    }
+    else if (plcPumpStation == FPLCType) {
         app.create_system_var("tio.ps_power_state", svtInt32, 0, "Pump servo system power state, 0 - power off, 1 - power on.");
         app.create_system_var("tio.ps_has_fault", svtInt32, 0, "Pump servo system fault state, 0 - no fault, 1 - has fault.");
         app.create_system_var("tio.ps_is_runing", svtInt32, 0, "Pump station, 0 - stop, 1 - running.");
@@ -1196,19 +1186,40 @@ void TServo::RegisterSystemVars() {
         app.create_system_var("tio.ps_reservior_pressure", svtDouble, 0, "Reservior pressure, bar.");
         app.create_system_var("tio.ps_target_pressure", svtDouble, 0, "Pressure control proportional valve target output pressure, bar.");
     }
-    else {
-        app.create_system_var("tio.PedalSpeed", svtDouble, 0, "Servo Pedal Speed");
-        app.create_system_var("tio.PedalPosition", svtDouble, 0, "Servo Pedal Position");
-        app.create_system_var("tio.RotateDegree", svtDouble, 0, "Servo Slope Rotate Degree");
-        app.create_system_var("tio.SlopeGrad", svtDouble, 0, "Servo Slope Gradient");
+    else if (plcTurnTable == FPLCType) {
+        app.create_system_var("tio.pedal_speed", svtDouble, 0, "Servo Pedal Speed");
     }
 }
 
 void TServo::UnregisterSystemVars() {
-    app.delete_system_var("PedalSpeed");
-    app.delete_system_var("PedalPosition");
-    app.delete_system_var("RotateDegree");
-    app.delete_system_var("SlopeGrad");
+    if (plcPedal == FPLCType || plcPedal == FPLCType) {
+        app.delete_system_var("tio.pedal_speed");
+        app.delete_system_var("tio.pedal_position");
+    }
+    else if (plcPedalSlope == FPLCType) {
+        app.delete_system_var("tio.pedal_speed");
+        app.delete_system_var("tio.pedal_position");
+        app.delete_system_var("tio.rotate_degree");
+        app.delete_system_var("tio.slope_grad");
+    }
+    else if (plcPumpStation == FPLCType) {
+        app.delete_system_var("tio.ps_power_state");
+        app.delete_system_var("tio.ps_has_fault");
+        app.delete_system_var("tio.ps_is_runing");
+        app.delete_system_var("tio.ps_relief_valve_is_power_on");
+        app.delete_system_var("tio.ps_reservior_valve_is_power_on");
+        app.delete_system_var("tio.ps_proportional_valve_is_power_on");
+        app.delete_system_var("tio.ps_fan_is_running");
+        app.delete_system_var("tio.ps_output_pressure");
+        app.delete_system_var("tio.ps_output_flow");
+        app.delete_system_var("tio.ps_pump_pressure");
+        app.delete_system_var("tio.ps_reservior_pressure");
+        app.delete_system_var("tio.ps_target_pressure");
+    }
+    else if (plcTurnTable == FPLCType) {
+        app.delete_system_var("tio.pedal_speed");
+    }
+    
 }
 
 // todo: 原始代码中设置了最长互锁时长
@@ -1310,6 +1321,10 @@ int TServo::S7_ClearFault(int ATimeout) {
 
 int TServo::S7_Connection() {
     int PingTime = 0;
+    if (FS7IsConnected) {
+        log_hint("Device has already connnected, if there are problem, you should disconnect first then connect again.");
+        return 0;
+    }
     SetFS7LastError(FS7Client.SetParam(p_i32_PingTimeout, &PingTime));
     if(FS7LastError != 0) {
         return -1;
@@ -1331,11 +1346,10 @@ int TServo::S7_Connection() {
 }
 
 int TServo::S7_Disconnection() {
-    //if(vGetDataThread != nullptr) {
-    //    vGetDataThread->GetDataexit();
-    //    delete vGetDataThread;
-    //    vGetDataThread = nullptr;
-    //}
+    if (!FS7IsConnected) {
+        log_hint("Device has already disconnnected, if there are problem, you should connect first then disconnect again.");
+        return 0;
+    }
     SetFS7IsConnected(false);
     SetFS7LastError(FS7Client.Disconnect());
     if(FS7LastError != 0) {
@@ -1355,8 +1369,8 @@ int TServo::S7_GetAllData() {
     }
 
     if(S7Read(AddrGetAllData, &FS7Buffer, false) == 0) {
-        if (plcPumpStation == FPLCType) {
-            SetFS7IsHandShaked(S7.ValBit(&FS7Buffer[4], 0));
+        SetFS7IsHandShaked(S7.ValBit(&FS7Buffer[0], 0));
+        if(plcPumpStation == FPLCType) {
             SetFPSIsPowerOn(S7.ValBit(&FS7Buffer[0], 1));
             SetFPSIsFault(S7.ValBit(&FS7Buffer[0], 2));
             SetFPSIsPumpRunning(S7.ValBit(&FS7Buffer[0], 3));
@@ -1364,44 +1378,43 @@ int TServo::S7_GetAllData() {
             SetFPSIsReserviorValvePowerOn(S7.ValBit(&FS7Buffer[0], 5));
             SetFPSIsProportionalValvePowerOn(S7.ValBit(&FS7Buffer[0], 6));
             SetFPSIsFanRunning(S7.ValBit(&FS7Buffer[0], 7));
-            SetFPSActPressure(S7.ValReal(&FS7Buffer[32]));
-            SetFPSActFlow(S7.ValReal(&FS7Buffer[64]));
-            SetFPSPumpPressure(S7.ValReal(&FS7Buffer[96]));
-            SetFPSReserviorPressure(S7.ValReal(&FS7Buffer[128]));
+            SetFPSActPressure(S7.ValReal(&FS7Buffer[4]));
+            SetFPSActFlow(S7.ValReal(&FS7Buffer[8]));
+            SetFPSPumpPressure(S7.ValReal(&FS7Buffer[12]));
+            SetFPSReserviorPressure(S7.ValReal(&FS7Buffer[16]));
         }
         else {
-        //log_ok("S7_GetAllData:enter");
-        SetFS7IsHandShaked(S7.ValBit(&FS7Buffer[0], 0));
-        SetFS7IsPowerOn(S7.ValBit(&FS7Buffer[0], 1));
-        SetFS7IsAutoMode(S7.ValBit(&FS7Buffer[0], 2));
-        SetFS7IsFault(S7.ValBit(&FS7Buffer[0], 3));
-        SetFS1IsServoOn(S7.ValBit(&FS7Buffer[0], 4));
-        SetFS1ZeroExisted(S7.ValBit(&FS7Buffer[0], 5));
-        SetFS1IsReady(S7.ValBit(&FS7Buffer[0], 6));
-        // FS1Running = S7.ValBit(&FS7Buffer[2], 6);
-        SetFS1RunFinished(S7.ValBit(&FS7Buffer[0], 7));
-        SetFS1IsFault(S7.ValBit(&FS7Buffer[1], 0));
-        // todo check the address
-        // FS1AutoMode = S7.ValBit(&FS7Buffer[3], 7);
-        // FS2AutoMode = S7.ValBit(&FS7Buffer[3], 8);
+            //log_ok("S7_GetAllData:enter");
+            SetFS7IsPowerOn(S7.ValBit(&FS7Buffer[0], 1));
+            SetFS7IsAutoMode(S7.ValBit(&FS7Buffer[0], 2));
+            SetFS7IsFault(S7.ValBit(&FS7Buffer[0], 3));
+            SetFS1IsServoOn(S7.ValBit(&FS7Buffer[0], 4));
+            SetFS1ZeroExisted(S7.ValBit(&FS7Buffer[0], 5));
+            SetFS1IsReady(S7.ValBit(&FS7Buffer[0], 6));
+            // FS1Running = S7.ValBit(&FS7Buffer[2], 6);
+            SetFS1RunFinished(S7.ValBit(&FS7Buffer[0], 7));
+            SetFS1IsFault(S7.ValBit(&FS7Buffer[1], 0));
+            // todo check the address
+            // FS1AutoMode = S7.ValBit(&FS7Buffer[3], 7);
+            // FS2AutoMode = S7.ValBit(&FS7Buffer[3], 8);
 
-        SetFS1ActPosition(S7.ValReal(&FS7Buffer[2]));
-        SetFS1ActSpeed(S7.ValReal(&FS7Buffer[6]));
-        if(!FS7IsOnlyPedal) {
-            SetFS2IsServoOn(S7.ValBit(&FS7Buffer[1], 1));
-            SetFS2ZeroExisted(S7.ValBit(&FS7Buffer[1], 2));
-            SetFS2IsReady(S7.ValBit(&FS7Buffer[1], 3));
-            // FS2Running = S7.ValBit(&FS7Buffer[3], 4);
-            SetFS2RunFinished(S7.ValBit(&FS7Buffer[1], 4));
-            SetFS2IsFault(S7.ValBit(&FS7Buffer[1], 5));
-            SetFS2ActPosition(S7.ValReal(&FS7Buffer[10]));
-            SetFS2ActSpeed(S7.ValReal(&FS7Buffer[14]));
-        }
+            SetFS1ActPosition(S7.ValReal(&FS7Buffer[2]));
+            SetFS1ActSpeed(S7.ValReal(&FS7Buffer[6]));
+            if(!FS7IsOnlyPedal) {
+                SetFS2IsServoOn(S7.ValBit(&FS7Buffer[1], 1));
+                SetFS2ZeroExisted(S7.ValBit(&FS7Buffer[1], 2));
+                SetFS2IsReady(S7.ValBit(&FS7Buffer[1], 3));
+                // FS2Running = S7.ValBit(&FS7Buffer[3], 4);
+                SetFS2RunFinished(S7.ValBit(&FS7Buffer[1], 4));
+                SetFS2IsFault(S7.ValBit(&FS7Buffer[1], 5));
+                SetFS2ActPosition(S7.ValReal(&FS7Buffer[10]));
+                SetFS2ActSpeed(S7.ValReal(&FS7Buffer[14]));
+            }
         }
         return 0;
     }
     else {
-        log_nok("S7_GetAllData:faied");
+        log_nok("S7_GetAllData:failed");
         return -1;
     }
 }
@@ -3205,19 +3218,20 @@ int TServo::S2_Run_Off(const int ATimeout) {
 //add for PumpValve
 //int TServo
 int TServo::PS_Set_Pressure_Asyn(float APressureBar) {
-    unsigned char AWriteByte[4] = { 0 };
+    unsigned char AWriteByte[4] = {0};
     float ASetPressure;
 
-    if (FPLCType != plcPumpStation) {
+    if(FPLCType != plcPumpStation) {
         log_nok("current servo is not used as pump control servo"); // LVL_ERROR
         return -1;
     }
     //ASetPressure = APressureBar;
-    if (APressureBar > vTIOConfig.FPSMaxPressure) {
+    //vTIOConfig.FPSMaxPressure = 300;
+    if(APressureBar > vTIOConfig.FPSMaxPressure) {
         ASetPressure = vTIOConfig.FPSMaxPressure;
         log_warning("Pressure is greater than 300 bar, and the target value used the max value instead"); // LVL_WARNING
     }
-    else if (APressureBar < 0) {
+    else if(APressureBar < 0) {
         ASetPressure = 0;
         log_warning("Pressure is smaller than 0 bar, and the target value used the min value instead"); // LVL_WARNING
     }
@@ -3229,31 +3243,31 @@ int TServo::PS_Set_Pressure_Asyn(float APressureBar) {
 
     S7.ValReal(&AWriteByte[0], ASetPressure);
 
-    if (S7Write(AddrSetPSPressure, AWriteByte, false) != 0) {
-        log_nok("pump servo target pressure write error"); // LVL_ERROR
+    if(S7Write(AddrSetPSPressure, AWriteByte, false) != 0) {
+        log_nok("pump station target pressure write error"); // LVL_ERROR
         return -2;
     }
     else {
-        log("pump servo target pressure send out"); // LVL_INFO
+        log("pump station target pressure send out"); // LVL_INFO
         return 0;
     }
 }
 
-int TServo::PS_Set_Pressure_Syn(float APressureBar, float AMaxTol , int ATimeout) {
-    if (PS_Set_Pressure_Asyn(APressureBar)) {
+int TServo::PS_Set_Pressure_Syn(float APressureBar, float AMaxTol, int ATimeout) {
+    if(PS_Set_Pressure_Asyn(APressureBar)) {
         log("send out command failed");
         return -1;
     }
     int ATime = 0;
-    while (true) {
-        if (fabs(FPSTargetPressure - FPSActPressure) < AMaxTol) {
+    while(true) {
+        if(fabs(FPSTargetPressure - FPSActPressure) < AMaxTol) {
             log("Target pressure is reached");
             return 0;
         }
 
         Sleep(1);
         ATime++;
-        if (ATime > ATimeout) {
+        if(ATime > ATimeout) {
             log_nok("control to target pressure timeout, timeout setting is %d ms", ATimeout);
             return -3;
         }
@@ -3261,83 +3275,85 @@ int TServo::PS_Set_Pressure_Syn(float APressureBar, float AMaxTol , int ATimeout
 }
 
 int TServo::PS_PowerOn(int ATimeout) {
-    if (plcPumpStation != FPLCType) {
+    if(plcPumpStation != FPLCType) {
         log_nok("Pump servo is not available!");
         return -10;
     }
     unsigned char AWriteByte = 0;
-    if (!FS7IsHandShaked) {
+    if(!FS7IsHandShaked) {
         log_nok("HandShake needed before Power On.");
         return -1;
     }
     S7.ValBit(&AWriteByte, 0, true);
 
-    if (S7Write(AddrSetPSPowerOn, &AWriteByte, false) != 0) {
+    if(S7Write(AddrSetPSPowerOn, &AWriteByte, false) != 0) {
         log_nok("S7 write power on address error.");
         return -2;
     }
 
     int ATime = 0;
-    while (true) {
-        if (FPSIsPowerOn) {
+    while(true) {
+        if(FPSIsPowerOn) {
             log_ok("Power On Successful.");
             return 0;
         }
 
         Sleep(1);
         ATime++;
-        if (ATime > ATimeout) {
+        if(ATime > ATimeout) {
             log_nok("Pump station power on timeout, timeout setting is %d ms.", ATimeout);
             return -3;
         }
     }
 }
+
 int TServo::PS_PowerOff(int ATimeout) {
-    if (plcPumpStation != FPLCType) {
+    if(plcPumpStation != FPLCType) {
         log_nok("Pump servo is not available!");
         return -10;
     }
     unsigned char AWriteByte = 0;
-    if (!FS7IsHandShaked) {
+    if(!FS7IsHandShaked) {
         log_nok("HandShake needed before Power Off.");
         return -1;
     }
     S7.ValBit(&AWriteByte, 0, true);
 
-    if (S7Write(AddrSetPSPowerOff, &AWriteByte, false) != 0) {
+    if(S7Write(AddrSetPSPowerOff, &AWriteByte, false) != 0) {
         log_nok("S7 write power off address error.");
         return -2;
     }
 
     int ATime = 0;
-    while (true) {
-        if (!FPSIsPowerOn) {
+    while(true) {
+        if(!FPSIsPowerOn) {
             log_ok("Power Off Successful.");
             return 0;
         }
 
         Sleep(1);
         ATime++;
-        if (ATime > ATimeout) {
+        if(ATime > ATimeout) {
             log_nok("Pump station power off timeout, timeout setting is %d ms.", ATimeout);
             return -3;
         }
     }
 
 }
+
 int TServo::PS_Reset() {
-    if (plcPumpStation != FPLCType) {
+    if(plcPumpStation != FPLCType) {
         log_nok("Pump servo is not available!");
         return -10;
     }
     unsigned char AWriteByte = 0;
-    if (!FS7IsHandShaked) {
+    if(!FS7IsHandShaked) {
         log_nok("HandShake needed before reset.");
         return -1;
     }
     S7.ValBit(&AWriteByte, 0, true);
 
-    if (S7Write(AddrSetPSReset, &AWriteByte, false) != 0) {
+    if(S7Write(AddrSetPSReset, &AWriteByte, false) != 0) {
         log_nok("S7 Write reset address error.");
         return -2;
     }
@@ -3348,13 +3364,13 @@ int TServo::PS_Reset() {
 
 void TServo::SetFS1ActPosition(float Value) {
     FS1ActPosition = Value;
-    app.set_system_var_double("tio.PedalPosition", Value);
+    app.set_system_var_double("tio.pedal_position", Value);
 
 }
 
 void TServo::SetFS1ActSpeed(float Value) {
     FS1ActSpeed = Value;
-    app.set_system_var_double("tio.PedalSpeed", Value);
+    app.set_system_var_double("tio.pedal_speed", Value);
 }
 
 void TServo::SetFPedalIsSysMode(bool AEnable) {
@@ -3473,12 +3489,12 @@ void TServo::SetFS1ZeroExisted(bool Value) {
 void TServo::SetFS2ActPosition(float Value) {
     FS2ActPosition = Value;
     FS2ActPositionGrad = float(std::tan((FS2ActPosition - FS2MountPosition) * pi / 180) * 100);
-    app.set_system_var_double("tio.RotateDegree", Value);
+    app.set_system_var_double("tio.rotate_degree", Value);
 }
 
 void TServo::SetFS2ActPositionGrad(float Value) {
     FS2ActPositionGrad = Value;
-    app.set_system_var_double("tio.SlopeGrad", Value);
+    app.set_system_var_double("tio.slope_grad", Value);
 }
 
 void TServo::SetFS2ActSpeed(float Value) {
@@ -3724,11 +3740,11 @@ void TServo::SetFPSTargetPressure(float Value) {
 }
 
 void TServo::SetFPSMaxPressure(float Value) {
-    if (Value > 300) {
+    if(Value > 300) {
         FPSMaxPressure = 300;
         log_nok("SetFPSMaxPressure: maxium set Pressure is: %0.2f Bar, out of range, the max value set 300 Bar", Value); // LVL_ERROR
     }
-    else if (Value < 0) {
+    else if(Value < 0) {
         FPSMaxPressure = 0;
         log("SetFPSMaxPressure: maxium set Pressure is: %0.2f Bar, out of range, the min value set 0 Bar", Value); // LVL_INFO
     }
@@ -3746,22 +3762,24 @@ void TServo::SetFPSActPressure(float Value) {
 
 }
 
-void TServo::SetFPSActFlow(float Value){
+void TServo::SetFPSActFlow(float Value) {
     FPSActFlow = Value;
     app.set_system_var_int32("tio.ps_output_flow", Value);
 }
-void TServo::SetFPSPumpPressure(float Value){
+
+void TServo::SetFPSPumpPressure(float Value) {
     FPSPumpPressure = Value;
     app.set_system_var_int32("tio.ps_pump_pressure", Value);
 }
+
 void TServo::SetFPSReserviorPressure(float Value) {
     FPSReserviorPressure = Value;
     app.set_system_var_int32("tio.ps_reservior_pressure", Value);
 }
 
 void TServo::SetFPSIsPowerOn(bool AEnable) {
-    if (FPSIsPowerOn != AEnable) {
-        if (AEnable)
+    if(FPSIsPowerOn != AEnable) {
+        if(AEnable)
             log("Pump servo system is power on!"); // LVL_INFO
         else
             log("Pump servo system is power off!"); // LVL_INFO
@@ -3769,9 +3787,10 @@ void TServo::SetFPSIsPowerOn(bool AEnable) {
     FPSIsPowerOn = AEnable;
     app.set_system_var_int32("tio.ps_power_state", int(AEnable));
 }
+
 void TServo::SetFPSIsFault(bool AEnable) {
-    if (FPSIsFault != AEnable) {
-        if (AEnable)
+    if(FPSIsFault != AEnable) {
+        if(AEnable)
             log("Pump servo system is power on!"); // LVL_INFO
         else
             log("Pump servo system is power off!"); // LVL_INFO
@@ -3779,9 +3798,10 @@ void TServo::SetFPSIsFault(bool AEnable) {
     FPSIsFault = AEnable;
     app.set_system_var_int32("tio.ps_has_fault", int(AEnable));
 }
-void TServo::SetFPSIsPumpRunning(bool AEnable){
-    if (FPSIsPumpRunning != AEnable) {
-        if (AEnable)
+
+void TServo::SetFPSIsPumpRunning(bool AEnable) {
+    if(FPSIsPumpRunning != AEnable) {
+        if(AEnable)
             log("Pump station is power on!"); // LVL_INFO
         else
             log("Pump station is power off!"); // LVL_INFO
@@ -3789,9 +3809,10 @@ void TServo::SetFPSIsPumpRunning(bool AEnable){
     FPSIsPumpRunning = AEnable;
     app.set_system_var_int32("tio.ps_is_runing", int(AEnable));
 }
+
 void TServo::SetFPSIsReliefValvePowerOn(bool AEnable) {
-    if (FPSIsReliefValvePowerOn != AEnable) {
-        if (AEnable)
+    if(FPSIsReliefValvePowerOn != AEnable) {
+        if(AEnable)
             log("Pump relief vavle is power on!"); // LVL_INFO
         else
             log("Pump relief vavle is power off!"); // LVL_INFO
@@ -3801,8 +3822,8 @@ void TServo::SetFPSIsReliefValvePowerOn(bool AEnable) {
 }
 
 void TServo::SetFPSIsReserviorValvePowerOn(bool AEnable) {
-    if (FPSIsReserviorValvePowerOn != AEnable) {
-        if (AEnable)
+    if(FPSIsReserviorValvePowerOn != AEnable) {
+        if(AEnable)
             log("Reservior valve is power on!"); // LVL_INFO
         else
             log("Reservior valve is power off!"); // LVL_INFO
@@ -3812,8 +3833,8 @@ void TServo::SetFPSIsReserviorValvePowerOn(bool AEnable) {
 }
 
 void TServo::SetFPSIsProportionalValvePowerOn(bool AEnable) {
-    if (FPSIsProportionalValvePowerOn != AEnable) {
-        if (AEnable)
+    if(FPSIsProportionalValvePowerOn != AEnable) {
+        if(AEnable)
             log("Output control valve is power on!"); // LVL_INFO
         else
             log("output control valve is power off!"); // LVL_INFO
@@ -3821,9 +3842,10 @@ void TServo::SetFPSIsProportionalValvePowerOn(bool AEnable) {
     FPSIsProportionalValvePowerOn = AEnable;
     app.set_system_var_int32("tio.ps_proportional_valve_is_power_on", int(AEnable));
 }
+
 void TServo::SetFPSIsFanRunning(bool AEnable) {
-    if (FPSIsFanRunning != AEnable) {
-        if (AEnable)
+    if(FPSIsFanRunning != AEnable) {
+        if(AEnable)
             log("Pump station fan is open!"); // LVL_INFO
         else
             log("Pump station fan is off!"); // LVL_INFO

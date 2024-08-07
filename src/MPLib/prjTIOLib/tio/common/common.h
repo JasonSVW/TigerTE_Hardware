@@ -9,7 +9,7 @@
 
 class TTIOConfig {
 public:
-    std::string FConfigIniFile;
+    std::string FConfigIniFile = "";
     // form
     bool FServoFormIsActive;
     bool FMappingFormIsActive;

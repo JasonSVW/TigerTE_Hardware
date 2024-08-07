@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "common.h"
 #include "uPLC1200.h"
 
 // Variables definition
@@ -119,8 +120,10 @@ DLLEXPORT s32 __stdcall initialize_miniprogram(const PTSMasterConfiguration ACon
     app = AConf->FTSApp;
     com = AConf->FTSCOM;
     test = AConf->FTSTest;
+    //load configuration files
+    vTIOConfig.InitIniFile();
+    vTIOConfig.LoadConfigValue();
     mp_initialize_servo_lib_initialize();
-    app.log_text("initialize_miniprogram", lvlOK);
     return 0;
     
 }
@@ -237,12 +240,12 @@ DLLEXPORT s32 __stdcall retrieve_mp_abilities(const void* AObj, const TRegTSMast
   if (!AReg(AObj, "on_custom_callback", "turntable_run_centrifugal_acc_syn", "const float ATargetAccG, const float AArmLengthMM, const u32 ATimeout", reinterpret_cast<const void*>(&turntable_run_centrifugal_acc_syn), "set and run turntable with target acc synchronouslly, unit: g"))  return -1;
   if (!AReg(AObj, "on_custom_callback", "turntable_stop_run_asyn", "void", reinterpret_cast<const void*>(&turntable_stop_run_asyn), "set turntable speed to zero asynchronouslly"))  return -1;
   if (!AReg(AObj, "on_custom_callback", "turntable_stop_run_syn", "const u32 ATimeout", reinterpret_cast<const void*>(&turntable_stop_run_syn), "set turntable speed to zero synchronouslly"))  return -1;
-  // pump servo
-  if (!AReg(AObj, "on_custom_callback", "ps_power_on", "const u32 ATimeout", reinterpret_cast<const void*>(&ps_power_on), "synchronouslly set pump servo system to power on."))  return -1;
-  if (!AReg(AObj, "on_custom_callback", "ps_power_off", "const u32 ATimeout", reinterpret_cast<const void*>(&ps_power_off), "synchronouslly set pump servo system to power off."))  return -1;
-  if (!AReg(AObj, "on_custom_callback", "ps_reset", "void", reinterpret_cast<const void*>(&ps_reset), "reset pump servo control system."))  return -1;
-  if (!AReg(AObj, "on_custom_callback", "ps_set_pressure_asyn", "const float APressureBar", reinterpret_cast<const void*>(&ps_set_pressure_asyn), "set out pressure to target asynchronouslly."))  return -1;
-  if (!AReg(AObj, "on_custom_callback", "ps_set_pressure_syn", "const float APressureBar, const float AMaxTolBar, const u32 ATimeout", reinterpret_cast<const void*>(&ps_set_pressure_syn), "set out pressure to target pressure with tollerance synchronouslly."))  return -1;
+  // pump station
+  if (!AReg(AObj, "on_custom_callback", "ps_power_on", "const u32 ATimeout", reinterpret_cast<const void*>(&ps_power_on), "synchronouslly set pump station system to power on."))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "ps_power_off", "const u32 ATimeout", reinterpret_cast<const void*>(&ps_power_off), "synchronouslly set pump station system to power off."))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "ps_reset", "void", reinterpret_cast<const void*>(&ps_reset), "reset pump station control system."))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "ps_set_pressure_asyn", "const float APressureBar", reinterpret_cast<const void*>(&ps_set_pressure_asyn), "set pump station out pressure to target asynchronouslly."))  return -1;
+  if (!AReg(AObj, "on_custom_callback", "ps_set_pressure_syn", "const float APressureBar, const float AMaxTolBar, const u32 ATimeout", reinterpret_cast<const void*>(&ps_set_pressure_syn), "set pump station out pressure to target pressure with tollerance synchronouslly."))  return -1;
     
   // MP library functions
   return 66;

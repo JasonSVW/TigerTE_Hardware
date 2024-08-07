@@ -77,13 +77,15 @@ public:
 
 class TServo {
 private:
+    // kernal
     std::mutex FMonitorObj;
     TS7Client FS7Client;
     TS7Helper S7;
     TS7Buffer FS7Buffer;
-    TPLCType FPLCType;
-    int FS7LastError;
-    bool FS7IsHandShaked;
+    TPLCType FPLCType = plcPedal;
+    bool FS7IsHandShaked = false;
+    int FS7LastError = 0;
+    // function related
     bool FS7IsPowerOn;
     bool FS7IsOnlyPedal;
     bool FS7WithAirCylinder;
@@ -102,7 +104,6 @@ private:
     float FS2ActPositionGrad;
     float FS2ActSpeed;
     float FS2MountPosition;
-    float FS3TargetCurrent;
     float FS1TargetPositionManual;
     float FS1TargetSpeedManual;
     float FS2TargetPositionManual;
@@ -111,23 +112,25 @@ private:
     float FS1TargetSpeedAuto;
     float FS2TargetPositionAuto;
     float FS2TargetSpeedAuto;
+    float FS3TargetCurrent;
     float FS3MCMaxPressure;
     float FS3P2AFactor;
     float FS3P2AOffset;
     //add for pump station
-    float FPSTargetPressure;
-    float FPSMaxPressure;
-    float FPSActPressure;
-    float FPSActFlow;
-    float FPSPumpPressure;
-    float FPSReserviorPressure;
-    bool FPSIsPowerOn;
-    bool FPSIsFault;
-    bool FPSIsPumpRunning;
-    bool FPSIsReliefValvePowerOn;
-    bool FPSIsReserviorValvePowerOn;
-    bool FPSIsProportionalValvePowerOn;
-    bool FPSIsFanRunning;
+    float FPSTargetPressure = 0.0f;
+    float FPSMaxPressure = 300.0f;
+    float FPSActPressure = 0.0f;
+    float FPSActFlow = 0.0f;
+    float FPSPumpPressure = 0.0f;
+    float FPSReserviorPressure = 0.0f;
+    bool FPSIsPowerOn = false;
+    bool FPSIsFault = false;
+    bool FPSIsPumpRunning = false;
+    bool FPSIsReliefValvePowerOn = false;
+    bool FPSIsReserviorValvePowerOn = false;
+    bool FPSIsProportionalValvePowerOn = false;
+    bool FPSIsFanRunning = false;
+    int FPSFaultCode = 0;
     // related with multithread
     std::thread HeartbeatThread;
     std::atomic<bool> HeartbeatRunning;
@@ -289,7 +292,7 @@ public:
     int S3_Set_Current(float ACurrentA);
     int S3_Set_Target_Pressure(float ATargetPressureBar);
     float S3_Pressure_Current(float APressure);
-    //add for pump servo
+    //add for pump station
     int PS_Set_Pressure_Asyn(float APressureBar);
     int PS_Set_Pressure_Syn(float APressureBar, float AMaxTol, int ATimeout);
     int PS_PowerOn(int ATimeout);
@@ -357,7 +360,7 @@ int turntable_run_centrifugal_acc_asyn(float ATargetAccelerationG, float AArmLen
 int turntable_run_centrifugal_acc_syn(float ATargetAccelerationG, float AArmLengthMM, int ATimeout);
 int turntable_stop_run_asyn();
 int turntable_stop_run_syn(int ATimeout);
-//add for pump servo
+//add for pump station
 int ps_power_on(int ATimeout);
 int ps_power_off(int ATimeout);
 int ps_reset();
