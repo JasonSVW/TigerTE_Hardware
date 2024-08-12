@@ -45,92 +45,8 @@ FullSim=0
 Speed=1
 Step=0.1
 
-[MDIInstances]
-TfrmBasePluginSingle.TfrmLicenseClient=0
-TfrmSystemMsgs=1
-TfrmGraphics=1
-TfrmCANStatistics=0
-TfrmCANDatabase=0
-TfrmHardware=0
-TfrmLogging=0
-TfrmPlayback=0
-TfrmCANFDTrace=0
-TfrmCANFDTransmit=0
-TfrmLINTrace=0
-TfrmLINTransmit=0
-TfrmLINDatabase=0
-TfrmChannelMapping=0
-TfrmCCodeEditor=1
-TfrmSettings=0
-TfrmCANRBS=0
-TfrmMPLibrary=0
-TfrmSystemVarMgmt=1
-TfrmMeasurementSetup=0
-TfrmMeasurementDataFilter=0
-TfrmLINRBS=0
-TfrmTSAppHost=0
-TfrmAutomotiveFileConverter=0
-TfrmSignalMapping=0
-TfrmSymbolValue=0
-TfrmSTIM=0
-TfrmFormDocker=0
-TfrmNumeric=0
-TfrmAppManager=0
-TfrmProjectSettings=0
-TfrmSignalTester=0
-TfrmMsgTrace=0
-TfrmTsRPC=0
-TfrmTSWebServer=0
-TfrmDeployTSMaster=0
-TfrmTC1005DFU=0
-TfrmTSInspector=0
-TfrmInternalTest=0
-TfrmStrEncoderDecoder=0
-TfrmAutomationModule=1
-TfrmGPBuilder=0
-
-[Pg0]
-Count=3
-HiddenCount=3
-f0=TfrmCCodeEditor,0,956,390,877,440,32,32,1040,703,1
-h0=TfrmSystemVarMgmt,0,96,96,802,747,96,96,802,747,1
-h1=TfrmStrEncoderDecoder,0,887,174,658,456,64,64,658,456,1
-f1=TfrmAutomationModule,0,956,1,920,553,160,160,1254,748,1
-f2=TfrmSystemMsgs,0,0,1,1740,829,0,0,1294,328,1
-f3=TfrmCCodeEditor,0,956,390,877,440,32,32,1040,703,1
-f4=TfrmGraphics,0,0,0,1088,606,0,0,1088,606,1
-h2=TfrmGraphics,0,0,0,1088,606,0,0,1088,606,1
-
-[RTL_Form_Position_MDI]
-TfrmSystemMsgs=0,1,1740,830
-CCodeEditor=956,390,1833,830
-TfrmSystemVarMgmt=128,128,1129,1060
-TfrmStrEncoderDecoder=887,174,1545,630
-TfrmAutomationModule=956,1,1876,554
-TfrmServo=32,32,1371,484
-Graphics=0,0,1358,756
-
-[RTL_Form_Position]
-TfrmTSMaster_0=-9,-9,1929,1051
-TfrmMPLibrary=2371,434,3334,918
-TfrmSettings=2520,261,3387,796
-TfrmSystemVarMgmt1=2479,151,3281,898
-
-[PageLayouts]
-DisableResize=0
-Tabbed=0
-PageCnt=1
-ActiveIdx=0
-Pg0=Workspace
-ScreenWidth=1920
-ScreenHeight=1080
-MainBounds=-9,-9,1929,1051
-PixelsPerInch=120
-AppLeftP=-9
-AppTopP=-9
-
 [MeasurementController]
-MCount=7
+MCount=11
 M0=0,1,131,-1,0,TfrmSystemMsgs,系统消息
 M1=0,1,146,-1,1,TfrmCCodeEditor,C 代码编辑器 [tio]
 M2=0,1,15,-1,2,TfrmSystemVarMgmt,系统变量管理器
@@ -138,10 +54,14 @@ M3=-1,1,5,-1,3,TfrmStrEncoderDecoder,已删除: StrEncoderDecoder
 M4=0,1,180,-1,4,TfrmAutomationModule,图形程序 1764
 M5=-1,1,117,-1,5,TfrmServo,已删除: Servo
 M6=0,1,124,-1,6,TfrmGraphics,图形
+M7=1,1,146,-1,7,TfrmCCodeEditor,C 代码编辑器 [CCode4644]
+M8=0,1,181,-1,8,TfrmGPBuilder,图形程序 生成器
+M9=0,1,177,-1,9,TfrmNumeric,数值显示
+M10=1,1,124,-1,10,TfrmGraphics,图形 [#2]
 
 [SystemMsgOptions]
 MaxLines=100000
-UICommon=0,-1,0,0,z7XNs8/7z6I_,100,354,4788452324757911351
+UICommon=0,-1,0,0,z7XNs8/7z6I_,100,362,4788452324757911351
 UIFilter=
 
 [ChannelMappings]
@@ -167,6 +87,18 @@ u0=PedalSpeed,tio,Servo Pedal Speed,MP,7,0,0,100,0,,-1,,,0,-1,
 u1=PedalPosition,tio,Servo Pedal Position,MP,7,0,0,100,0,,-1,,,0,-1,
 u2=RotateDegree,tio,Servo Slope Rotate Degree,MP,7,0,0,100,0,,-1,,,0,-1,
 u3=SlopeGrad,tio,Servo Slope Gradient,MP,7,0,0,100,0,,-1,,,0,-1,
+u4=ps_power_state,tio,Pump servo system power state  0 - power off  1 - power on.,MP,0,0,0,100,1,,-1,,,0,-1,
+u5=ps_has_fault,tio,Pump servo system fault state  0 - no fault  1 - has fault.,MP,0,0,0,100,0,,-1,,,0,-1,
+u6=ps_is_runing,tio,Pump station  0 - stop  1 - running.,MP,0,0,0,100,1,,-1,,,0,-1,
+u7=ps_relief_valve_is_power_on,tio,Pump station relief valve  0 - power off  1 - power on.,MP,0,0,0,100,1,,-1,,,0,-1,
+u8=ps_reservior_valve_is_power_on,tio,Reservior output valve  0 - power off  1 - power on.,MP,0,0,0,100,1,,-1,,,0,-1,
+u9=ps_proportional_valve_is_power_on,tio,Pressure control proportional valve  0 - power off  1 - power on.,MP,0,0,0,100,1,,-1,,,0,-1,
+u10=ps_fan_is_running,tio,Cooling fan  0 - stop  1 - running.,MP,0,0,0,100,0,,-1,,,0,-1,
+u11=ps_output_pressure,tio,Pressure control proportional valve actully output pressure  bar.,MP,7,0,0,100,9,,-1,,,0,-1,
+u12=ps_output_flow,tio,Flow control proportional valve act output flow.,MP,7,0,0,100,50,,-1,,,0,-1,
+u13=ps_pump_pressure,tio,Pump output pressure  bar.,MP,7,0,0,100,198,,-1,,,0,-1,
+u14=ps_reservior_pressure,tio,Reservior pressure  bar.,MP,7,0,0,100,194,,-1,,,0,-1,
+u15=ps_target_pressure,tio,Pressure control proportional valve target output pressure  bar.,MP,7,0,0,100,0,,-1,,,0,-1,
 
 [PluginManager]
 ExternalCount=0
@@ -220,15 +152,18 @@ FEnableTSWirelessOBD=0
 DeviceCount=0
 
 [MPLibrary]
-UICommon=0,0,0,0,0KGzzNDyv+I_,100,183,6218063910063365607
+UICommon=0,0,0,0,0KGzzNDyv+I_,100,162,893401607555556397
 UIFilter=
 
 [MPLibraryMgmt]
 tio=
-MPsCount=0
+MPsCount=2
+mytio=
+MPs0=tio.mp64
+MPs1=mytio.mp64
 
 [SysVarMgmt]
-UICommon=0,-1,0,0,z7XNs7Hkwb+53MDtxvc_,100,388,3055692389547924782
+UICommon=0,-1,0,0,z7XNs7Hkwb+53MDtxvc_,100,305,3055692389547924782
 UIFilter=
 
 [TfrmStrEncoderDecoder]
@@ -236,7 +171,7 @@ UICommon=0,-1,0,0,U3RyaW5nIEVuY29kZXIgRGVjb2Rlcg__,100,84,5850738923180861359
 UIFilter=
 
 [TfrmMPFunctionList]
-scroll_1=0
+scroll_1=11
 
 [SoftwareConf]
 UICommon=0,0,0,0,z7XNs9DFz6I_,100,244,4173711198097439028
@@ -248,3 +183,106 @@ UIFilter=
 
 [hw_app_chn_0]
 VIRTUAL_CAN_conf={"FControllerType":1,"FClockMHz":80,"FTSeg1Abr":119,"FTSeg2Abr":40,"FSjwAbr":40,"FPrescalerAbr":1,"FTSeg1Dbr":29,"FTSeg2Dbr":10,"FSjwDbr":10,"FPrescalerDbr":1,"FArbitrationBaudrateBps":500000,"FDataBaudrateBps":2000000,"FSamplingPointMul10Percent":750}
+
+[TfrmTSConstantManager]
+PageIdx=3
+ConstantsWidths=63,250,626
+UsersWidths=63,250,626
+
+[TfrmGPBuilder]
+UICommon=0,-1,0,0,zbzQzrPM0PIgyfqzycb3,100,181,2411396356833755715
+UIFilter=
+
+[MDIInstances]
+TfrmBasePluginSingle.TfrmLicenseClient=0
+TfrmSystemMsgs=1
+TfrmGraphics=2
+TfrmCANStatistics=0
+TfrmCANDatabase=0
+TfrmHardware=0
+TfrmLogging=0
+TfrmPlayback=0
+TfrmCANFDTrace=0
+TfrmCANFDTransmit=0
+TfrmLINTrace=0
+TfrmLINTransmit=0
+TfrmLINDatabase=0
+TfrmChannelMapping=0
+TfrmCCodeEditor=2
+TfrmSettings=0
+TfrmCANRBS=0
+TfrmMPLibrary=0
+TfrmSystemVarMgmt=1
+TfrmMeasurementSetup=0
+TfrmMeasurementDataFilter=0
+TfrmLINRBS=0
+TfrmTSAppHost=0
+TfrmAutomotiveFileConverter=0
+TfrmSignalMapping=0
+TfrmSymbolValue=0
+TfrmSTIM=0
+TfrmFormDocker=0
+TfrmNumeric=1
+TfrmAppManager=0
+TfrmProjectSettings=0
+TfrmSignalTester=0
+TfrmMsgTrace=0
+TfrmTsRPC=0
+TfrmTSWebServer=0
+TfrmDeployTSMaster=0
+TfrmTC1005DFU=0
+TfrmTSInspector=0
+TfrmInternalTest=0
+TfrmStrEncoderDecoder=0
+TfrmAutomationModule=1
+TfrmGPBuilder=1
+
+[Pg0]
+Count=6
+HiddenCount=7
+f0=TfrmGraphics,1,960,518,960,259,0,0,1358,756,1
+h0=TfrmSystemVarMgmt,0,96,96,802,747,96,96,802,747,1
+h1=TfrmStrEncoderDecoder,0,887,174,658,456,64,64,658,456,1
+f1=TfrmAutomationModule,0,960,0,960,645,160,160,1254,748,1
+f2=TfrmNumeric,0,0,0,960,389,0,0,1154,520,1
+f3=TfrmCCodeEditor,0,716,159,960,259,32,32,1040,703,1
+f4=TfrmSystemMsgs,0,0,314,1491,389,0,0,1294,328,1
+h2=TfrmGraphics,0,0,0,1088,606,0,0,1088,606,1
+h3=TfrmCCodeEditor,0,512,1,877,677,32,32,1040,703,1
+h4=TfrmCCodeEditor,1,64,0,1298,783,64,64,1298,877,1
+h5=TfrmSystemMsgs,0,77,0,1740,783,0,0,1294,328,1
+h6=TfrmGPBuilder,0,0,0,1006,752,0,0,1006,752,1
+f5=TfrmCCodeEditor,1,64,0,1298,783,64,64,1298,877,1
+
+[RTL_Form_Position_MDI]
+TfrmSystemMsgs=0,314,1491,703
+CCodeEditor=716,159,1676,418
+TfrmSystemVarMgmt=224,224,1225,1156
+TfrmStrEncoderDecoder=887,174,1545,630
+TfrmAutomationModule=960,0,1920,645
+TfrmServo=32,32,1371,484
+Graphics=0,0,1358,756
+CCodeEditor1=64,0,1362,783
+TfrmGPBuilder=0,0,1006,752
+TfrmNumeric=0,0,960,389
+Graphics1=960,518,1920,777
+
+[RTL_Form_Position]
+TfrmTSMaster_0=0,0,1938,1060
+TfrmMPLibrary=359,219,1561,822
+TfrmSettings=2520,261,3387,796
+TfrmSystemVarMgmt1=459,55,1460,987
+
+[PageLayouts]
+DisableResize=0
+Tabbed=0
+PageCnt=1
+ActiveIdx=0
+Pg0=Workspace
+ScreenWidth=1920
+ScreenHeight=1080
+MainBounds=-9,-9,1929,1051
+PixelsPerInch=120
+AppLeftP=-9
+AppTopP=-9
+

@@ -144,6 +144,10 @@ private:
     std::atomic<int> GetDataFailedReads;
     std::mutex getdata_mutex;
     std::condition_variable getdata_cv;
+    // add for protection
+    std::mutex mtx_time;
+    bool FEnablePVProtection = false;
+    std::chrono::time_point<std::chrono::steady_clock> pv_last_execution_time;
 
 public:
     //bool FSnap7IsLoaded;
@@ -169,6 +173,7 @@ private:
     void GetDataStartThread();
     void GetDataStopThread();
     void GetDataThreadProcess();
+    int S7_GetAllData();
     int S7Write(const TDataRecord& AField, void* pData, bool Async);
     int S7Read(const TDataRecord& AField, void* pData, bool Async);
     void S7WaitCompletion(int ATimeout = DefaultTimeout);
@@ -232,6 +237,7 @@ private:
     void SetFPSIsReserviorValvePowerOn(bool AEnable);
     void SetFPSIsProportionalValvePowerOn(bool AEnable);
     void SetFPSIsFanRunning(bool AEnable);
+    void SetFEnablePVProtection(bool AEnable);
 
 
 public:
@@ -293,13 +299,11 @@ public:
     int S3_Set_Target_Pressure(float ATargetPressureBar);
     float S3_Pressure_Current(float APressure);
     //add for pump station
-    int PS_Set_Pressure_Asyn(float APressureBar);
-    int PS_Set_Pressure_Syn(float APressureBar, float AMaxTol, int ATimeout);
+    int PS_Set_Pressure_Asyn(float APressureBar, bool AEnableProtection);
+    int PS_Set_Pressure_Syn(float APressureBar, float AMaxTol, bool AEnableProtection, int ATimeout);
     int PS_PowerOn(int ATimeout);
     int PS_PowerOff(int ATimeout);
     int PS_Reset();
-
-    int S7_GetAllData();
 };
 
 extern TServo* vServoObj;
@@ -364,6 +368,6 @@ int turntable_stop_run_syn(int ATimeout);
 int ps_power_on(int ATimeout);
 int ps_power_off(int ATimeout);
 int ps_reset();
-int ps_set_pressure_asyn(float APressureBar);
-int ps_set_pressure_syn(float APressureBar, float AMaxTol, int ATimeout);
+int ps_set_pressure_asyn(float APressureBar, bool AEnableProtection);
+int ps_set_pressure_syn(float APressureBar, float AMaxTol, bool AEnableProtection, int ATimeout);
 

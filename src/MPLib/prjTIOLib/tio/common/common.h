@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <filesystem> // 需要包含filesystem头文件
 
+
 class TTIOConfig {
 public:
     std::string FConfigIniFile = "";
@@ -73,3 +74,6 @@ private:
 };
 
 extern TTIOConfig vTIOConfig;
+extern std::string vMP_Name;
+
+std::string GetCurrentModuleName();

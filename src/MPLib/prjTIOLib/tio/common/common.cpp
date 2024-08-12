@@ -1,10 +1,59 @@
 #include "common.h"
 #include "TSMaster.h"
+#include <windows.h>
+#include <string>
+#include <filesystem>
 
 TTIOConfig vTIOConfig;
+std::string vMP_Name = "tio";
 
 #define INI_FILE "TIO\\TIOConfiguration.ini"
 
+std::string WideCharToMultiByte(const std::wstring& wstr) {
+    if (wstr.empty()) return std::string();
+
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    std::string strTo(size_needed, 0);
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    return strTo;
+}
+
+std::string GetCurrentModuleName()
+{
+    wchar_t path[MAX_PATH];
+    HMODULE hModule = NULL;
+
+    // 使用 GetModuleHandleExW 代替 GetModuleHandleEx
+    if (GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+        GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+        (LPCWSTR)GetCurrentModuleName,
+        &hModule) == 0)
+    {
+        // 处理错误
+        return "tio";
+    }
+
+    // 使用 GetModuleFileNameW 代替 GetModuleFileName
+    if (GetModuleFileNameW(hModule, path, MAX_PATH) == 0)
+    {
+        // 处理错误
+        return "tio";
+    }
+
+    //std::filesystem::path p(path);
+    //return p.filename().wstring();
+    std::filesystem::path p(path);
+    std::wstring filename = p.filename().wstring();
+
+    // 找到最后一个点号的位置
+    size_t pos = filename.find_last_of(L'.');
+    if (pos != std::wstring::npos)
+    {
+        // 提取不带后缀的名称
+        return WideCharToMultiByte(filename.substr(0, pos));
+    }
+    return WideCharToMultiByte(filename);
+}
 
 void TTIOConfig::SaveConfig() {
     if (FConfigIniFile.empty()) {

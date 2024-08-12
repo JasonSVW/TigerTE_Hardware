@@ -1,0 +1,830 @@
+object frmVCLFormDesigner_1: TfrmVCLFormDesigner
+  Left = 109
+  Top = 199
+  ActiveControl = lbledtIPAddress
+  Caption = 
+    #21516#26143#24037#20855#31665#31383#20307#35774#35745#22120' - svgbtnFaultState: TTSSvgImageButton; '#20301#32622' (896, 8, 99' +
+    '6, 58); '#23485': 100, '#39640': 50 [*TIO_Pump_Station.TSUI]'
+  ClientHeight = 363
+  ClientWidth = 797
+  Color = clBtnFace
+  DoubleBuffered = True
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  KeyPreview = True
+  Position = poDesigned
+  Visible = True
+  StyleName = 'Windows11 Dark'
+  OnActivate = FormActivate
+  OnClick = FormClick
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnDragDrop = FormDragDrop
+  OnDragOver = FormDragOver
+  OnKeyDown = FormKeyDown
+  OnMouseEnter = FormMouseEnter
+  OnMouseLeave = FormMouseLeave
+  OnResize = FormResize
+  OnShow = FormShow
+  TextHeight = 15
+  object pnlBackground: TPanel
+    Left = 0
+    Top = 0
+    Width = 797
+    Height = 363
+    Cursor = crArrow
+    Align = alClient
+    ShowCaption = False
+    TabOrder = 0
+    object pnlConfigure: TPanel
+      Left = 1
+      Top = 1
+      Width = 795
+      Height = 57
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlConfigure'
+      ShowCaption = False
+      TabOrder = 0
+      object btnConnect: TButton
+        Left = 32
+        Top = 19
+        Width = 102
+        Height = 26
+        Cursor = crArrow
+        Caption = 'Connect'
+        ImageIndex = 105
+        Images = dmIcons.imgLstSmall
+        TabOrder = 0
+      end
+      object btnDisconnect: TButton
+        Left = 192
+        Top = 19
+        Width = 102
+        Height = 26
+        Cursor = crArrow
+        Caption = 'Disonnect'
+        ImageIndex = 104
+        Images = dmIcons.imgLstSmall
+        TabOrder = 1
+      end
+      object lbledtIPAddress: TLabeledEdit
+        Left = 352
+        Top = 26
+        Width = 160
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 93
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Device IP Address'
+        EditLabel.Transparent = True
+        TabOrder = 2
+        Text = '192.168.1.1'
+      end
+    end
+    object pnlStateLamp: TPanel
+      Left = 1
+      Top = 275
+      Width = 795
+      Height = 58
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlConfigure'
+      ShowCaption = False
+      TabOrder = 1
+      object svgbtnReserviorValve: TTSSvgImageButton
+        Left = 453
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Reservior Valve'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
+          'lve_Cycle_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzMzY3ODg3Nzc3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjIwNTEwIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzNC43NGY3M2E4MVlJVlNxViIgeG1sbnM6eGxpbms9Imh0dHA6' +
+          'Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAw' +
+          'Ij48cGF0aCBkPSJNNTExLjk5IDk1OS4zMWMtMjQ2LjY1IDAtNDQ3LjMxLTIwMC42' +
+          'Ni00NDcuMzEtNDQ3LjMgMC0yNDYuNjUgMjAwLjY2LTQ0Ny4zMiA0NDcuMzEtNDQ3' +
+          'LjMyczQ0Ny4zMiAyMDAuNjcgNDQ3LjMyIDQ0Ny4zMmMwIDI0Ni42NC0yMDAuNjYg' +
+          'NDQ3LjMtNDQ3LjMyIDQ0Ny4zeiBtMC04NTQuNzNjLTIyNC42NSAwLTQwNy40MiAx' +
+          'ODIuNzctNDA3LjQyIDQwNy40MyAwIDIyNC42NSAxODIuNzcgNDA3LjQyIDQwNy40' +
+          'MiA0MDcuNDIgMjI0LjY2IDAgNDA3LjQzLTE4Mi43NyA0MDcuNDMtNDA3LjQyIDAt' +
+          'MjI0LjY2LTE4Mi43Ny00MDcuNDMtNDA3LjQzLTQwNy40M3oiIGZpbGw9IiM4YThh' +
+          'OGEiIHAtaWQ9IjIwNTExIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzMy43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNlbGVjdGVkIj48' +
+          'L3BhdGg+PHBhdGggZD0iTTQ4OS4zIDM3Ni41NnYtODYuOTFIMzU4LjMyYy0xNy44' +
+          'MyAwLTMyLjM2LTE0LjA4LTMyLjM2LTMxLjM1IDAtMTcuMjggMTQuNTQtMzEuMzUg' +
+          'MzIuMzYtMzEuMzVoMzE3LjM3YzE3LjgzIDAgMzIuMzYgMTQuMDggMzIuMzYgMzEu' +
+          'MzUgMCAxNy40Ni0xNC41MyAzMS4zNS0zMi4zNSAzMS4zNUg1NDQuOTF2ODYuOTFo' +
+          'MTAuMjZjMTIuMiAwIDIyLjA4IDkuNTcgMjIuMDggMjEuNHY1MS4xM2wtMTIwLjMy' +
+          'LTAuMTl2LTUwLjk0YzAtMTEuODMgOS44OC0yMS40IDIyLjA5LTIxLjRoMTAuMjh6' +
+          'TTI3My43NyA3MDkuODV2MzYuMDVjMCA1LjI1LTQuNDMgOS41Ny05Ljk5IDkuNTdo' +
+          'LTI1LjU2Yy01LjU3IDAtOS45OS00LjMyLTkuOTktOS43NlY1MTUuMTdjMC01LjQ0' +
+          'IDQuNDMtOS43NiA5Ljk5LTkuNzZoMjUuNTZjNS41NyAwIDkuOTkgNC4zMiA5Ljk5' +
+          'IDkuNzZ2NDYuOTRoODVjMy41NC00OC4yOSA0NC43NC04Ni4zNiA5NS4wNy04Ni4z' +
+          'NmgxMTcuNDNjNTAuMzMgMCA5MS41MyAzOC4wNyA5NS4wOSA4Ni4zNmg4NS4xOVY1' +
+          'MTQuOGMwLTUuMjUgNC4yMy05LjM4IDkuNjEtOS4zOGgyNi4xNGM1LjM4IDAgOS42' +
+          'IDQuMTMgOS42IDkuMzh2MjMxLjI4YzAuMTkgNS4yNi00LjIyIDkuMzktOS42MSA5' +
+          'LjM5aC0yNi4xNGMtNS4zOCAwLTkuNjEtNC4xMy05LjYxLTkuMzl2LTM2LjIzaC05' +
+          'MS40OWMtMTMuODkgMzQuNjItNDguMzkgNTkuMTMtODguNzggNTkuMTNINDUzLjg1' +
+          'Yy00MC4zOCAwLTc0Ljg5LTI0LjUtODguNzgtNTkuMTNoLTkxLjN6IG0wIDAiIGZp' +
+          'bGw9IiM4YThhOGEiIHAtaWQ9IjIwNTEyIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEz' +
+          'MTN4LnNlYXJjaF9pbmRleC4wLmkzNS43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNl' +
+          'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object TSSvgImageButton4: TTSSvgImageButton
+        Left = 13
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Connect'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/re' +
+          'mote connection_2_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzMzY4MTY1Mjg5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjI5MjIyIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik05' +
+          'MjAgNDk2SDc2OFYyMzIuMWE0MCA0MCAwIDAgMC00MC00MEg1MTJWMTA0YTQwIDQw' +
+          'IDAgMCAwLTQwLTQwSDEwNGE0MCA0MCAwIDAgMC00MCA0MHYyNDBhNDAgNDAgMCAw' +
+          'IDAgNDAgNDBoMzY4YTQwIDQwIDAgMCAwIDQwLTQwdi04Ny45aDE5MlY0OTZINTUy' +
+          'YTQwIDQwIDAgMCAwLTQwIDQwdjEwNEgzMjBWNTI4aDc0YTQgNCAwIDAgMCA0LTR2' +
+          'LTY0YTQgNCAwIDAgMC00LTRIMTgyYTQgNCAwIDAgMC00IDR2NjRhNCA0IDAgMCAw' +
+          'IDQgNGg3NHYxMzZhNDAgNDAgMCAwIDAgNDAgNDBoMjE2djcyYTQwIDQwIDAgMCAw' +
+          'IDQwIDQwaDM2OGE0MCA0MCAwIDAgMCA0MC00MFY1MzZhNDAgNDAgMCAwIDAtNDAt' +
+          'NDB6IG0tNzggMzkySDYzMGE0IDQgMCAwIDAtNCA0djY0YTQgNCAwIDAgMCA0IDRo' +
+          'MjEyYTQgNCAwIDAgMCA0LTR2LTY0YTQgNCAwIDAgMC00LTR6IiBwLWlkPSIyOTIy' +
+          'MyIgZmlsbD0iIzhhOGE4YSI+PC9wYXRoPjwvc3ZnPg0K'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnHandshaked: TTSSvgImageButton
+        Left = 107
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Handshaked'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Ha' +
+          'ndshake_4_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzNDM3NTU5ODc0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjI2NDcwIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzNi42ZjQwM2E4MU1ZUFo2dSIgeG1sbnM6eGxpbms9Imh0dHA6' +
+          'Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAw' +
+          'Ij48cGF0aCBkPSJNNTEyIDgzMmMtMjYuMTk3MzMzIDAtNjAuMDMyLTE0LjUwNjY2' +
+          'Ny03NS43MzMzMzMtMjQuODMyLTE5LjAyOTMzMy0xMi41MDEzMzMtMTE0LjUxNzMz' +
+          'My04NC4zMDkzMzMtMTkzLjk2MjY2Ny0xNTAuODI2NjY3LTEzLjIyNjY2Ny0xMS4w' +
+          'OTMzMzMtMzIuODk2LTMxLjY1ODY2Ny01MS45MjUzMzMtNTEuNTQxMzMzLTE0LjEy' +
+          'MjY2Ny0xNC43Mi0yNi45MjI2NjctMjguMjQ1MzMzLTMzLjUzNi0zMy44MzQ2Njdh' +
+          'MjEuMzMzMzMzIDIxLjMzMzMzMyAwIDAgMSAyNy41NjI2NjYtMzIuNTk3MzMzYzcu' +
+          'MjUzMzMzIDYuMTQ0IDIxLjM3NiAyMC43Nzg2NjcgMzYuODIxMzM0IDM2LjkwNjY2' +
+          'NyAxNy40MDggMTguMTc2IDM3LjEyIDM4Ljc0MTMzMyA0OC41MTIgNDguMzQxMzMz' +
+          'IDgxLjEwOTMzMyA2Ny45MjUzMzMgMTc1LjAxODY2NyAxMzcuOTg0IDE4OS45OTQ2' +
+          'NjYgMTQ3Ljg0IDEyLjUwMTMzMyA4LjI3NzMzMyAzOC4wNTg2NjcgMTcuODc3MzMz' +
+          'IDUyLjI2NjY2NyAxNy44NzczMzMgMTkuOTY4IDAgMjEuODAyNjY3LTUuMTIgMjIu' +
+          'NjEzMzMzLTcuMjUzMzMzYTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzQuNDc0' +
+          'NjY3LTguNDkwNjY3YzguNDkwNjY3IDcuNzY1MzMzIDE3Ljk2MjY2NyA2LjI3MiAy' +
+          'NC40OTA2NjcgMy43OTczMzRhNDAuNTMzMzMzIDQwLjUzMzMzMyAwIDAgMCAyNS4x' +
+          'NzMzMzMtMzIuNjgyNjY3IDIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzUuNzk3' +
+          'MzMzLTEzLjYxMDY2N2M1LjMzMzMzMyA0Ljk0OTMzMyAxOS41ODQgNi4xNDQgMzMu' +
+          'MjM3MzM0LTAuNzY4IDUuMzc2LTIuNjg4IDE3Ljc5Mi0xMC40NTMzMzMgMTYuMzQx' +
+          'MzMzLTI0LjAyMTMzM2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDMzLjMyMjY2' +
+          'Ny0xOS44NGM2LjI3MiA0LjM5NDY2NyAxNy44MzQ2NjcgMi4wOTA2NjcgMjYuMjgy' +
+          'NjY2LTUuMTYyNjY3YTI1LjAwMjY2NyAyNS4wMDI2NjcgMCAwIDAgNi4zNTczMzQt' +
+          'MzIuMDQyNjY2Yy0xNi0zMy4yOC04Ny4xMjUzMzMtOTAuNzk0NjY3LTE0OS44NDUz' +
+          'MzQtMTQxLjUyNTMzNC0zNC42ODgtMjguMDMyLTY3LjYyNjY2Ny01NC42OTg2Njct' +
+          'OTIuMDMyLTc3LjYxMDY2NmE0MTkuNjI2NjY3IDQxOS42MjY2NjcgMCAwIDAtMTQu' +
+          'OTMzMzMzIDYuNGMtMTEuMDkzMzMzIDQuOTkyLTE4LjQ3NDY2NyA4LjA2NC0zMi4w' +
+          'NDI2NjcgMTAuMTU0NjY2LTMyLjg1MzMzMyA0My42MDUzMzMtNzYuOTcwNjY3IDU4' +
+          'Ljg4LTEyNS4zMTIgNDIuOTIyNjY3LTE5LjI4NTMzMy02LjM1NzMzMy0zMi4yNTYt' +
+          'MjAuMDEwNjY3LTM2LjY1MDY2Ni0zOC40NDI2NjctMTAuMjQtNDMuMzA2NjY3IDI5' +
+          'LjM5NzMzMy0xMDIuMzU3MzMzIDU4LjU4MTMzMy0xMzEuNTQxMzMzIDc2LjY3Mi03' +
+          'Ni43MTQ2NjcgMTMwLjM0NjY2Ny0xMDUuNTE0NjY3IDIyOC4xODEzMzMtNjEuNzgx' +
+          'MzMzIDgzLjk2OCAzNy41ODkzMzMgMTY4LjEwNjY2NyA2Ni45ODY2NjcgMTY4Ljk2' +
+          'IDY3LjI4NTMzM2EyMS4zNzYgMjEuMzc2IDAgMCAxLTE0LjAzNzMzMyA0MC4zMmMt' +
+          'MC44NTMzMzMtMC4yOTg2NjctODYuNjk4NjY3LTMwLjI5MzMzMy0xNzIuMzczMzMz' +
+          'LTY4LjYwOC03NS41Mi0zMy43NDkzMzMtMTExLjI3NDY2Ny0xNi4zODQtMTgwLjYw' +
+          'OCA1Mi45OTItMjkuMTQxMzMzIDI5LjE0MTMzMy01MS42MjY2NjcgNzIuNzQ2NjY3' +
+          'LTQ3LjE0NjY2NyA5MS40NzczMzMgMC42NCAyLjczMDY2NyAxLjgzNDY2NyA1LjU4' +
+          'OTMzMyA4LjQ5MDY2NyA3LjgwOCAyMC44NjQgNi45OTczMzMgNTIuMDk2IDEwLjgz' +
+          'NzMzMyA4Mi4yNjEzMzMtMzQuMjYxMzMzYTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAw' +
+          'IDEgMTUuNjE2LTkuMzQ0YzE0LjM3ODY2Ny0xLjQ1MDY2NyAxNy45NjI2NjctMy4w' +
+          'NzIgMjguNjI5MzMzLTcuODUwNjY3IDYuOTk3MzMzLTMuMTE0NjY3IDE1Ljg3Mi03' +
+          'LjEyNTMzMyAzMC4yNTA2NjctMTIuMzMwNjY2YTIxLjMzMzMzMyAyMS4zMzMzMzMg' +
+          'MCAwIDEgMjIuMzE0NjY3IDQuOTkyYzIzLjMzODY2NyAyMy4zMzg2NjcgNTkuOTQ2' +
+          'NjY3IDUyLjk0OTMzMyA5OC42ODggODQuMjY2NjY2IDY5LjQ2MTMzMyA1Ni4xOTIg' +
+          'MTQxLjM1NDY2NyAxMTQuMzQ2NjY3IDE2MS40NTA2NjYgMTU2LjI0NTMzNCAxNC4x' +
+          'NjUzMzMgMjkuMzk3MzMzIDcuNDI0IDYxLjk5NDY2Ny0xNy4wNjY2NjYgODIuOTQ0' +
+          'YTY5Ljc2IDY5Ljc2IDAgMCAxLTQ4LjkzODY2NyAxNy41MzZjLTYuMTQ0IDE1LjQw' +
+          'MjY2Ny0xOC41MTczMzMgMjguNTg2NjY3LTM1LjYyNjY2NyAzNy4yMDUzMzMtMTcu' +
+          'NDkzMzMzIDguNzg5MzMzLTM2LjczNiAxMS4zMDY2NjctNTMuNTQ2NjY2IDcuNzIy' +
+          'NjY3YTg0LjA1MzMzMyA4NC4wNTMzMzMgMCAwIDEtNDQuNDE2IDQxLjAwMjY2NmMt' +
+          'MTYuNDI2NjY3IDYuNC0zMy40OTMzMzMgNi4zNTczMzMtNDguNTEyIDAuNTEyLTEx' +
+          'LjIyMTMzMyA5LjQyOTMzMy0yNy4zOTIgMTQuMjUwNjY3LTQ4LjQyNjY2NyAxNC4y' +
+          'NTA2Njd6IiBwLWlkPSIyNjQ3MSIgZGF0YS1zcG0tYW5jaG9yLWlkPSJhMzEzeC5z' +
+          'ZWFyY2hfaW5kZXguMC5pMzcuNmY0MDNhODFNWVBaNnUiIGNsYXNzPSJzZWxlY3Rl' +
+          'ZCIgZmlsbD0iIzhhOGE4YSI+PC9wYXRoPjxwYXRoIGQ9Ik00MjYuNjY2NjY3IDMy' +
+          'MEgyMzQuNjY2NjY3YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMC00Mi42NjY2' +
+          'NjdINDI2LjY2NjY2N2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDAgNDIuNjY2' +
+          'NjY3ek03OTAuOTk3MzMzIDY2MC41NjUzMzNhMjEuMzMzMzMzIDIxLjMzMzMzMyAw' +
+          'IDAgMS0xMS45NDY2NjYtMzkuMDRsNjIuMzc4NjY2LTQxLjg5ODY2NmEyMS4zMzMz' +
+          'MzMgMjEuMzMzMzMzIDAgMCAxIDIzLjgwOCAzNS40MTMzMzNsLTYyLjM3ODY2NiA0' +
+          'MS44OTg2NjdhMjEuMTYyNjY3IDIxLjE2MjY2NyAwIDAgMS0xMS44NjEzMzQgMy42' +
+          'MjY2NjZ6TTcyNS4zMzMzMzMgNzI1LjMzMzMzM2EyMS4yNDggMjEuMjQ4IDAgMCAx' +
+          'LTEzLjE4NC00LjU2NTMzM2MtMjIuNDg1MzMzLTE3Ljc0OTMzMy0xMTkuMjEwNjY3' +
+          'LTExOC41NzA2NjctMTMwLjE3Ni0xMzAuMDA1MzMzYTIxLjMzMzMzMyAyMS4zMzMz' +
+          'MzMgMCAxIDEgMzAuODA1MzM0LTI5LjUyNTMzNGM0Mi4yNCA0NC4wMzIgMTEwLjU0' +
+          'OTMzMyAxMTMuOTYyNjY3IDEyNS44MjQgMTI1Ljk5NDY2N0EyMS4zMzMzMzMgMjEu' +
+          'MzMzMzMzIDAgMCAxIDcyNS4zMzMzMzMgNzI1LjMzMzMzM3pNNjQwIDc2OGEyMS40' +
+          'MTg2NjcgMjEuNDE4NjY3IDAgMCAxLTEzLjMxMi00LjY1MDY2N2MtMzEuNjU4NjY3' +
+          'LTI1LjM0NC0xMDguMjg4LTEwOC4wNzQ2NjctMTA5LjA1Ni0xMDguODg1MzMzYTIx' +
+          'LjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzEuNDQ1MzMzLTI4Ljg4NTMzM2MxNC41' +
+          'MDY2NjcgMTUuNzg2NjY3IDc4LjcyIDg0LjAxMDY2NyAxMDQuMjc3MzM0IDEwNC40' +
+          'NDhBMjEuMzc2IDIxLjM3NiAwIDAgMSA2NDAgNzY4ek01NTQuNjY2NjY3IDgxMC42' +
+          'NjY2NjdhMjEuMjkwNjY3IDIxLjI5MDY2NyAwIDAgMS0xMy43Mzg2NjctNS4wMzQ2' +
+          'NjdjLTMxLjQ0NTMzMy0yNi41Mzg2NjctOTEuMDA4LTg5LjY4NTMzMy0xMDguNTAx' +
+          'MzMzLTEwOC40MTZhMjEuMzMzMzMzIDIxLjMzMzMzMyAwIDAgMSAzMS4xODkzMzMt' +
+          'MjkuMTQxMzMzYzEyLjE2IDEzLjAxMzMzMyA3NC40MTA2NjcgNzkuMjc0NjY3IDEw' +
+          'NC44MzIgMTA0LjkxNzMzM0EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDU1NC42' +
+          'NjY2NjcgODEwLjY2NjY2N3oiIHAtaWQ9IjI2NDcyIiBkYXRhLXNwbS1hbmNob3It' +
+          'aWQ9ImEzMTN4LnNlYXJjaF9pbmRleC4wLmkzOC42ZjQwM2E4MU1ZUFo2dSIgY2xh' +
+          'c3M9InNlbGVjdGVkIiBmaWxsPSIjOGE4YThhIj48L3BhdGg+PHBhdGggZD0iTTE0' +
+          'OS4zMzMzMzMgNjE4LjY2NjY2N2gtMTI4QTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAw' +
+          'IDEgMCA1OTcuMzMzMzMzVjIxMy4zMzMzMzNhMjEuMzMzMzMzIDIxLjMzMzMzMyAw' +
+          'IDAgMSAyMi42MTMzMzMtMjEuMjkwNjY2YzQzLjk0NjY2NyAyLjYwMjY2NyAxOTAu' +
+          'MTY1MzMzIDEzLjgyNCAyMjYuNzMwNjY3IDQ4LjQ2OTMzM2EyMS4yNDggMjEuMjQ4' +
+          'IDAgMCAxIDYuNTcwNjY3IDE3LjMyMjY2N2MtOS42ODUzMzMgMTEwLjkzMzMzMy04' +
+          'My4yIDMzNi41NTQ2NjctODYuMzE0NjY3IDM0Ni4xMTJhMjEuMzMzMzMzIDIxLjMz' +
+          'MzMzMyAwIDAgMS0yMC4yNjY2NjcgMTQuNzJ6IG0tMTA2LjY2NjY2Ni00Mi42NjY2' +
+          'NjdoOTEuMDkzMzMzYzE1Ljg3Mi01MC4wOTA2NjcgNjcuMDI5MzMzLTIxNi4xMDY2' +
+          'NjcgNzguMzM2LTMwOS41NDY2NjctMjYuODgtMTMuMDU2LTEwMC44NjQtMjQuODMy' +
+          'LTE2OS40MjkzMzMtMzAuMjUwNjY2VjU3NnpNMTAwMi42NjY2NjcgNjYxLjMzMzMz' +
+          'M2gtMTI4YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEtMjAuNTY1MzM0LTE1LjY1' +
+          'ODY2NmMtMTUuODcyLTU3LjUxNDY2Ny05OC40MzItMjkzLjI5MDY2Ny0xMjQuOC0z' +
+          'MzUuNzQ0YTIxLjI0OCAyMS4yNDggMCAwIDEgOS4wNDUzMzQtMzAuNTkyQzc0Mi4y' +
+          'MjkzMzMgMjc3LjU0NjY2NyA4MzUuMTU3MzMzIDIzNC42NjY2NjcgMTAwMi42NjY2' +
+          'NjcgMjM0LjY2NjY2N2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDIxLjMzMzMz' +
+          'MyAyMS4zMzMzMzN2Mzg0YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEtMjEuMzMz' +
+          'MzMzIDIxLjMzMzMzM3ogbS0xMTIuMDQyNjY3LTQyLjY2NjY2Nkg5ODEuMzMzMzMz' +
+          'VjI3Ny41ODkzMzNjLTEwMS41MDQgMi4zODkzMzMtMTcxLjQzNDY2NyAyMS4zNzYt' +
+          'MjAzLjk4OTMzMyAzMi40MjY2NjdDODEwLjY2NjY2NyAzODEuMDEzMzMzIDg3MC40' +
+          'IDU1Mi43ODkzMzMgODkwLjYyNCA2MTguNjY2NjY3eiIgcC1pZD0iMjY0NzMiIGRh' +
+          'dGEtc3BtLWFuY2hvci1pZD0iYTMxM3guc2VhcmNoX2luZGV4LjAuaTM1LjZmNDAz' +
+          'YTgxTVlQWjZ1IiBjbGFzcz0ic2VsZWN0ZWQiIGZpbGw9IiM4YThhOGEiPjwvcGF0' +
+          'aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnPumpPower: TTSSvgImageButton
+        Left = 277
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Pump Power'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/bu' +
+          'mpstation_1_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzNDM0MjYyMjI3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjEyODU1IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik04' +
+          'MTkuNDA5OTIgMzEwLjY3MTM2QTQxMC44MDMyIDQxMC44MDMyIDAgMSAxIDQ2MS44' +
+          'MjQgMTAyLjRjMS42OTQ3MiAwIDMuMzU4NzIgMC4xMDc1MiA1LjA0MzIgMC4xMjhM' +
+          'NDY2Ljk0NCAxMDIuNEg5NzIuOHYyMDguMjcxMzZoLTE1My4zOTAwOHpNODc1LjUy' +
+          'IDE3NC4wOEg0MjQuOTZsMC4xNDMzNi0wLjI0NTc2QTM0MC45NTEwNCAzNDAuOTUx' +
+          'MDQgMCAxIDAgNjY3LjMxNTIgMjQwLjY0aDEwMS45NDk0NGMwLjIxNTA0IDAuMjM1' +
+          'NTIgMC40NDU0NCAwLjQ1NTY4IDAuNjU1MzYgMC42OTYzMnYtMC4wODcwNGgxMDcu' +
+          'Njc4NzJ6IG0tMTk0LjU2IDQ0MC44MDEyOGwtMjAxLjk5NDI0IDAuMjYxMTJjLTU1' +
+          'LjM4MzA0IDk0LjAyMzY4LTE5My41MzYgMjkuNjk2LTIxOC44ODUxMiAyMC42NjQz' +
+          'MiAyMS44NjI0LTcuNTQxNzYgMTE5Ljk2NjcyLTExOS40OTA1NiAxMTkuOTY2NzIt' +
+          'MTE5LjQ5MDU2QzM4MC4wNTI0OCAzNjEuNjMwNzIgNTI0LjMxODcyIDMyMi41NiA1' +
+          'MjQuMzE4NzIgMzIyLjU2djE2NC43MDUyOGwtMC4wMzA3MiAxNi42MDQxNmMxMDQu' +
+          'NzgwOCAyMS40ODg2NCAxNTYuNjcyIDExMS4wMTE4NCAxNTYuNjcyIDExMS4wMTE4' +
+          'NHpNNDYxLjEyMjU2IDQ4MS40Mzg3MmE1MS4yIDUxLjIgMCAxIDAgNTEuMiA1MS4y' +
+          'IDUxLjIgNTEuMiAwIDAgMC01MS4yLTUxLjJ6IG0tMjA0Ljc0MzY4IDE1NC4xOTM5' +
+          'MmMtMS4xMjY0LTEuMjkwMjQgMC4zMTIzMi0xLjAyNCAzLjcwMTc2IDAuMTc0MDhh' +
+          'My4zNzQwOCAzLjM3NDA4IDAgMCAxLTMuNzAxNzYtMC4xNzQwOHoiIHAtaWQ9IjEy' +
+          'ODU2IiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJjaF9pbmRleC4wLmky' +
+          'NS42ZjQwM2E4MU1ZUFo2dSIgY2xhc3M9InNlbGVjdGVkIiBmaWxsPSIjOGE4YThh' +
+          'Ij48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnSystemPower: TTSSvgImageButton
+        Left = 189
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'System Power'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 4
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/sy' +
+          'stem_power_on_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzNDM0NzE3ODExIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjIyODk2IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik04' +
+          'NTMuMzc2IDQ2OS4zMTJoLTQyLjY4OFYyOTguNjg4aDQyLjY4OHYtMTI4aDg1LjMx' +
+          'MnYxMjhoNDIuNjg4djE3MC42MjRoLTQyLjY4OFY3NjhhMTI4IDEyOCAwIDAgMS0y' +
+          'NTYgMFY1OTcuMzEyaC04NS4zMTJ2MjEzLjM3Nkg2NDBWODk2SDg1LjM3NnYtODUu' +
+          'MzEySDEyOHYtNjQwQTQyLjY4OCA0Mi42ODggMCAwIDEgMTcwLjY4OCAxMjhoMzg0' +
+          'YTQyLjY4OCA0Mi42ODggMCAwIDEgNDIuNjg4IDQyLjY4OFY1MTJoODUuMzEyQTg1' +
+          'LjMxMiA4NS4zMTIgMCAwIDEgNzY4IDU5Ny4zMTJWNzY4YTQyLjY4OCA0Mi42ODgg' +
+          'MCAxIDAgODUuMzc2IDBWNDY5LjMxMnogbS00NjkuMzc2IDBWMjk4LjY4OGwtMTcw' +
+          'LjY4OCAyNTZoMTI4djE3MC42MjRsMTcwLjY4OC0yNTZIMzg0eiIgZmlsbD0iIzhh' +
+          'OGE4YSIgcC1pZD0iMjI4OTciPjwvcGF0aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnReliefValve: TTSSvgImageButton
+        Left = 365
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Relief Valve'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 5
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
+          'lve_Cycle_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzMzY3ODg3Nzc3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjIwNTEwIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzNC43NGY3M2E4MVlJVlNxViIgeG1sbnM6eGxpbms9Imh0dHA6' +
+          'Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAw' +
+          'Ij48cGF0aCBkPSJNNTExLjk5IDk1OS4zMWMtMjQ2LjY1IDAtNDQ3LjMxLTIwMC42' +
+          'Ni00NDcuMzEtNDQ3LjMgMC0yNDYuNjUgMjAwLjY2LTQ0Ny4zMiA0NDcuMzEtNDQ3' +
+          'LjMyczQ0Ny4zMiAyMDAuNjcgNDQ3LjMyIDQ0Ny4zMmMwIDI0Ni42NC0yMDAuNjYg' +
+          'NDQ3LjMtNDQ3LjMyIDQ0Ny4zeiBtMC04NTQuNzNjLTIyNC42NSAwLTQwNy40MiAx' +
+          'ODIuNzctNDA3LjQyIDQwNy40MyAwIDIyNC42NSAxODIuNzcgNDA3LjQyIDQwNy40' +
+          'MiA0MDcuNDIgMjI0LjY2IDAgNDA3LjQzLTE4Mi43NyA0MDcuNDMtNDA3LjQyIDAt' +
+          'MjI0LjY2LTE4Mi43Ny00MDcuNDMtNDA3LjQzLTQwNy40M3oiIGZpbGw9IiM4YThh' +
+          'OGEiIHAtaWQ9IjIwNTExIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzMy43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNlbGVjdGVkIj48' +
+          'L3BhdGg+PHBhdGggZD0iTTQ4OS4zIDM3Ni41NnYtODYuOTFIMzU4LjMyYy0xNy44' +
+          'MyAwLTMyLjM2LTE0LjA4LTMyLjM2LTMxLjM1IDAtMTcuMjggMTQuNTQtMzEuMzUg' +
+          'MzIuMzYtMzEuMzVoMzE3LjM3YzE3LjgzIDAgMzIuMzYgMTQuMDggMzIuMzYgMzEu' +
+          'MzUgMCAxNy40Ni0xNC41MyAzMS4zNS0zMi4zNSAzMS4zNUg1NDQuOTF2ODYuOTFo' +
+          'MTAuMjZjMTIuMiAwIDIyLjA4IDkuNTcgMjIuMDggMjEuNHY1MS4xM2wtMTIwLjMy' +
+          'LTAuMTl2LTUwLjk0YzAtMTEuODMgOS44OC0yMS40IDIyLjA5LTIxLjRoMTAuMjh6' +
+          'TTI3My43NyA3MDkuODV2MzYuMDVjMCA1LjI1LTQuNDMgOS41Ny05Ljk5IDkuNTdo' +
+          'LTI1LjU2Yy01LjU3IDAtOS45OS00LjMyLTkuOTktOS43NlY1MTUuMTdjMC01LjQ0' +
+          'IDQuNDMtOS43NiA5Ljk5LTkuNzZoMjUuNTZjNS41NyAwIDkuOTkgNC4zMiA5Ljk5' +
+          'IDkuNzZ2NDYuOTRoODVjMy41NC00OC4yOSA0NC43NC04Ni4zNiA5NS4wNy04Ni4z' +
+          'NmgxMTcuNDNjNTAuMzMgMCA5MS41MyAzOC4wNyA5NS4wOSA4Ni4zNmg4NS4xOVY1' +
+          'MTQuOGMwLTUuMjUgNC4yMy05LjM4IDkuNjEtOS4zOGgyNi4xNGM1LjM4IDAgOS42' +
+          'IDQuMTMgOS42IDkuMzh2MjMxLjI4YzAuMTkgNS4yNi00LjIyIDkuMzktOS42MSA5' +
+          'LjM5aC0yNi4xNGMtNS4zOCAwLTkuNjEtNC4xMy05LjYxLTkuMzl2LTM2LjIzaC05' +
+          'MS40OWMtMTMuODkgMzQuNjItNDguMzkgNTkuMTMtODguNzggNTkuMTNINDUzLjg1' +
+          'Yy00MC4zOCAwLTc0Ljg5LTI0LjUtODguNzgtNTkuMTNoLTkxLjN6IG0wIDAiIGZp' +
+          'bGw9IiM4YThhOGEiIHAtaWQ9IjIwNTEyIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEz' +
+          'MTN4LnNlYXJjaF9pbmRleC4wLmkzNS43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNl' +
+          'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnPressureValve: TTSSvgImageButton
+        Left = 541
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Pressure Valve'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 6
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
+          'lve_Cycle_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzMzY3ODg3Nzc3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjIwNTEwIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzNC43NGY3M2E4MVlJVlNxViIgeG1sbnM6eGxpbms9Imh0dHA6' +
+          'Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAw' +
+          'Ij48cGF0aCBkPSJNNTExLjk5IDk1OS4zMWMtMjQ2LjY1IDAtNDQ3LjMxLTIwMC42' +
+          'Ni00NDcuMzEtNDQ3LjMgMC0yNDYuNjUgMjAwLjY2LTQ0Ny4zMiA0NDcuMzEtNDQ3' +
+          'LjMyczQ0Ny4zMiAyMDAuNjcgNDQ3LjMyIDQ0Ny4zMmMwIDI0Ni42NC0yMDAuNjYg' +
+          'NDQ3LjMtNDQ3LjMyIDQ0Ny4zeiBtMC04NTQuNzNjLTIyNC42NSAwLTQwNy40MiAx' +
+          'ODIuNzctNDA3LjQyIDQwNy40MyAwIDIyNC42NSAxODIuNzcgNDA3LjQyIDQwNy40' +
+          'MiA0MDcuNDIgMjI0LjY2IDAgNDA3LjQzLTE4Mi43NyA0MDcuNDMtNDA3LjQyIDAt' +
+          'MjI0LjY2LTE4Mi43Ny00MDcuNDMtNDA3LjQzLTQwNy40M3oiIGZpbGw9IiM4YThh' +
+          'OGEiIHAtaWQ9IjIwNTExIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
+          'aF9pbmRleC4wLmkzMy43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNlbGVjdGVkIj48' +
+          'L3BhdGg+PHBhdGggZD0iTTQ4OS4zIDM3Ni41NnYtODYuOTFIMzU4LjMyYy0xNy44' +
+          'MyAwLTMyLjM2LTE0LjA4LTMyLjM2LTMxLjM1IDAtMTcuMjggMTQuNTQtMzEuMzUg' +
+          'MzIuMzYtMzEuMzVoMzE3LjM3YzE3LjgzIDAgMzIuMzYgMTQuMDggMzIuMzYgMzEu' +
+          'MzUgMCAxNy40Ni0xNC41MyAzMS4zNS0zMi4zNSAzMS4zNUg1NDQuOTF2ODYuOTFo' +
+          'MTAuMjZjMTIuMiAwIDIyLjA4IDkuNTcgMjIuMDggMjEuNHY1MS4xM2wtMTIwLjMy' +
+          'LTAuMTl2LTUwLjk0YzAtMTEuODMgOS44OC0yMS40IDIyLjA5LTIxLjRoMTAuMjh6' +
+          'TTI3My43NyA3MDkuODV2MzYuMDVjMCA1LjI1LTQuNDMgOS41Ny05Ljk5IDkuNTdo' +
+          'LTI1LjU2Yy01LjU3IDAtOS45OS00LjMyLTkuOTktOS43NlY1MTUuMTdjMC01LjQ0' +
+          'IDQuNDMtOS43NiA5Ljk5LTkuNzZoMjUuNTZjNS41NyAwIDkuOTkgNC4zMiA5Ljk5' +
+          'IDkuNzZ2NDYuOTRoODVjMy41NC00OC4yOSA0NC43NC04Ni4zNiA5NS4wNy04Ni4z' +
+          'NmgxMTcuNDNjNTAuMzMgMCA5MS41MyAzOC4wNyA5NS4wOSA4Ni4zNmg4NS4xOVY1' +
+          'MTQuOGMwLTUuMjUgNC4yMy05LjM4IDkuNjEtOS4zOGgyNi4xNGM1LjM4IDAgOS42' +
+          'IDQuMTMgOS42IDkuMzh2MjMxLjI4YzAuMTkgNS4yNi00LjIyIDkuMzktOS42MSA5' +
+          'LjM5aC0yNi4xNGMtNS4zOCAwLTkuNjEtNC4xMy05LjYxLTkuMzl2LTM2LjIzaC05' +
+          'MS40OWMtMTMuODkgMzQuNjItNDguMzkgNTkuMTMtODguNzggNTkuMTNINDUzLjg1' +
+          'Yy00MC4zOCAwLTc0Ljg5LTI0LjUtODguNzgtNTkuMTNoLTkxLjN6IG0wIDAiIGZp' +
+          'bGw9IiM4YThhOGEiIHAtaWQ9IjIwNTEyIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEz' +
+          'MTN4LnNlYXJjaF9pbmRleC4wLmkzNS43NGY3M2E4MVlJVlNxViIgY2xhc3M9InNl' +
+          'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnFaultState: TTSSvgImageButton
+        Left = 717
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Fault'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 7
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/wa' +
+          'rning_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzNDMxMjE2OTAzIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjMyOTQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x' +
+          'OTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTgw' +
+          'My44NCA4OTcuNTM2SDMwMy4xMDRjLTQzLjAwOCAwLTc3LjMxMi0zNC44MTYtNzcu' +
+          'MzEyLTc3LjMxMiAwLTYuMTQ0IDUuMTItMTEuMjY0IDExLjI2NC0xMS4yNjRoNjMy' +
+          'LjgzMmM2LjE0NCAwIDExLjI2NCA1LjEyIDExLjI2NCAxMS4yNjQgMCA0My4wMDgt' +
+          'MzQuODE2IDc3LjMxMi03Ny4zMTIgNzcuMzEyek01NTMuNDcyIDE4MC43MzZjLTEy' +
+          'LjI4OCAwLTIyLjAxNi05LjcyOC0yMi4wMTYtMjIuMDE2Vjk3LjI4YzAtMTIuMjg4' +
+          'IDkuNzI4LTIyLjAxNiAyMi4wMTYtMjIuMDE2czIyLjAxNiA5LjcyOCAyMi4wMTYg' +
+          'MjIuMDE2djYxLjQ0YzAuNTEyIDEyLjI4OC05LjcyOCAyMi4wMTYtMjIuMDE2IDIy' +
+          'LjAxNnpNMzE4Ljk3NiAyNzAuODQ4Yy0xMC43NTIgNi4xNDQtMjQuMDY0IDIuNTYt' +
+          'MzAuMjA4LTguMTkybC0zMC43Mi01My4yNDhjLTYuMTQ0LTEwLjc1Mi0yLjU2LTI0' +
+          'LjA2NCA4LjE5Mi0zMC4yMDggMTAuNzUyLTYuMTQ0IDI0LjA2NC0yLjU2IDMwLjIw' +
+          'OCA4LjE5MmwzMC43MiA1My4yNDhjNi4xNDQgMTAuNzUyIDIuNTYgMjQuMDY0LTgu' +
+          'MTkyIDMwLjIwOHpNMjU2IDQzNi43MzZjLTMuNTg0IDExLjc3Ni0xNS44NzIgMTgu' +
+          'NDMyLTI3LjY0OCAxNC44NDhsLTU4Ljg4LTE3LjkyYy0xMS43NzYtMy41ODQtMTgu' +
+          'NDMyLTE1Ljg3Mi0xNC44NDgtMjcuNjQ4IDMuNTg0LTExLjc3NiAxNS44NzItMTgu' +
+          'NDMyIDI3LjY0OC0xNC44NDhsNTguODggMTcuOTJjMTEuNzc2IDMuNTg0IDE4LjQz' +
+          'MiAxNS44NzIgMTQuODQ4IDI3LjY0OHpNOTUxLjgwOCA0MDQuOTkyYzQuMDk2IDEx' +
+          'Ljc3Ni0yLjU2IDI0LjA2NC0xNC4zMzYgMjguMTZsLTU4LjM2OCAxOS40NTZjLTEx' +
+          'Ljc3NiA0LjA5Ni0yNC4wNjQtMi41Ni0yOC4xNi0xNC4zMzYtNC4wOTYtMTEuNzc2' +
+          'IDIuNTYtMjQuMDY0IDE0LjMzNi0yOC4xNmw1OC4zNjgtMTkuNDU2YzExLjc3Ni0z' +
+          'LjU4NCAyNC41NzYgMi41NiAyOC4xNiAxNC4zMzZ6TTg0MS4yMTYgMTc5LjJjMTAu' +
+          'NzUyIDYuMTQ0IDE0LjMzNiAxOS40NTYgOC4xOTIgMzAuMjA4bC0zMC43MiA1My4y' +
+          'NDhjLTYuMTQ0IDEwLjc1Mi0xOS40NTYgMTQuMzM2LTMwLjIwOCA4LjE5Mi0xMC43' +
+          'NTItNi4xNDQtMTQuMzM2LTE5LjQ1Ni04LjE5Mi0zMC4yMDhsMzAuNzItNTMuMjQ4' +
+          'YzYuMTQ0LTEwLjI0IDE5LjQ1Ni0xNC4zMzYgMzAuMjA4LTguMTkyek01NTMuNDcy' +
+          'IDIzOS4xMDRjLTEyNS40NCAwLTIyNi44MTYgMTAxLjM3Ni0yMjYuODE2IDIyNi44' +
+          'MTZ2MjU4LjU2YzAgMTguNDMyIDE0Ljg0OCAzMy4yOCAzMy4yOCAzMy4yOEg3NDcu' +
+          'NTJjMTguNDMyIDAgMzMuMjgtMTQuODQ4IDMzLjI4LTMzLjI4VjQ2NS45MmMtMC41' +
+          'MTItMTI1LjQ0LTEwMS44ODgtMjI2LjgxNi0yMjcuMzI4LTIyNi44MTZ6IG02OC4w' +
+          'OTYgMjU0LjQ2NEw1NjMuMiA2MjkuMjQ4Yy0xLjUzNiA0LjA5Ni03LjY4IDMuMDcy' +
+          'LTguMTkyLTEuMDI0bC0xMS4yNjQtODIuNDMyYy0wLjUxMi0yLjA0OC0yLjA0OC0z' +
+          'LjU4NC00LjA5Ni0zLjU4NGgtNDkuNjY0Yy0zLjA3MiAwLTUuMTItMy4wNzItNC4w' +
+          'OTYtNi4xNDRsNTguMzY4LTEzNS42OGMxLjUzNi00LjA5NiA3LjY4LTMuMDcyIDgu' +
+          'MTkyIDEuMDI0bDExLjI2NCA4Mi40MzJjMC41MTIgMi4wNDggMi4wNDggMy41ODQg' +
+          'NC4wOTYgMy41ODRoNDkuNjY0YzMuMDcyIDAgNS4xMiAzLjA3MiA0LjA5NiA2LjE0' +
+          'NHoiIHAtaWQ9IjMyOTUiIGZpbGw9IiM4YThhOGEiPjwvcGF0aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+      object svgbtnProtection: TTSSvgImageButton
+        Left = 629
+        Top = 6
+        Width = 80
+        Height = 40
+        Cursor = crArrow
+        BevelOuter = bvNone
+        Caption = 'Protection'
+        Locked = True
+        TabOrder = 8
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/pr' +
+          'otection_3_gray.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NzIzNDMxNzA0OTIxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9Ijk3ODYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x' +
+          'OTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTU3' +
+          'MC42IDg0NC4zTDUxMiA4ODMuOWwtNTguNi0zOS42QzI4OC4xIDczMi40IDE5MCA1' +
+          'NTEuOCAxOTAgMzU5LjNWMjQ3LjdsMzIyLTEyMy4yIDMyMiAxMjMuMnYxMTEuNWMw' +
+          'IDE5Mi42LTk4LjIgMzczLjItMjYzLjQgNDg1LjF6IiBmaWxsPSIjOGE4YThhIiBw' +
+          'LWlkPSI5Nzg3IiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJjaF9pbmRl' +
+          'eC4wLmkxNy42ZjQwM2E4MU1ZUFo2dSIgY2xhc3M9InNlbGVjdGVkIj48L3BhdGg+' +
+          'PHBhdGggZD0iTTQ3Ni4yIDU4Ni40Yy04IDAtMTUuNi0zLjItMjEuMi04LjhsLTEx' +
+          'MC0xMTBjLTExLjctMTEuNy0xMS43LTMwLjcgMC00Mi40czMwLjctMTEuNyA0Mi40' +
+          'IDBsODguOCA4OC44IDE4My43LTE4My43YzExLjctMTEuNyAzMC43LTExLjcgNDIu' +
+          'NCAwczExLjcgMzAuNyAwIDQyLjRMNDk3LjQgNTc3LjZjLTUuNiA1LjctMTMuMiA4' +
+          'LjgtMjEuMiA4Ljh6IiBmaWxsPSIjRkZGRkZGIiBwLWlkPSI5Nzg4Ij48L3BhdGg+' +
+          'PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+      end
+    end
+    object pnlControl: TPanel
+      Left = 1
+      Top = 58
+      Width = 795
+      Height = 128
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlConfigure'
+      ShowCaption = False
+      TabOrder = 2
+      object btnSetPressure: TButton
+        Left = 192
+        Top = 83
+        Width = 102
+        Height = 26
+        Cursor = crArrow
+        Caption = 'Set Pressure'
+        ImageIndex = 332
+        Images = dmIcons.imgLstSmall
+        TabOrder = 0
+      end
+      object lbledtProtectionTime: TLabeledEdit
+        Left = 592
+        Top = 85
+        Width = 160
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 130
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Protection Time(minute)'
+        EditLabel.Transparent = True
+        NumbersOnly = True
+        TabOrder = 1
+        Text = '10'
+      end
+      object btnSetZero: TButton
+        Left = 32
+        Top = 83
+        Width = 102
+        Height = 26
+        Cursor = crArrow
+        Caption = 'Relieve Pressure'
+        ImageIndex = 439
+        Images = dmIcons.imgLstSmall
+        TabOrder = 2
+      end
+      object btnPowerOn: TButton
+        Left = 32
+        Top = 26
+        Width = 102
+        Height = 24
+        Cursor = crArrow
+        Caption = 'Power On'
+        ImageIndex = 268
+        Images = dmIcons.imgLstSmall
+        TabOrder = 3
+      end
+      object btnPowerOff: TButton
+        Left = 192
+        Top = 26
+        Width = 102
+        Height = 24
+        Cursor = crArrow
+        Caption = 'Power Off'
+        ImageIndex = 350
+        Images = dmIcons.imgLstSmall
+        TabOrder = 4
+      end
+      object lbledtTargetPressure: TLabeledEdit
+        Left = 352
+        Top = 85
+        Width = 160
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 104
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Target Pressure(bar)'
+        EditLabel.Transparent = True
+        NumbersOnly = True
+        TabOrder = 5
+        Text = '0.00'
+      end
+      object cbEnableProtection: TCheckBox
+        Left = 592
+        Top = 38
+        Width = 134
+        Height = 15
+        Cursor = crArrow
+        Caption = 'Enable Protection'
+        TabOrder = 6
+      end
+      object btnReset: TButton
+        Left = 352
+        Top = 26
+        Width = 102
+        Height = 24
+        Cursor = crArrow
+        Caption = 'Reset'
+        ImageIndex = 218
+        Images = dmIcons.imgLstSmall
+        TabOrder = 7
+      end
+    end
+    object pnlInfomation: TPanel
+      Left = 1
+      Top = 186
+      Width = 795
+      Height = 89
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlConfigure'
+      ShowCaption = False
+      TabOrder = 3
+      object ActivityIndicator1: TActivityIndicator
+        Left = 230
+        Top = 26
+        Cursor = crArrow
+      end
+      object lbledtOutputPressure: TLabeledEdit
+        Left = 40
+        Top = 46
+        Width = 154
+        Height = 31
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 110
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Output Pressure(bar)'
+        EditLabel.Transparent = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -20
+        Font.Name = 'Consolas'
+        Font.Style = []
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+        Text = '060.00 bar'
+      end
+      object lbledtPumpPressure: TLabeledEdit
+        Left = 600
+        Top = 46
+        Width = 154
+        Height = 31
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 104
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pump Pressure(bar)'
+        EditLabel.Transparent = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -20
+        Font.Name = 'Consolas'
+        Font.Style = []
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 2
+        Text = '060.00 bar'
+      end
+      object lbledtReserviorPressure: TLabeledEdit
+        Left = 320
+        Top = 46
+        Width = 154
+        Height = 31
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 120
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Reservior Pressure(bar)'
+        EditLabel.Transparent = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -20
+        Font.Name = 'Consolas'
+        Font.Style = []
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 3
+        Text = '060.00 bar'
+      end
+    end
+  end
+end
