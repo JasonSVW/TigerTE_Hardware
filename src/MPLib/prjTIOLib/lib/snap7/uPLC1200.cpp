@@ -1163,61 +1163,61 @@ void TServo::GetDataStopThread() {
 void TServo::RegisterSystemVars() {
     // todo: need set property or not
     if (plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
-        app.create_system_var((vMP_Name + "pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
-        app.create_system_var((vMP_Name + "pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
+        app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
+        app.create_system_var((vMP_Name + ".pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
     }
     else if (plcPedalSlope == FPLCType) {
-        app.create_system_var((vMP_Name + "pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
-        app.create_system_var((vMP_Name + "pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
-        app.create_system_var((vMP_Name + "rotate_degree").c_str(), svtDouble, 0, "Servo Slope Rotate Degree");
-        app.create_system_var((vMP_Name + "slope_grad").c_str(), svtDouble, 0, "Servo Slope Gradient");
+        app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
+        app.create_system_var((vMP_Name + ".pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
+        app.create_system_var((vMP_Name + ".rotate_degree").c_str(), svtDouble, 0, "Servo Slope Rotate Degree");
+        app.create_system_var((vMP_Name + ".slope_grad").c_str(), svtDouble, 0, "Servo Slope Gradient");
     }
     else if (plcPumpStation == FPLCType) {
-        app.create_system_var((vMP_Name + "ps_power_state").c_str(), svtInt32, 0, "Pump servo system power state, 0 - power off, 1 - power on.");
-        app.create_system_var((vMP_Name + "ps_has_fault").c_str(), svtInt32, 0, "Pump servo system fault state, 0 - no fault, 1 - has fault.");
-        app.create_system_var((vMP_Name + "ps_is_runing").c_str(), svtInt32, 0, "Pump station, 0 - stop, 1 - running.");
-        app.create_system_var((vMP_Name + "ps_relief_valve_is_power_on").c_str(), svtInt32, 0, "Pump station relief valve, 0 - power off, 1 - power on.");
-        app.create_system_var((vMP_Name + "ps_reservior_valve_is_power_on").c_str(), svtInt32, 0, "Reservior output valve, 0 - power off, 1 - power on.");
-        app.create_system_var((vMP_Name + "ps_proportional_valve_is_power_on").c_str(), svtInt32, 0, "Pressure control proportional valve, 0 - power off, 1 - power on.");
-        app.create_system_var((vMP_Name + "ps_fan_is_running").c_str(), svtInt32, 0, "Cooling fan, 0 - stop, 1 - running.");
-        app.create_system_var((vMP_Name + "ps_output_pressure").c_str(), svtDouble, 0, "Pressure control proportional valve actully output pressure, bar.");
-        app.create_system_var((vMP_Name + "ps_output_flow").c_str(), svtDouble, 0, "Flow control proportional valve act output flow.");
-        app.create_system_var((vMP_Name + "ps_pump_pressure").c_str(), svtDouble, 0, "Pump output pressure, bar.");
-        app.create_system_var((vMP_Name + "ps_reservior_pressure").c_str(), svtDouble, 0, "Reservior pressure, bar.");
-        app.create_system_var((vMP_Name + "ps_target_pressure").c_str(), svtDouble, 0, "Pressure control proportional valve target output pressure, bar.");
+        app.create_system_var((vMP_Name + ".ps_power_state").c_str(), svtInt32, 0, "Pump servo system power state, 0 - power off, 1 - power on.");
+        app.create_system_var((vMP_Name + ".ps_has_fault").c_str(), svtInt32, 0, "Pump servo system fault state, 0 - no fault, 1 - has fault.");
+        app.create_system_var((vMP_Name + ".ps_is_runing").c_str(), svtInt32, 0, "Pump station, 0 - stop, 1 - running.");
+        app.create_system_var((vMP_Name + ".ps_relief_valve_is_power_on").c_str(), svtInt32, 0, "Pump station relief valve, 0 - power off, 1 - power on.");
+        app.create_system_var((vMP_Name + ".ps_reservior_valve_is_power_on").c_str(), svtInt32, 0, "Reservior output valve, 0 - power off, 1 - power on.");
+        app.create_system_var((vMP_Name + ".ps_proportional_valve_is_power_on").c_str(), svtInt32, 0, "Pressure control proportional valve, 0 - power off, 1 - power on.");
+        app.create_system_var((vMP_Name + ".ps_fan_is_running").c_str(), svtInt32, 0, "Cooling fan, 0 - stop, 1 - running.");
+        app.create_system_var((vMP_Name + ".ps_output_pressure").c_str(), svtDouble, 0, "Pressure control proportional valve actully output pressure, bar.");
+        app.create_system_var((vMP_Name + ".ps_output_flow").c_str(), svtDouble, 0, "Flow control proportional valve act output flow.");
+        app.create_system_var((vMP_Name + ".ps_pump_pressure").c_str(), svtDouble, 0, "Pump output pressure, bar.");
+        app.create_system_var((vMP_Name + ".ps_reservior_pressure").c_str(), svtDouble, 0, "Reservior pressure, bar.");
+        app.create_system_var((vMP_Name + ".ps_target_pressure").c_str(), svtDouble, 0, "Pressure control proportional valve target output pressure, bar.");
     }
     else if (plcTurnTable == FPLCType) {
-        app.create_system_var((vMP_Name + "pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
+        app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
     }
 }
 
 void TServo::UnregisterSystemVars() {
     if (plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
-        app.delete_system_var((vMP_Name + "pedal_speed").c_str());
-        app.delete_system_var((vMP_Name + "pedal_position").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_position").c_str());
     }
     else if (plcPedalSlope == FPLCType) {
-        app.delete_system_var((vMP_Name + "pedal_speed").c_str());
-        app.delete_system_var((vMP_Name + "pedal_position").c_str());
-        app.delete_system_var((vMP_Name + "rotate_degree").c_str());
-        app.delete_system_var((vMP_Name + "slope_grad").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_position").c_str());
+        app.delete_system_var((vMP_Name + ".rotate_degree").c_str());
+        app.delete_system_var((vMP_Name + ".slope_grad").c_str());
     }
     else if (plcPumpStation == FPLCType) {
-        app.delete_system_var((vMP_Name + "ps_power_state").c_str());
-        app.delete_system_var((vMP_Name + "ps_has_fault").c_str());
-        app.delete_system_var((vMP_Name + "ps_is_runing").c_str());
-        app.delete_system_var((vMP_Name + "ps_relief_valve_is_power_on").c_str());
-        app.delete_system_var((vMP_Name + "ps_reservior_valve_is_power_on").c_str());
-        app.delete_system_var((vMP_Name + "ps_proportional_valve_is_power_on").c_str());
-        app.delete_system_var((vMP_Name + "ps_fan_is_running").c_str());
-        app.delete_system_var((vMP_Name + "ps_output_pressure").c_str());
-        app.delete_system_var((vMP_Name + "ps_output_flow").c_str());
-        app.delete_system_var((vMP_Name + "ps_pump_pressure").c_str());
-        app.delete_system_var((vMP_Name + "ps_reservior_pressure").c_str());
-        app.delete_system_var((vMP_Name + "ps_target_pressure").c_str());
-    }
+        app.delete_system_var((vMP_Name + ".ps_power_state").c_str());
+        app.delete_system_var((vMP_Name + ".ps_has_fault").c_str());
+        app.delete_system_var((vMP_Name + ".ps_is_runing").c_str());
+        app.delete_system_var((vMP_Name + ".ps_relief_valve_is_power_on").c_str());
+        app.delete_system_var((vMP_Name + ".ps_reservior_valve_is_power_on").c_str());
+        app.delete_system_var((vMP_Name + ".ps_proportional_valve_is_power_on").c_str());
+        app.delete_system_var((vMP_Name + ".ps_fan_is_running").c_str());
+        app.delete_system_var((vMP_Name + ".ps_output_pressure").c_str());
+        app.delete_system_var((vMP_Name + ".ps_output_flow").c_str());
+        app.delete_system_var((vMP_Name + ".ps_pump_pressure").c_str());
+        app.delete_system_var((vMP_Name + ".ps_reservior_pressure").c_str());
+        app.delete_system_var((vMP_Name + ".ps_target_pressure").c_str());
+    }                                      
     else if (plcTurnTable == FPLCType) {
-        app.delete_system_var((vMP_Name + "pedal_speed").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
     }
     
 }
@@ -3379,13 +3379,13 @@ int TServo::PS_Reset() {
 
 void TServo::SetFS1ActPosition(float Value) {
     FS1ActPosition = Value;
-    app.set_system_var_double((vMP_Name + "pedal_position").c_str(), Value);
+    app.set_system_var_double((vMP_Name + ".pedal_position").c_str(), Value);
 
 }
 
 void TServo::SetFS1ActSpeed(float Value) {
     FS1ActSpeed = Value;
-    app.set_system_var_double((vMP_Name + "pedal_speed").c_str(), Value);
+    app.set_system_var_double((vMP_Name + ".pedal_speed").c_str(), Value);
 }
 
 void TServo::SetFPedalIsSysMode(bool AEnable) {
@@ -3504,12 +3504,12 @@ void TServo::SetFS1ZeroExisted(bool Value) {
 void TServo::SetFS2ActPosition(float Value) {
     FS2ActPosition = Value;
     FS2ActPositionGrad = float(std::tan((FS2ActPosition - FS2MountPosition) * pi / 180) * 100);
-    app.set_system_var_double((vMP_Name + "rotate_degree").c_str(), Value);
+    app.set_system_var_double((vMP_Name + ".rotate_degree").c_str(), Value);
 }
 
 void TServo::SetFS2ActPositionGrad(float Value) {
     FS2ActPositionGrad = Value;
-    app.set_system_var_double((vMP_Name + "slope_grad").c_str(), Value);
+    app.set_system_var_double((vMP_Name + ".slope_grad").c_str(), Value);
 }
 
 void TServo::SetFS2ActSpeed(float Value) {
@@ -3750,7 +3750,7 @@ void TServo::SetFS7IsConnected(bool Value) {
 
 void TServo::SetFPSTargetPressure(float Value) {
     FPSTargetPressure = Value;
-    app.set_system_var_double((vMP_Name + "ps_target_pressure").c_str(), float(Value));
+    app.set_system_var_double((vMP_Name + ".ps_target_pressure").c_str(), float(Value));
     log("SetFPSTargetPressure: Pump Servo target pressure is: %0.2f bar", Value); // LVL_INFO
 }
 
@@ -3773,23 +3773,23 @@ void TServo::SetFPSMaxPressure(float Value) {
 
 void TServo::SetFPSActPressure(float Value) {
     FPSActPressure = Value;
-    app.set_system_var_double((vMP_Name + "ps_output_pressure").c_str(), float(Value));
+    app.set_system_var_double((vMP_Name + ".ps_output_pressure").c_str(), float(Value));
 
 }
 
 void TServo::SetFPSActFlow(float Value) {
     FPSActFlow = Value;
-    app.set_system_var_double((vMP_Name + "ps_output_flow").c_str(), float(Value));
+    app.set_system_var_double((vMP_Name + ".ps_output_flow").c_str(), float(Value));
 }
 
 void TServo::SetFPSPumpPressure(float Value) {
     FPSPumpPressure = Value;
-    app.set_system_var_double((vMP_Name + "ps_pump_pressure").c_str(), float(Value));
+    app.set_system_var_double((vMP_Name + ".ps_pump_pressure").c_str(), float(Value));
 }
 
 void TServo::SetFPSReserviorPressure(float Value) {
     FPSReserviorPressure = Value;
-    app.set_system_var_double((vMP_Name + "ps_reservior_pressure").c_str(), float(Value));
+    app.set_system_var_double((vMP_Name + ".ps_reservior_pressure").c_str(), float(Value));
 }
 
 void TServo::SetFPSIsPowerOn(bool AEnable) {
@@ -3800,7 +3800,7 @@ void TServo::SetFPSIsPowerOn(bool AEnable) {
             log("Pump servo system is power off!"); // LVL_INFO
     }
     FPSIsPowerOn = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_power_state").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_power_state").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsFault(bool AEnable) {
@@ -3811,7 +3811,7 @@ void TServo::SetFPSIsFault(bool AEnable) {
             log("Pump servo system is power off!"); // LVL_INFO
     }
     FPSIsFault = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_has_fault").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_has_fault").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsPumpRunning(bool AEnable) {
@@ -3822,7 +3822,7 @@ void TServo::SetFPSIsPumpRunning(bool AEnable) {
             log("Pump station is power off!"); // LVL_INFO
     }
     FPSIsPumpRunning = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_is_runing").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_is_runing").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsReliefValvePowerOn(bool AEnable) {
@@ -3833,7 +3833,7 @@ void TServo::SetFPSIsReliefValvePowerOn(bool AEnable) {
             log("Pump relief vavle is power off!"); // LVL_INFO
     }
     FPSIsReliefValvePowerOn = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_relief_valve_is_power_on").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_relief_valve_is_power_on").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsReserviorValvePowerOn(bool AEnable) {
@@ -3844,7 +3844,7 @@ void TServo::SetFPSIsReserviorValvePowerOn(bool AEnable) {
             log("Reservior valve is power off!"); // LVL_INFO
     }
     FPSIsReserviorValvePowerOn = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_reservior_valve_is_power_on").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_reservior_valve_is_power_on").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsProportionalValvePowerOn(bool AEnable) {
@@ -3855,7 +3855,7 @@ void TServo::SetFPSIsProportionalValvePowerOn(bool AEnable) {
             log("output control valve is power off!"); // LVL_INFO
     }
     FPSIsProportionalValvePowerOn = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_proportional_valve_is_power_on").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_proportional_valve_is_power_on").c_str(), int(AEnable));
 }
 
 void TServo::SetFPSIsFanRunning(bool AEnable) {
@@ -3866,7 +3866,7 @@ void TServo::SetFPSIsFanRunning(bool AEnable) {
             log("Pump station fan is off!"); // LVL_INFO
     }
     FPSIsFanRunning = AEnable;
-    app.set_system_var_int32((vMP_Name + "ps_fan_is_running").c_str(), int(AEnable));
+    app.set_system_var_int32((vMP_Name + ".ps_fan_is_running").c_str(), int(AEnable));
 }
 
 void TServo::SetFEnablePVProtection(bool AEnable) {
