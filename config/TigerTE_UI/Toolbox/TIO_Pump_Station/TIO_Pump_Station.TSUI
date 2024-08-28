@@ -1,12 +1,10 @@
 object frmVCLFormDesigner_1: TfrmVCLFormDesigner
-  Left = 109
-  Top = 199
+  Left = 10
+  Top = 10
   ActiveControl = lbledtIPAddress
-  Caption = 
-    #21516#26143#24037#20855#31665#31383#20307#35774#35745#22120' - svgbtnFaultState: TTSSvgImageButton; '#20301#32622' (896, 8, 99' +
-    '6, 58); '#23485': 100, '#39640': 50 [*TIO_Pump_Station.TSUI]'
-  ClientHeight = 363
-  ClientWidth = 797
+  Caption = #21516#26143#24037#20855#31665#31383#20307#35774#35745#22120' [*TIO_Pump_Station.TSUI]'
+  ClientHeight = 343
+  ClientWidth = 830
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +15,6 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   KeyPreview = True
   Position = poDesigned
   Visible = True
-  StyleName = 'Windows11 Dark'
   OnActivate = FormActivate
   OnClick = FormClick
   OnClose = FormClose
@@ -34,8 +31,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   object pnlBackground: TPanel
     Left = 0
     Top = 0
-    Width = 797
-    Height = 363
+    Width = 830
+    Height = 343
     Cursor = crArrow
     Align = alClient
     ShowCaption = False
@@ -43,7 +40,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
     object pnlConfigure: TPanel
       Left = 1
       Top = 1
-      Width = 795
+      Width = 828
       Height = 57
       Cursor = crArrow
       Align = alTop
@@ -89,15 +86,15 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
     object pnlStateLamp: TPanel
       Left = 1
       Top = 275
-      Width = 795
-      Height = 58
+      Width = 828
+      Height = 67
       Cursor = crArrow
-      Align = alTop
+      Align = alClient
       Caption = 'pnlConfigure'
       ShowCaption = False
       TabOrder = 1
       object svgbtnReserviorValve: TTSSvgImageButton
-        Left = 453
+        Left = 397
         Top = 6
         Width = 80
         Height = 40
@@ -112,9 +109,6 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ParentFont = False
         TabOrder = 0
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
-          'lve_Cycle_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -154,8 +148,9 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
-      object TSSvgImageButton4: TTSSvgImageButton
+      object svgbtnConnected: TTSSvgImageButton
         Left = 13
         Top = 6
         Width = 80
@@ -171,9 +166,6 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ParentFont = False
         TabOrder = 1
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/re' +
-          'mote connection_2_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -194,141 +186,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'MyIgZmlsbD0iIzhhOGE4YSI+PC9wYXRoPjwvc3ZnPg0K'
         ImageIndex = -1
         ImageStretch = False
-      end
-      object svgbtnHandshaked: TTSSvgImageButton
-        Left = 107
-        Top = 6
-        Width = 80
-        Height = 40
-        Cursor = crArrow
-        BevelOuter = bvNone
-        Caption = 'Handshaked'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -12
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 2
-        VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Ha' +
-          'ndshake_4_gray.svg'
-        SvgFileContent = 
-          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
-          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
-          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
-          'NzIzNDM3NTU5ODc0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
-          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
-          'dmciIHAtaWQ9IjI2NDcwIiBkYXRhLXNwbS1hbmNob3ItaWQ9ImEzMTN4LnNlYXJj' +
-          'aF9pbmRleC4wLmkzNi42ZjQwM2E4MU1ZUFo2dSIgeG1sbnM6eGxpbms9Imh0dHA6' +
-          'Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAw' +
-          'Ij48cGF0aCBkPSJNNTEyIDgzMmMtMjYuMTk3MzMzIDAtNjAuMDMyLTE0LjUwNjY2' +
-          'Ny03NS43MzMzMzMtMjQuODMyLTE5LjAyOTMzMy0xMi41MDEzMzMtMTE0LjUxNzMz' +
-          'My04NC4zMDkzMzMtMTkzLjk2MjY2Ny0xNTAuODI2NjY3LTEzLjIyNjY2Ny0xMS4w' +
-          'OTMzMzMtMzIuODk2LTMxLjY1ODY2Ny01MS45MjUzMzMtNTEuNTQxMzMzLTE0LjEy' +
-          'MjY2Ny0xNC43Mi0yNi45MjI2NjctMjguMjQ1MzMzLTMzLjUzNi0zMy44MzQ2Njdh' +
-          'MjEuMzMzMzMzIDIxLjMzMzMzMyAwIDAgMSAyNy41NjI2NjYtMzIuNTk3MzMzYzcu' +
-          'MjUzMzMzIDYuMTQ0IDIxLjM3NiAyMC43Nzg2NjcgMzYuODIxMzM0IDM2LjkwNjY2' +
-          'NyAxNy40MDggMTguMTc2IDM3LjEyIDM4Ljc0MTMzMyA0OC41MTIgNDguMzQxMzMz' +
-          'IDgxLjEwOTMzMyA2Ny45MjUzMzMgMTc1LjAxODY2NyAxMzcuOTg0IDE4OS45OTQ2' +
-          'NjYgMTQ3Ljg0IDEyLjUwMTMzMyA4LjI3NzMzMyAzOC4wNTg2NjcgMTcuODc3MzMz' +
-          'IDUyLjI2NjY2NyAxNy44NzczMzMgMTkuOTY4IDAgMjEuODAyNjY3LTUuMTIgMjIu' +
-          'NjEzMzMzLTcuMjUzMzMzYTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzQuNDc0' +
-          'NjY3LTguNDkwNjY3YzguNDkwNjY3IDcuNzY1MzMzIDE3Ljk2MjY2NyA2LjI3MiAy' +
-          'NC40OTA2NjcgMy43OTczMzRhNDAuNTMzMzMzIDQwLjUzMzMzMyAwIDAgMCAyNS4x' +
-          'NzMzMzMtMzIuNjgyNjY3IDIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzUuNzk3' +
-          'MzMzLTEzLjYxMDY2N2M1LjMzMzMzMyA0Ljk0OTMzMyAxOS41ODQgNi4xNDQgMzMu' +
-          'MjM3MzM0LTAuNzY4IDUuMzc2LTIuNjg4IDE3Ljc5Mi0xMC40NTMzMzMgMTYuMzQx' +
-          'MzMzLTI0LjAyMTMzM2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDMzLjMyMjY2' +
-          'Ny0xOS44NGM2LjI3MiA0LjM5NDY2NyAxNy44MzQ2NjcgMi4wOTA2NjcgMjYuMjgy' +
-          'NjY2LTUuMTYyNjY3YTI1LjAwMjY2NyAyNS4wMDI2NjcgMCAwIDAgNi4zNTczMzQt' +
-          'MzIuMDQyNjY2Yy0xNi0zMy4yOC04Ny4xMjUzMzMtOTAuNzk0NjY3LTE0OS44NDUz' +
-          'MzQtMTQxLjUyNTMzNC0zNC42ODgtMjguMDMyLTY3LjYyNjY2Ny01NC42OTg2Njct' +
-          'OTIuMDMyLTc3LjYxMDY2NmE0MTkuNjI2NjY3IDQxOS42MjY2NjcgMCAwIDAtMTQu' +
-          'OTMzMzMzIDYuNGMtMTEuMDkzMzMzIDQuOTkyLTE4LjQ3NDY2NyA4LjA2NC0zMi4w' +
-          'NDI2NjcgMTAuMTU0NjY2LTMyLjg1MzMzMyA0My42MDUzMzMtNzYuOTcwNjY3IDU4' +
-          'Ljg4LTEyNS4zMTIgNDIuOTIyNjY3LTE5LjI4NTMzMy02LjM1NzMzMy0zMi4yNTYt' +
-          'MjAuMDEwNjY3LTM2LjY1MDY2Ni0zOC40NDI2NjctMTAuMjQtNDMuMzA2NjY3IDI5' +
-          'LjM5NzMzMy0xMDIuMzU3MzMzIDU4LjU4MTMzMy0xMzEuNTQxMzMzIDc2LjY3Mi03' +
-          'Ni43MTQ2NjcgMTMwLjM0NjY2Ny0xMDUuNTE0NjY3IDIyOC4xODEzMzMtNjEuNzgx' +
-          'MzMzIDgzLjk2OCAzNy41ODkzMzMgMTY4LjEwNjY2NyA2Ni45ODY2NjcgMTY4Ljk2' +
-          'IDY3LjI4NTMzM2EyMS4zNzYgMjEuMzc2IDAgMCAxLTE0LjAzNzMzMyA0MC4zMmMt' +
-          'MC44NTMzMzMtMC4yOTg2NjctODYuNjk4NjY3LTMwLjI5MzMzMy0xNzIuMzczMzMz' +
-          'LTY4LjYwOC03NS41Mi0zMy43NDkzMzMtMTExLjI3NDY2Ny0xNi4zODQtMTgwLjYw' +
-          'OCA1Mi45OTItMjkuMTQxMzMzIDI5LjE0MTMzMy01MS42MjY2NjcgNzIuNzQ2NjY3' +
-          'LTQ3LjE0NjY2NyA5MS40NzczMzMgMC42NCAyLjczMDY2NyAxLjgzNDY2NyA1LjU4' +
-          'OTMzMyA4LjQ5MDY2NyA3LjgwOCAyMC44NjQgNi45OTczMzMgNTIuMDk2IDEwLjgz' +
-          'NzMzMyA4Mi4yNjEzMzMtMzQuMjYxMzMzYTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAw' +
-          'IDEgMTUuNjE2LTkuMzQ0YzE0LjM3ODY2Ny0xLjQ1MDY2NyAxNy45NjI2NjctMy4w' +
-          'NzIgMjguNjI5MzMzLTcuODUwNjY3IDYuOTk3MzMzLTMuMTE0NjY3IDE1Ljg3Mi03' +
-          'LjEyNTMzMyAzMC4yNTA2NjctMTIuMzMwNjY2YTIxLjMzMzMzMyAyMS4zMzMzMzMg' +
-          'MCAwIDEgMjIuMzE0NjY3IDQuOTkyYzIzLjMzODY2NyAyMy4zMzg2NjcgNTkuOTQ2' +
-          'NjY3IDUyLjk0OTMzMyA5OC42ODggODQuMjY2NjY2IDY5LjQ2MTMzMyA1Ni4xOTIg' +
-          'MTQxLjM1NDY2NyAxMTQuMzQ2NjY3IDE2MS40NTA2NjYgMTU2LjI0NTMzNCAxNC4x' +
-          'NjUzMzMgMjkuMzk3MzMzIDcuNDI0IDYxLjk5NDY2Ny0xNy4wNjY2NjYgODIuOTQ0' +
-          'YTY5Ljc2IDY5Ljc2IDAgMCAxLTQ4LjkzODY2NyAxNy41MzZjLTYuMTQ0IDE1LjQw' +
-          'MjY2Ny0xOC41MTczMzMgMjguNTg2NjY3LTM1LjYyNjY2NyAzNy4yMDUzMzMtMTcu' +
-          'NDkzMzMzIDguNzg5MzMzLTM2LjczNiAxMS4zMDY2NjctNTMuNTQ2NjY2IDcuNzIy' +
-          'NjY3YTg0LjA1MzMzMyA4NC4wNTMzMzMgMCAwIDEtNDQuNDE2IDQxLjAwMjY2NmMt' +
-          'MTYuNDI2NjY3IDYuNC0zMy40OTMzMzMgNi4zNTczMzMtNDguNTEyIDAuNTEyLTEx' +
-          'LjIyMTMzMyA5LjQyOTMzMy0yNy4zOTIgMTQuMjUwNjY3LTQ4LjQyNjY2NyAxNC4y' +
-          'NTA2Njd6IiBwLWlkPSIyNjQ3MSIgZGF0YS1zcG0tYW5jaG9yLWlkPSJhMzEzeC5z' +
-          'ZWFyY2hfaW5kZXguMC5pMzcuNmY0MDNhODFNWVBaNnUiIGNsYXNzPSJzZWxlY3Rl' +
-          'ZCIgZmlsbD0iIzhhOGE4YSI+PC9wYXRoPjxwYXRoIGQ9Ik00MjYuNjY2NjY3IDMy' +
-          'MEgyMzQuNjY2NjY3YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMC00Mi42NjY2' +
-          'NjdINDI2LjY2NjY2N2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDAgNDIuNjY2' +
-          'NjY3ek03OTAuOTk3MzMzIDY2MC41NjUzMzNhMjEuMzMzMzMzIDIxLjMzMzMzMyAw' +
-          'IDAgMS0xMS45NDY2NjYtMzkuMDRsNjIuMzc4NjY2LTQxLjg5ODY2NmEyMS4zMzMz' +
-          'MzMgMjEuMzMzMzMzIDAgMCAxIDIzLjgwOCAzNS40MTMzMzNsLTYyLjM3ODY2NiA0' +
-          'MS44OTg2NjdhMjEuMTYyNjY3IDIxLjE2MjY2NyAwIDAgMS0xMS44NjEzMzQgMy42' +
-          'MjY2NjZ6TTcyNS4zMzMzMzMgNzI1LjMzMzMzM2EyMS4yNDggMjEuMjQ4IDAgMCAx' +
-          'LTEzLjE4NC00LjU2NTMzM2MtMjIuNDg1MzMzLTE3Ljc0OTMzMy0xMTkuMjEwNjY3' +
-          'LTExOC41NzA2NjctMTMwLjE3Ni0xMzAuMDA1MzMzYTIxLjMzMzMzMyAyMS4zMzMz' +
-          'MzMgMCAxIDEgMzAuODA1MzM0LTI5LjUyNTMzNGM0Mi4yNCA0NC4wMzIgMTEwLjU0' +
-          'OTMzMyAxMTMuOTYyNjY3IDEyNS44MjQgMTI1Ljk5NDY2N0EyMS4zMzMzMzMgMjEu' +
-          'MzMzMzMzIDAgMCAxIDcyNS4zMzMzMzMgNzI1LjMzMzMzM3pNNjQwIDc2OGEyMS40' +
-          'MTg2NjcgMjEuNDE4NjY3IDAgMCAxLTEzLjMxMi00LjY1MDY2N2MtMzEuNjU4NjY3' +
-          'LTI1LjM0NC0xMDguMjg4LTEwOC4wNzQ2NjctMTA5LjA1Ni0xMDguODg1MzMzYTIx' +
-          'LjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEgMzEuNDQ1MzMzLTI4Ljg4NTMzM2MxNC41' +
-          'MDY2NjcgMTUuNzg2NjY3IDc4LjcyIDg0LjAxMDY2NyAxMDQuMjc3MzM0IDEwNC40' +
-          'NDhBMjEuMzc2IDIxLjM3NiAwIDAgMSA2NDAgNzY4ek01NTQuNjY2NjY3IDgxMC42' +
-          'NjY2NjdhMjEuMjkwNjY3IDIxLjI5MDY2NyAwIDAgMS0xMy43Mzg2NjctNS4wMzQ2' +
-          'NjdjLTMxLjQ0NTMzMy0yNi41Mzg2NjctOTEuMDA4LTg5LjY4NTMzMy0xMDguNTAx' +
-          'MzMzLTEwOC40MTZhMjEuMzMzMzMzIDIxLjMzMzMzMyAwIDAgMSAzMS4xODkzMzMt' +
-          'MjkuMTQxMzMzYzEyLjE2IDEzLjAxMzMzMyA3NC40MTA2NjcgNzkuMjc0NjY3IDEw' +
-          'NC44MzIgMTA0LjkxNzMzM0EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDU1NC42' +
-          'NjY2NjcgODEwLjY2NjY2N3oiIHAtaWQ9IjI2NDcyIiBkYXRhLXNwbS1hbmNob3It' +
-          'aWQ9ImEzMTN4LnNlYXJjaF9pbmRleC4wLmkzOC42ZjQwM2E4MU1ZUFo2dSIgY2xh' +
-          'c3M9InNlbGVjdGVkIiBmaWxsPSIjOGE4YThhIj48L3BhdGg+PHBhdGggZD0iTTE0' +
-          'OS4zMzMzMzMgNjE4LjY2NjY2N2gtMTI4QTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAw' +
-          'IDEgMCA1OTcuMzMzMzMzVjIxMy4zMzMzMzNhMjEuMzMzMzMzIDIxLjMzMzMzMyAw' +
-          'IDAgMSAyMi42MTMzMzMtMjEuMjkwNjY2YzQzLjk0NjY2NyAyLjYwMjY2NyAxOTAu' +
-          'MTY1MzMzIDEzLjgyNCAyMjYuNzMwNjY3IDQ4LjQ2OTMzM2EyMS4yNDggMjEuMjQ4' +
-          'IDAgMCAxIDYuNTcwNjY3IDE3LjMyMjY2N2MtOS42ODUzMzMgMTEwLjkzMzMzMy04' +
-          'My4yIDMzNi41NTQ2NjctODYuMzE0NjY3IDM0Ni4xMTJhMjEuMzMzMzMzIDIxLjMz' +
-          'MzMzMyAwIDAgMS0yMC4yNjY2NjcgMTQuNzJ6IG0tMTA2LjY2NjY2Ni00Mi42NjY2' +
-          'NjdoOTEuMDkzMzMzYzE1Ljg3Mi01MC4wOTA2NjcgNjcuMDI5MzMzLTIxNi4xMDY2' +
-          'NjcgNzguMzM2LTMwOS41NDY2NjctMjYuODgtMTMuMDU2LTEwMC44NjQtMjQuODMy' +
-          'LTE2OS40MjkzMzMtMzAuMjUwNjY2VjU3NnpNMTAwMi42NjY2NjcgNjYxLjMzMzMz' +
-          'M2gtMTI4YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEtMjAuNTY1MzM0LTE1LjY1' +
-          'ODY2NmMtMTUuODcyLTU3LjUxNDY2Ny05OC40MzItMjkzLjI5MDY2Ny0xMjQuOC0z' +
-          'MzUuNzQ0YTIxLjI0OCAyMS4yNDggMCAwIDEgOS4wNDUzMzQtMzAuNTkyQzc0Mi4y' +
-          'MjkzMzMgMjc3LjU0NjY2NyA4MzUuMTU3MzMzIDIzNC42NjY2NjcgMTAwMi42NjY2' +
-          'NjcgMjM0LjY2NjY2N2EyMS4zMzMzMzMgMjEuMzMzMzMzIDAgMCAxIDIxLjMzMzMz' +
-          'MyAyMS4zMzMzMzN2Mzg0YTIxLjMzMzMzMyAyMS4zMzMzMzMgMCAwIDEtMjEuMzMz' +
-          'MzMzIDIxLjMzMzMzM3ogbS0xMTIuMDQyNjY3LTQyLjY2NjY2Nkg5ODEuMzMzMzMz' +
-          'VjI3Ny41ODkzMzNjLTEwMS41MDQgMi4zODkzMzMtMTcxLjQzNDY2NyAyMS4zNzYt' +
-          'MjAzLjk4OTMzMyAzMi40MjY2NjdDODEwLjY2NjY2NyAzODEuMDEzMzMzIDg3MC40' +
-          'IDU1Mi43ODkzMzMgODkwLjYyNCA2MTguNjY2NjY3eiIgcC1pZD0iMjY0NzMiIGRh' +
-          'dGEtc3BtLWFuY2hvci1pZD0iYTMxM3guc2VhcmNoX2luZGV4LjAuaTM1LjZmNDAz' +
-          'YTgxTVlQWjZ1IiBjbGFzcz0ic2VsZWN0ZWQiIGZpbGw9IiM4YThhOGEiPjwvcGF0' +
-          'aD48L3N2Zz4NCg__'
-        ImageIndex = -1
-        ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnPumpPower: TTSSvgImageButton
-        Left = 277
+        Left = 205
         Top = 6
         Width = 80
         Height = 40
@@ -341,11 +202,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/bu' +
-          'mpstation_1_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -375,9 +233,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'Ij48L3BhdGg+PC9zdmc+DQo_'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnSystemPower: TTSSvgImageButton
-        Left = 189
+        Left = 109
         Top = 6
         Width = 80
         Height = 40
@@ -390,11 +249,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/sy' +
-          'stem_power_on_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -414,9 +270,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'OGE4YSIgcC1pZD0iMjI4OTciPjwvcGF0aD48L3N2Zz4NCg__'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnReliefValve: TTSSvgImageButton
-        Left = 365
+        Left = 301
         Top = 6
         Width = 80
         Height = 40
@@ -429,11 +286,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 4
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
-          'lve_Cycle_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -473,9 +327,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnPressureValve: TTSSvgImageButton
-        Left = 541
+        Left = 493
         Top = 6
         Width = 80
         Height = 40
@@ -488,11 +343,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 5
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/Va' +
-          'lve_Cycle_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -532,9 +384,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'bGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnFaultState: TTSSvgImageButton
-        Left = 717
+        Left = 685
         Top = 6
         Width = 80
         Height = 40
@@ -547,11 +400,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 6
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/wa' +
-          'rning_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -597,9 +447,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'NHoiIHAtaWQ9IjMyOTUiIGZpbGw9IiM4YThhOGEiPjwvcGF0aD48L3N2Zz4NCg__'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
       object svgbtnProtection: TTSSvgImageButton
-        Left = 629
+        Left = 589
         Top = 6
         Width = 80
         Height = 40
@@ -607,11 +458,8 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         BevelOuter = bvNone
         Caption = 'Protection'
         Locked = True
-        TabOrder = 8
+        TabOrder = 7
         VerticalAlignment = taAlignBottom
-        SvgFileName = 
-          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/src/res/pr' +
-          'otection_3_gray.svg'
         SvgFileContent = 
           'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
           'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
@@ -633,12 +481,13 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
           'PC9zdmc+DQo_'
         ImageIndex = -1
         ImageStretch = False
+        ReadOnly = True
       end
     end
     object pnlControl: TPanel
       Left = 1
       Top = 58
-      Width = 795
+      Width = 828
       Height = 128
       Cursor = crArrow
       Align = alTop
@@ -741,7 +590,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
     object pnlInfomation: TPanel
       Left = 1
       Top = 186
-      Width = 795
+      Width = 828
       Height = 89
       Cursor = crArrow
       Align = alTop
