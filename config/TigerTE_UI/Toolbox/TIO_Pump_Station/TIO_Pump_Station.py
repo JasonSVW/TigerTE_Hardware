@@ -84,6 +84,7 @@ class TIO_Pump_Station(frmTSForm):
             self.pnlBackground.Height = 343
             self.pnlBackground.Cursor = crArrow
             self.pnlBackground.Align = "alClient"
+            self.pnlBackground.ParentBackground = False
             self.pnlBackground.ShowCaption = "False"
             self.pnlBackground.TabOrder = 0
             # Create control: pnlConfigure = Panel(self)

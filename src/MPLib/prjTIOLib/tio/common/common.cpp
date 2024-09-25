@@ -10,32 +10,29 @@ std::string vMP_Name = "tio";
 #define INI_FILE "TIO\\TIOConfiguration.ini"
 
 std::string WideCharToMultiByte(const std::wstring& wstr) {
-    if (wstr.empty()) return std::string();
+    if(wstr.empty()) return std::string();
 
-    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), NULL, 0, NULL, NULL);
     std::string strTo(size_needed, 0);
-    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), &strTo[0], size_needed, NULL, NULL);
     return strTo;
 }
 
-std::string GetCurrentModuleName()
-{
+std::string GetCurrentModuleName() {
     wchar_t path[MAX_PATH];
     HMODULE hModule = NULL;
 
     // 使用 GetModuleHandleExW 代替 GetModuleHandleEx
-    if (GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+    if(GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
         GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-        (LPCWSTR)GetCurrentModuleName,
-        &hModule) == 0)
-    {
+        (LPCWSTR) GetCurrentModuleName,
+        &hModule) == 0) {
         // 处理错误
         return "tio";
     }
 
     // 使用 GetModuleFileNameW 代替 GetModuleFileName
-    if (GetModuleFileNameW(hModule, path, MAX_PATH) == 0)
-    {
+    if(GetModuleFileNameW(hModule, path, MAX_PATH) == 0) {
         // 处理错误
         return "tio";
     }
@@ -47,8 +44,7 @@ std::string GetCurrentModuleName()
 
     // 找到最后一个点号的位置
     size_t pos = filename.find_last_of(L'.');
-    if (pos != std::wstring::npos)
-    {
+    if(pos != std::wstring::npos) {
         // 提取不带后缀的名称
         return WideCharToMultiByte(filename.substr(0, pos));
     }
@@ -56,12 +52,12 @@ std::string GetCurrentModuleName()
 }
 
 void TTIOConfig::SaveConfig() {
-    if (FConfigIniFile.empty()) {
+    if(FConfigIniFile.empty()) {
         log_nok("Configuration file is not specified.");
         return;
     }
     std::ofstream file(FConfigIniFile);
-    if (!file.is_open()) {
+    if(!file.is_open()) {
         log_nok("Failed to open config file for writing"); // LVL_ERROR
         return;
     }
@@ -106,8 +102,16 @@ void TTIOConfig::SaveConfig() {
         WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", FPressure2CurrentOffset, currentSection);
         WriteFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", FAirValveMaxCurrent, currentSection);
         WriteFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", FPSMaxPressure, currentSection);
+        // add for pedal force control
+        WriteString(file, "SERVO_CONFIG", "PFC_MM2BAR_POSITION", FPFCPosVSPresPosition, currentSection);
+        WriteString(file, "SERVO_CONFIG", "PFC_MM2BAR_PRESSURE", FPFCPosVSPresPressure, currentSection);
+        WriteString(file, "SERVO_CONFIG", "PFC_BAR2N_PRESSURE", FPFCPresVSForcePressure, currentSection);
+        WriteString(file, "SERVO_CONFIG", "PFC_BAR2N_FORCE", FPFCPresVSForceForce, currentSection);
+        WriteFloat(file, "SERVO_CONFIG", "PFC_MAX_PRESSURE", FPFCMCMaxPressure, currentSection);
+        WriteBoolean(file, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED", FPFCPosVSPresIsCalibrated, currentSection);
+        WriteBoolean(file, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", FPFCPresVSForceIsCalibrated, currentSection);
     }
-    catch (const std::exception& e) {
+    catch(const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
     }
 
@@ -117,7 +121,7 @@ void TTIOConfig::SaveConfig() {
 bool TTIOConfig::GetConfigFile() {
     std::string AConfigFolder;
     char* s;
-    if (app.get_configuration_file_path(&s) == 0) {
+    if(app.get_configuration_file_path(&s) == 0) {
         AConfigFolder = std::string(s);
         FConfigIniFile = AConfigFolder + INI_FILE;
         return true;
@@ -128,12 +132,16 @@ bool TTIOConfig::GetConfigFile() {
 }
 
 void TTIOConfig::LoadConfigValue() {
-    if (FConfigIniFile.empty()) {
+    if(!GetConfigFile()) {
+        log_nok("Can not get TSMaster project configuration path.");
+        return;
+    }
+    if(FConfigIniFile.empty()) {
         log_nok("Configuration file is not specified.");
         return;
     }
     std::ifstream file(FConfigIniFile);
-    if (!file.is_open()) {
+    if(!file.is_open()) {
         log_nok("Failed to open config file for reading"); // LVL_ERROR
         return;
     }
@@ -183,8 +191,16 @@ void TTIOConfig::LoadConfigValue() {
         FAirValveMaxCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20);
         FAirValveMinCurrent = ReadFloat(file, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0);
         FPSMaxPressure = ReadFloat(file, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300.0f);
+        // add for pedal force control
+        FPFCPosVSPresPosition = ReadString(file, "SERVO_CONFIG", "PFC_MM2BAR_POSITION", "2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,39");
+        FPFCPosVSPresPressure = ReadString(file, "SERVO_CONFIG", "PFC_MM2BAR_PRESSURE", "0,4.61,12.32,21.72,30.83,40.87,52.45,62.913,74.826,87.937,97.975,109.684,123.429,133.466,145.334,158.626,168.975,180.509,191.315,194.547");
+        FPFCPresVSForcePressure = ReadString(file, "SERVO_CONFIG", "PFC_BAR2N_PRESSURE", "0,4.61,12.32,21.72,30.83,40.87,52.45,62.913,74.826,87.937,97.975,109.684,123.429,133.466,145.334,158.626,168.975,180.509,191.315,194.547");
+        FPFCPresVSForceForce = ReadString(file, "SERVO_CONFIG", "PFC_BAR2N_FORCE", "821,2042,4950.5,8512,11862.5,15861,20109,24206,28814,33759.5,37602.5,42190,47237.5,51013.5,55599,60658,64566,68975.5,73010.5,74257.5");
+        FPFCMCMaxPressure = ReadFloat(file, "SERVO_CONFIG", "PFC_MAX_PRESSURE", 0.0f);
+        FPFCPosVSPresIsCalibrated = ReadBoolean(file, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED", false);
+        FPFCPresVSForceIsCalibrated = ReadBoolean(file, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", false);
     }
-    catch (const std::exception& e) {
+    catch(const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
     }
 
@@ -192,30 +208,30 @@ void TTIOConfig::LoadConfigValue() {
 }
 
 void TTIOConfig::InitIniFile() {
-    if (!GetConfigFile()) {
+    if(!GetConfigFile()) {
         log_nok("Can not get TSMaster project configuration path.");
         return;
     }
     std::ifstream readFile(FConfigIniFile);
-    if (!readFile.is_open()) {
+    if(!readFile.is_open()) {
         log_hint("Failed to open config file for initialization, new config file will be created."); // LVL_ERROR
 
         // 尝试创建文件所在的文件夹
         try {
             std::filesystem::path filePath(FConfigIniFile);
             std::filesystem::path directory = filePath.parent_path();
-            if (!std::filesystem::exists(directory)) {
+            if(!std::filesystem::exists(directory)) {
                 std::filesystem::create_directories(directory);
             }
         }
-        catch (const std::filesystem::filesystem_error& e) {
+        catch(const std::filesystem::filesystem_error& e) {
             log_nok(std::string("Failed to create directory for config file: ").append(e.what()).c_str()); // LVL_ERROR
             return;
         }
 
         // 尝试创建新的ini文件
         std::ofstream newFile(FConfigIniFile);
-        if (!newFile.is_open()) {
+        if(!newFile.is_open()) {
             log_nok("Failed to create new config file"); // LVL_ERROR
             return;
         }
@@ -223,14 +239,14 @@ void TTIOConfig::InitIniFile() {
 
         // 重新打开文件进行读写
         readFile.open(FConfigIniFile);
-        if (!readFile.is_open()) {
+        if(!readFile.is_open()) {
             log_nok("Failed to reopen newly created config file"); // LVL_ERROR
             return;
         }
     }
 
     std::ofstream writeFile(FConfigIniFile, std::ios::app); // 使用 std::ios::app 追加模式打开文件
-    if (!writeFile.is_open()) {
+    if(!writeFile.is_open()) {
         log_nok("Failed to open config file for writing"); // LVL_ERROR
         return;
     }
@@ -240,88 +256,103 @@ void TTIOConfig::InitIniFile() {
 
     try {
         // form related
-        if (!ValueExists(readFile, "TIO_CONFIG", "MAPPING_FORM"))
+        if(!ValueExists(readFile, "TIO_CONFIG", "MAPPING_FORM"))
             WriteBoolean(writeFile, "TIO_CONFIG", "MAPPING_FORM", true, currentSection);
-        if (!ValueExists(readFile, "TIO_CONFIG", "DELTA_FORM"))
+        if(!ValueExists(readFile, "TIO_CONFIG", "DELTA_FORM"))
             WriteBoolean(writeFile, "TIO_CONFIG", "DELTA_FORM", true, currentSection);
-        if (!ValueExists(readFile, "TIO_CONFIG", "ITECH_FORM"))
+        if(!ValueExists(readFile, "TIO_CONFIG", "ITECH_FORM"))
             WriteBoolean(writeFile, "TIO_CONFIG", "ITECH_FORM", true, currentSection);
-        if (!ValueExists(readFile, "TIO_CONFIG", "AMP_FORM"))
+        if(!ValueExists(readFile, "TIO_CONFIG", "AMP_FORM"))
             WriteBoolean(writeFile, "TIO_CONFIG", "AMP_FORM", true, currentSection);
-        if (!ValueExists(readFile, "TIO_CONFIG", "SERVO_FORM"))
+        if(!ValueExists(readFile, "TIO_CONFIG", "SERVO_FORM"))
             WriteBoolean(writeFile, "TIO_CONFIG", "SERVO_FORM", true, currentSection);
         // delta power related
-        if (!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_IP"))
+        if(!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_IP"))
             WriteString(writeFile, "DELTA_POWER_CONFIG", "DELTA_POWER_IP", "192.168.1.101", currentSection);
-        if (!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_PORT"))
+        if(!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_PORT"))
             WriteInteger(writeFile, "DELTA_POWER_CONFIG", "DELTA_POWER_PORT", 8462, currentSection);
-        if (!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_AUTO_CONNECT"))
+        if(!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_AUTO_CONNECT"))
             WriteBoolean(writeFile, "DELTA_POWER_CONFIG", "DELTA_POWER_AUTO_CONNECT", false, currentSection);
-        if (!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_MAX_VOLTAGE"))
+        if(!ValueExists(readFile, "DELTA_POWER_CONFIG", "DELTA_POWER_MAX_VOLTAGE"))
             WriteFloat(writeFile, "DELTA_POWER_CONFIG", "DELTA_POWER_MAX_VOLTAGE", 20, currentSection);
         // itech power related
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_IP"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_IP"))
             WriteString(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_IP", "192.168.1.11", currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PORT"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PORT"))
             WriteInteger(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PORT", 30000, currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_TYPE"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_TYPE"))
             WriteInteger(writeFile, "ITECH_POWER_CONFIG", "ITECH_TYPE", 0, currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_AUTO_CONNECT"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_AUTO_CONNECT"))
             WriteBoolean(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_AUTO_CONNECT", false, currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PROTECT_VOLTAGE"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PROTECT_VOLTAGE"))
             WriteFloat(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_PROTECT_VOLTAGE", 16, currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MAX_CURRENT"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MAX_CURRENT"))
             WriteFloat(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MAX_CURRENT", 1, currentSection);
-        if (!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MIN_CURRENT"))
+        if(!ValueExists(readFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MIN_CURRENT"))
             WriteFloat(writeFile, "ITECH_POWER_CONFIG", "ITECH_POWER_MIN_CURRENT", -1, currentSection);
         // amp power related
-        if (!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_IP"))
+        if(!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_IP"))
             WriteString(writeFile, "AMP_POWER_CONFIG", "AMP_POWER_IP", "192.168.1.100", currentSection);
-        if (!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_PORT"))
+        if(!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_PORT"))
             WriteInteger(writeFile, "AMP_POWER_CONFIG", "AMP_POWER_PORT", 2001, currentSection);
-        if (!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_AUTO_CONNECT"))
+        if(!ValueExists(readFile, "AMP_POWER_CONFIG", "AMP_POWER_AUTO_CONNECT"))
             WriteBoolean(writeFile, "AMP_POWER_CONFIG", "AMP_POWER_AUTO_CONNECT", false, currentSection);
         // amp load related
-        if (!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_IP"))
+        if(!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_IP"))
             WriteString(writeFile, "AMP_LOAD_CONFIG", "AMP_LOAD_IP", "192.168.1.100", currentSection);
-        if (!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_PORT"))
+        if(!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_PORT"))
             WriteInteger(writeFile, "AMP_LOAD_CONFIG", "AMP_LOAD_PORT", 2001, currentSection);
-        if (!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AUTO_CONNECT"))
+        if(!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AUTO_CONNECT"))
             WriteBoolean(writeFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AUTO_CONNECT", false, currentSection);
-        if (!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AVAILABLE"))
+        if(!ValueExists(readFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AVAILABLE"))
             WriteBoolean(writeFile, "AMP_LOAD_CONFIG", "AMP_LOAD_AVAILABLE", false, currentSection);
         // servo related
-        if (!ValueExists(readFile, "SERVO_CONFIG", "ROTATE_SERVO_AVAILABLE"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "ROTATE_SERVO_AVAILABLE"))
             WriteBoolean(writeFile, "SERVO_CONFIG", "ROTATE_SERVO_AVAILABLE", false, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_AVAILABLE"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_AVAILABLE"))
             WriteBoolean(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_AVAILABLE", false, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "SERVO_AUTO_CONNECT"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "SERVO_AUTO_CONNECT"))
             WriteBoolean(writeFile, "SERVO_CONFIG", "SERVO_AUTO_CONNECT", false, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "SERVO2_MOUNT_ANGLE"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "SERVO2_MOUNT_ANGLE"))
             WriteFloat(writeFile, "SERVO_CONFIG", "SERVO2_MOUNT_ANGLE", 0, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "SERVO2_SPEED"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "SERVO2_SPEED"))
             WriteFloat(writeFile, "SERVO_CONFIG", "SERVO2_SPEED", 2, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "SERVO1_MAX_POSITION"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "SERVO1_MAX_POSITION"))
             WriteFloat(writeFile, "SERVO_CONFIG", "SERVO1_MAX_POSITION", 20, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "SERVO1_MIN_POSITION"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "SERVO1_MIN_POSITION"))
             WriteFloat(writeFile, "SERVO_CONFIG", "SERVO1_MIN_POSITION", 0, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "S7_IP"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "S7_IP"))
             WriteString(writeFile, "SERVO_CONFIG", "S7_IP", "192.168.1.1", currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_MAX"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_MAX"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_MAX", 150, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_FACTOR", 0.0597f, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_OFFSET", 4, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MAX", 20, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN"))
             WriteFloat(writeFile, "SERVO_CONFIG", "AIR_CYLINDER_CURRENT_MIN", 0, currentSection);
-        if (!ValueExists(readFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX"))
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX"))
             WriteFloat(writeFile, "SERVO_CONFIG", "PUMP_STATION_PRESSURE_MAX", 300.0f, currentSection);
+        // add for pedal force control
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_MM2BAR_POSITION"))
+            WriteString(writeFile, "SERVO_CONFIG", "PFC_MM2BAR_POSITION", "2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,39", currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_MM2BAR_PRESSURE"))
+            WriteString(writeFile, "SERVO_CONFIG", "PFC_MM2BAR_PRESSURE", "0,4.61,12.32,21.72,30.83,40.87,52.45,62.913,74.826,87.937,97.975,109.684,123.429,133.466,145.334,158.626,168.975,180.509,191.315,194.547", currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_BAR2N_PRESSURE"))
+            WriteString(writeFile, "SERVO_CONFIG", "PFC_BAR2N_PRESSURE", "0,4.61,12.32,21.72,30.83,40.87,52.45,62.913,74.826,87.937,97.975,109.684,123.429,133.466,145.334,158.626,168.975,180.509,191.315,194.547", currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_BAR2N_FORCE"))
+            WriteString(writeFile, "SERVO_CONFIG", "PFC_BAR2N_FORCE", "821,2042,4950.5,8512,11862.5,15861,20109,24206,28814,33759.5,37602.5,42190,47237.5,51013.5,55599,60658,64566,68975.5,73010.5,74257.5", currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE"))
+            WriteFloat(writeFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE", 200.0f, currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED"))
+            WriteBoolean(writeFile, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED", false, currentSection);
+        if(!ValueExists(readFile, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED"))
+            WriteBoolean(writeFile, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", false, currentSection);
     }
 
-    catch (const std::exception& e) {
+    catch(const std::exception& e) {
         log_nok(std::string(e.what()).c_str()); // LVL_ERROR
     }
 
@@ -330,7 +361,7 @@ void TTIOConfig::InitIniFile() {
 }
 
 void TTIOConfig::WriteBoolean(std::ofstream& file, const std::string& section, const std::string& key, bool value, std::string& currentSection) {
-    if (currentSection != section) {
+    if(currentSection != section) {
         file << "[" << section << "]" << std::endl;
         currentSection = section;
     }
@@ -338,7 +369,7 @@ void TTIOConfig::WriteBoolean(std::ofstream& file, const std::string& section, c
 }
 
 void TTIOConfig::WriteString(std::ofstream& file, const std::string& section, const std::string& key, const std::string& value, std::string& currentSection) {
-    if (currentSection != section) {
+    if(currentSection != section) {
         file << "[" << section << "]" << std::endl;
         currentSection = section;
     }
@@ -346,7 +377,7 @@ void TTIOConfig::WriteString(std::ofstream& file, const std::string& section, co
 }
 
 void TTIOConfig::WriteInteger(std::ofstream& file, const std::string& section, const std::string& key, int32_t value, std::string& currentSection) {
-    if (currentSection != section) {
+    if(currentSection != section) {
         file << "[" << section << "]" << std::endl;
         currentSection = section;
     }
@@ -354,7 +385,7 @@ void TTIOConfig::WriteInteger(std::ofstream& file, const std::string& section, c
 }
 
 void TTIOConfig::WriteFloat(std::ofstream& file, const std::string& section, const std::string& key, float value, std::string& currentSection) {
-    if (currentSection != section) {
+    if(currentSection != section) {
         file << "[" << section << "]" << std::endl;
         currentSection = section;
     }
@@ -364,13 +395,13 @@ void TTIOConfig::WriteFloat(std::ofstream& file, const std::string& section, con
 bool TTIOConfig::ReadBoolean(std::ifstream& file, const std::string& section, const std::string& key, bool defaultValue) {
     std::string line;
     std::string currentSection;
-    while (std::getline(file, line)) {
-        if (line.front() == '[' && line.back() == ']') {
+    while(std::getline(file, line)) {
+        if(line.front() == '[' && line.back() == ']') {
             currentSection = line.substr(1, line.size() - 2);
         }
-        else if (currentSection == section) {
+        else if(currentSection == section) {
             size_t pos = line.find('=');
-            if (pos != std::string::npos && line.substr(0, pos) == key) {
+            if(pos != std::string::npos && line.substr(0, pos) == key) {
                 std::string value = line.substr(pos + 1);
                 return value == "true" || value == "1";
             }
@@ -382,13 +413,13 @@ bool TTIOConfig::ReadBoolean(std::ifstream& file, const std::string& section, co
 std::string TTIOConfig::ReadString(std::ifstream& file, const std::string& section, const std::string& key, const std::string& defaultValue) {
     std::string line;
     std::string currentSection;
-    while (std::getline(file, line)) {
-        if (line.front() == '[' && line.back() == ']') {
+    while(std::getline(file, line)) {
+        if(line.front() == '[' && line.back() == ']') {
             currentSection = line.substr(1, line.size() - 2);
         }
-        else if (currentSection == section) {
+        else if(currentSection == section) {
             size_t pos = line.find('=');
-            if (pos != std::string::npos && line.substr(0, pos) == key) {
+            if(pos != std::string::npos && line.substr(0, pos) == key) {
                 return line.substr(pos + 1);
             }
         }
@@ -399,13 +430,13 @@ std::string TTIOConfig::ReadString(std::ifstream& file, const std::string& secti
 int32_t TTIOConfig::ReadInteger(std::ifstream& file, const std::string& section, const std::string& key, int32_t defaultValue) {
     std::string line;
     std::string currentSection;
-    while (std::getline(file, line)) {
-        if (line.front() == '[' && line.back() == ']') {
+    while(std::getline(file, line)) {
+        if(line.front() == '[' && line.back() == ']') {
             currentSection = line.substr(1, line.size() - 2);
         }
-        else if (currentSection == section) {
+        else if(currentSection == section) {
             size_t pos = line.find('=');
-            if (pos != std::string::npos && line.substr(0, pos) == key) {
+            if(pos != std::string::npos && line.substr(0, pos) == key) {
                 return std::stoi(line.substr(pos + 1));
             }
         }
@@ -416,13 +447,13 @@ int32_t TTIOConfig::ReadInteger(std::ifstream& file, const std::string& section,
 float TTIOConfig::ReadFloat(std::ifstream& file, const std::string& section, const std::string& key, float defaultValue) {
     std::string line;
     std::string currentSection;
-    while (std::getline(file, line)) {
-        if (line.front() == '[' && line.back() == ']') {
+    while(std::getline(file, line)) {
+        if(line.front() == '[' && line.back() == ']') {
             currentSection = line.substr(1, line.size() - 2);
         }
-        else if (currentSection == section) {
+        else if(currentSection == section) {
             size_t pos = line.find('=');
-            if (pos != std::string::npos && line.substr(0, pos) == key) {
+            if(pos != std::string::npos && line.substr(0, pos) == key) {
                 return std::stof(line.substr(pos + 1));
             }
         }
@@ -433,13 +464,13 @@ float TTIOConfig::ReadFloat(std::ifstream& file, const std::string& section, con
 bool TTIOConfig::ValueExists(std::ifstream& file, const std::string& section, const std::string& key) {
     std::string line;
     std::string currentSection;
-    while (std::getline(file, line)) {
-        if (line.front() == '[' && line.back() == ']') {
+    while(std::getline(file, line)) {
+        if(line.front() == '[' && line.back() == ']') {
             currentSection = line.substr(1, line.size() - 2);
         }
-        else if (currentSection == section) {
+        else if(currentSection == section) {
             size_t pos = line.find('=');
-            if (pos != std::string::npos && line.substr(0, pos) == key) {
+            if(pos != std::string::npos && line.substr(0, pos) == key) {
                 return true;
             }
         }

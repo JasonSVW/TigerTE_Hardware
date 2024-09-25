@@ -2,7 +2,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   Left = 10
   Top = 10
   ActiveControl = lbledtIPAddress
-  Caption = #21516#26143#24037#20855#31665#31383#20307#35774#35745#22120' [*TIO_Pump_Station.TSUI]'
+  Caption = 'TOSUN Toolbox Form Designer [TIO_Pump_Station.TSUI]'
   ClientHeight = 343
   ClientWidth = 830
   Color = clBtnFace
@@ -15,18 +15,6 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   KeyPreview = True
   Position = poDesigned
   Visible = True
-  OnActivate = FormActivate
-  OnClick = FormClick
-  OnClose = FormClose
-  OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDragDrop = FormDragDrop
-  OnDragOver = FormDragOver
-  OnKeyDown = FormKeyDown
-  OnMouseEnter = FormMouseEnter
-  OnMouseLeave = FormMouseLeave
-  OnResize = FormResize
-  OnShow = FormShow
   TextHeight = 15
   object pnlBackground: TPanel
     Left = 0
@@ -35,6 +23,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
     Height = 343
     Cursor = crArrow
     Align = alClient
+    ParentBackground = False
     ShowCaption = False
     TabOrder = 0
     object pnlConfigure: TPanel
@@ -47,6 +36,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       Caption = 'pnlConfigure'
       ShowCaption = False
       TabOrder = 0
+      ExplicitWidth = 829
       object btnConnect: TButton
         Left = 32
         Top = 19
@@ -93,6 +83,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       Caption = 'pnlConfigure'
       ShowCaption = False
       TabOrder = 1
+      ExplicitWidth = 829
       object svgbtnReserviorValve: TTSSvgImageButton
         Left = 397
         Top = 6
@@ -494,6 +485,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       Caption = 'pnlConfigure'
       ShowCaption = False
       TabOrder = 2
+      ExplicitWidth = 829
       object btnSetPressure: TButton
         Left = 192
         Top = 83
@@ -597,6 +589,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       Caption = 'pnlConfigure'
       ShowCaption = False
       TabOrder = 3
+      ExplicitWidth = 829
       object ActivityIndicator1: TActivityIndicator
         Left = 230
         Top = 26

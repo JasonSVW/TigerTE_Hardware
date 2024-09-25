@@ -30,7 +30,7 @@ const int amCallBack = 2;
 const int DefaultTimeout = 1000;
 const float PositionMaxTol = 0.1f;
 
-typedef enum { plcPedal = 1, plcPedalSlope = 2, plcPedalCylinder = 3, plcTurnTable = 4, plcPumpStation = 5 } TPLCType;
+typedef enum { plcPedal = 1, plcPedalSlope = 2, plcPedalCylinder = 3, plcTurnTable = 4, plcPumpStation = 5, plcPedalForceControl = 6 } TPLCType;
 
 struct TDataRecord {
     int Area;
@@ -131,6 +131,24 @@ private:
     bool FPSIsProportionalValvePowerOn = false;
     bool FPSIsFanRunning = false;
     int FPSFaultCode = 0;
+    // add for pedal control master cylinder and caliper force
+    // also used in plcPedal
+    bool FPedalForceControlEnabled = false;
+    bool FMCP2FIsCalibrated = false;
+    bool FMCPos2PIsCalibrated = false;
+    float FMCMaxPressure = 200.0f;
+    float FMCActPressure = 0.0f;
+    float FMCCalibratedForce = 0.0f;
+    int FMCPosPresTableSize = 0;
+    int FMCPresForceTableSize = 0;
+    float FMCPosPresPressure[100] = {0};
+    float FMCPosPresPosition[100] = {0};
+    float FMCPresForceTablePressure[100] = {0};
+    float FMCPresForceTableForce[100] = {0};
+
+
+
+
     // related with multithread
     std::thread HeartbeatThread;
     std::atomic<bool> HeartbeatRunning;
@@ -238,10 +256,12 @@ private:
     void SetFPSIsProportionalValvePowerOn(bool AEnable);
     void SetFPSIsFanRunning(bool AEnable);
     void SetFEnablePVProtection(bool AEnable);
+    // add for pedal force control
+    void SetFMCActPressure(float Value);
 
 
 public:
-    TServo(TPLCType APLCType, bool AOnlyPedalServo);
+    TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceControl);
     ~TServo();
     int S7_Connection();
     int S7_Disconnection();
@@ -304,6 +324,12 @@ public:
     int PS_PowerOn(int ATimeout);
     int PS_PowerOff(int ATimeout);
     int PS_Reset();
+    // add for pedal force control
+    int S1_GoTargetForce_AutoMode_Syn(float AForceN, float ASpeedMMS, int ATimeout);
+    int S1_GoTargetForce_AutoMode_Asyn(float AForceN, float ASpeedMMS);
+    int S1_GoTargetForce_MMode_Syn(float AForceN, float ASpeedMMS, int ATimeout);
+    int S1_GoTargetForce_MMode_Asyn(float AForceN, float ASpeedMMS);
+    int S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS);
 };
 
 extern TServo* vServoObj;
@@ -324,6 +350,7 @@ int pedal_go_step_syn(float ARelPositionMM, float ASpeedMMpS, int ATimeout);
 int pedal_go_step_asyn(float ARelPositionMM, float ASpeedMMpS);
 int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout);
 int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
+int pedal_go_position_manual_mode_asyn(float AAbsPositionMM, float ASpeedMMpS);
 int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
 int pedal_go_step_percent_syn(float ARelPositionPercent, float ASpeedMMpS, int ATimeout);
 int pedal_go_step_percent_asyn(float ARelPositionPercent, float ASpeedMMpS);
@@ -370,4 +397,9 @@ int ps_power_off(int ATimeout);
 int ps_reset();
 int ps_set_pressure_asyn(float APressureBar, bool AEnableProtection);
 int ps_set_pressure_syn(float APressureBar, float AMaxTol, bool AEnableProtection, int ATimeout);
-
+// add for force control
+int pedal_force_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout);
+int pedal_force_apllied_asyn(float AForceN, float ASpeedMMpS);
+int pedal_force_manual_mode_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout);
+int pedal_force_manual_mode_apllied_asyn(float AForceN, float ASpeedMMpS);
+int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS);

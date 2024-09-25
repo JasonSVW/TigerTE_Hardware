@@ -55,6 +55,14 @@ public:
     float FAirValveMaxCurrent;
     float FAirValveMinCurrent;
     float FPSMaxPressure;
+    // servo pedal force control(FPC)
+    bool FPFCPosVSPresIsCalibrated;
+    bool FPFCPresVSForceIsCalibrated;
+    std::string FPFCPosVSPresPosition;
+    std::string FPFCPosVSPresPressure;
+    std::string FPFCPresVSForcePressure;
+    std::string FPFCPresVSForceForce;
+    float FPFCMCMaxPressure;
 
     bool GetConfigFile();
     void InitIniFile();

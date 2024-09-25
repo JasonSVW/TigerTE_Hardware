@@ -2,6 +2,9 @@
 #include "TSMaster.h"
 #include "common.h"
 #include <windows.h>
+#include <iostream>
+#include <sstream>
+#include <string>
 TServo* vServoObj = nullptr;
 //TServo* vServoObj2 = nullptr;
 
@@ -85,6 +88,7 @@ void mp_initialize_servo_lib_initialize(void) {
     app.add_system_constant("TIO.SERVO_TYPE_PEDAL_CYLINDER", int(plcPedalCylinder), "used to create a pedal with cylinder servo object.");
     app.add_system_constant("TIO.SERVO_TYPE_TURNTABLE", int(plcTurnTable), "used to create a truntable control servo object.");
     app.add_system_constant("TIO.SERVO_TYPE_PUMP", int(plcPumpStation), "used to create a pump station control servo object.");
+    app.add_system_constant("TIO.SERVO_TYPE_PEDAL_FORCE_CONTROL", int(plcPedalForceControl), "used to create a pump station control servo object.");
 }
 
 
@@ -99,7 +103,7 @@ int servo_check() {
 
 int servo_create() {
     if(vServoObj == nullptr) {
-        vServoObj = new TServo(plcPumpStation, true);
+        vServoObj = new TServo(plcPedal, true, true);
     }
     return 0;
 }
@@ -281,6 +285,21 @@ int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
     }
     return 0;
 }
+
+int pedal_go_position_manual_mode_asyn(float AAbsPositionMM, float ASpeedMMpS) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoAbsPos_MMode_Asyn(AAbsPositionMM, ASpeedMMpS);
+    }
+    return 0;
+}
+
 
 int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
     int result = servo_check();
@@ -595,7 +614,7 @@ int air_cylinder_push_pressure(float ATargetPressureBar) {
 int turntable_enable_control() {
     // todo: turntable
     if(vServoObj == nullptr) {
-        vServoObj = new TServo(plcTurnTable, true);
+        vServoObj = new TServo(plcTurnTable, true, false);
     }
 
     //if(!vServoObj->FSnap7IsLoaded) {
@@ -768,6 +787,148 @@ int ps_set_pressure_syn(float APressureBar, float AMaxTol, bool AEnableProtectio
     if(result != 0)
         return result;
     return vServoObj->PS_Set_Pressure_Syn(APressureBar, AMaxTol, AEnableProtection, ATimeout);
+}
+
+// add for ui manual mode
+
+
+
+// add for pedal force control
+int pedal_force_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoTargetForce_AutoMode_Syn(AForceN, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_force_apllied_asyn(float AForceN, float ASpeedMMpS) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoTargetForce_AutoMode_Asyn(AForceN, ASpeedMMpS);
+    }
+}
+
+int pedal_force_manual_mode_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoTargetForce_MMode_Syn(AForceN, ASpeedMMpS, ATimeout);
+    }
+}
+
+int pedal_force_manual_mode_apllied_asyn(float AForceN, float ASpeedMMpS) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoTargetForce_MMode_Asyn(AForceN, ASpeedMMpS);
+    }
+}
+
+int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_syn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_Force_Position_Table_Calibrate(APostionStepMM, ASpeedMMpS);
+    }
+
+}
+
+// linear 1-D lookup table
+float lookup_table_1D(float AInputValue, float* ABreakPoint, float* ATable, int ATableSize) {
+    int i = 0;
+    int j = ATableSize - 1;
+    int k;
+    double k_coe, b_offset;
+    float AOutputValue = 0;
+    while(i < j) {
+        k = (i + j) / 2;
+        if(ABreakPoint[k] < AInputValue) {
+            i = k + 1;
+        }
+        else {
+            j = k;
+        }
+    }
+
+    if(AInputValue < ABreakPoint[0]) {
+        AOutputValue = ATable[0];
+    }
+    else if(AInputValue > ABreakPoint[ATableSize - 1]) {
+        AOutputValue = ATable[ATableSize - 1];
+    }
+
+    else if(i == 0) {
+        AOutputValue = ATable[0];
+    }
+    else if(i == (ATableSize - 1)) {
+        AOutputValue = ATable[ATableSize - 1];
+    }
+    else {
+        k_coe = (ATable[i] - ATable[i - 1]) / (ABreakPoint[i] - ABreakPoint[i - 1]);
+        b_offset = ATable[i] - k_coe * ABreakPoint[i];
+        AOutputValue = k_coe * AInputValue + b_offset;
+    }
+    return AOutputValue;
+}
+
+// table converter
+std::string floatArrayToString(const float* arr, int n) {
+    std::stringstream ss;
+    for(int i = 0; i < n; ++i) {
+        if(i != 0) {
+            ss << ",";
+        }
+        ss << arr[i];
+    }
+    return ss.str();
+}
+
+int stringToFloatArray(const std::string& str, float* arr, int* length) {
+    std::stringstream ss(str);
+    std::string item;
+    int count = 0;
+
+    while(std::getline(ss, item, ',')) {
+        try {
+            arr[count++] = std::stof(item); // 尝试将字符串转换为float
+        }
+        catch(const std::invalid_argument& e) {
+            return -1; // 无效的浮点数格式
+        }
+        catch(const std::out_of_range& e) {
+            return -1; // 浮点数超出范围
+        }
+    }
+
+    *length = count;
+    return 0; // 成功
 }
 
 void ProcessMessages() {
@@ -1000,36 +1161,27 @@ void TS7Helper::SetWord(void* pval, uint16_t value) {
 }
 
 /* class TServo */
-TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo)
-    :FPLCType(APLCType), FS7IsOnlyPedal(AOnlyPedalServo), FS7IsConnected(false), FS7IsHandShaked(false), FS7IsPowerOn(false), FS7IsAutoMode(false), \
+TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceControl)
+    :FPLCType(APLCType), FS7IsOnlyPedal(AOnlyPedalServo), FPedalForceControlEnabled(AEnablePedalForceControl), FS7IsConnected(false), FS7IsHandShaked(false), FS7IsPowerOn(false), FS7IsAutoMode(false), \
     FS7IsFault(false), FS7WithAirCylinder(false), FS1IsServoOn(false), FS1ZeroExisted(false), FS1IsReady(false), FS1RunFinished(false), \
     FS1IsFault(false), FS2IsServoOn(false), FS2ZeroExisted(false), FS2IsReady(false), FS2RunFinished(false), FS2IsFault(false), FS1ActPosition(0.0f), \
     FS1ActSpeed(0.0f), FS2ActPosition(0.0f), FS2ActPositionGrad(0.0f), FS2ActSpeed(0.0f), FS1MaxSpeed(500.0f), FS1MaxPosition(60.0f), FS1MinPosition(-10.0f), \
     FS2MaxSpeed(10.0f), FS2MaxPosition(20.0f), FS2MinPosition(-20.0f), FS2MountPosition(0.0f), FS2SlopSpeed(0.0f), FS3TargetCurrent(0.0f), FS1TargetPositionManual(0.0f), \
     FS1TargetSpeedManual(0.0f), FS2TargetPositionManual(0.0f), FS2TargetSpeedManual(0.0f), FS1TargetPositionAuto(0.0f), FS1TargetSpeedAuto(0.0f), FS2TargetPositionAuto(0.0f), \
     FS2TargetSpeedAuto(0.0f), FPedalIsSysMode(false), FS3MCMaxPressure(0.0f), FS3P2AFactor(0.0f), FS3P2AOffset(0.0f), GetDataRunning(false), GetDataFailedReads(0), HeartbeatRunning(false), HeartbeatFailedReads(0) {
-    // if(InitializeSnap7Api()) {
-    //     log_ok("Load Snap7 successful");
-    //     FSnap7IsLoaded = true;
-    // }
-    // else {
-    //     log_nok("Load Snap7 failed");
-    //     FSnap7IsLoaded = false;
-    // }
+
     RegisterSystemVars();
 
-    //FS7Client = new TS7Client();
-    //S7 = new TS7Helper();
     FS7IsConnected = false;
     FS7IsHandShaked = false;
 
     // FMonitorObj: = TObject.Create;
     //vHeartbeatThread = new TThreadHeartbeat();
     log("TServo.Create: Servo Object is created");
-
+    // todo: all config data initilize
     SetFS1MaxSpeed(500.0f);
-    SetFS1MaxPosition(60.0f);
-    SetFS1MinPosition(-10.0f);
+    SetFS1MaxPosition(vTIOConfig.FServo1MaxPosition);
+    SetFS1MinPosition(vTIOConfig.FServo1MinPosition);
     SetFS2MaxSpeed(10.0f);
     SetFS2MaxPosition(20.0f);
     SetFS2MinPosition(-20.0f);
@@ -1042,23 +1194,95 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo)
     SetFS3MCMaxPressure(vTIOConfig.FMCMaxPressure);
     SetFS3P2AFactor(vTIOConfig.FPressure2CurrentFactor);
     SetFS3P2AOffset(vTIOConfig.FPressure2CurrentOffset);
+    if(FPLCType == plcPedal && AEnablePedalForceControl) {
+        // todo: add ini read
+        float AT1Position[100] = {0};
+        float AT1Pressure[100] = {0};
+        float AT2Pressure[100] = {0};
+        float AT2Force[100] = {0};
+        int AT1PositionSize = 0;
+        int AT1PressureSize = 0;
+        int AT2PressureSize = 0;
+        int AT2ForceSize = 0;
+        //         int FMCPosPresTableSize = 0;
+                    // int FMCPresForceTableSize = 0;
+                    // float FMCPosPresPressure[100] = {0};
+                    // float FMCPosPresPosition[100] = {0};
+                    // float FMCPresForceTablePressure[100] = {0};
+                    // float FMCPresForceTableForce[100] = {0};
+        if(vTIOConfig.FPFCPosVSPresIsCalibrated) {
+            if((0 == stringToFloatArray(vTIOConfig.FPFCPosVSPresPosition, &AT1Position[0], &AT1PositionSize)) && (0 == stringToFloatArray(vTIOConfig.FPFCPosVSPresPressure, &AT1Pressure[0], &AT1PressureSize))) {
+                if((AT1PositionSize == AT1PressureSize) && (AT1PressureSize <= 100) && (AT1PressureSize > 2)) {
+                    FMCPosPresTableSize = AT1PressureSize;
+                    for(int i = 0; i < AT1PressureSize; i++) {
+                        FMCPosPresPressure[i] = AT1Pressure[i];
+                        FMCPosPresPosition[i] = AT1Position[i];
+                    }
+                    FMCPos2PIsCalibrated = true;
+                    log_ok("load position to pressure calibrated data from config file!");
+                }
+                else {
+                    FMCPos2PIsCalibrated = false;
+                    log_nok("Position to pressure calibrated data in config file is invalid!");
+                }
+
+            }
+            else {
+                FMCPos2PIsCalibrated = false;
+                log_nok("Can not convert ini config content to calibrated table(Position to Pressure) data!");
+            }
+        }
+        else {
+            FMCPos2PIsCalibrated = false;
+            log_nok("TServo.Create: Position to Pressure Table Not Calibrated");
+        }
+        //table pressure to force
+        if(vTIOConfig.FPFCPresVSForceIsCalibrated) {
+            if((0 == stringToFloatArray(vTIOConfig.FPFCPresVSForcePressure, &AT2Pressure[0], &AT2PressureSize)) && (0 == stringToFloatArray(vTIOConfig.FPFCPresVSForceForce, &AT2Force[0], &AT2ForceSize))) {
+                if((AT2ForceSize == AT2PressureSize) && (AT2ForceSize <= 100) && (AT2ForceSize > 2)) {
+                    FMCPresForceTableSize = AT2ForceSize;
+                    for(int i = 0; i < AT2ForceSize; i++) {
+                        FMCPresForceTablePressure[i] = AT2Pressure[i];
+                        FMCPresForceTableForce[i] = AT2Force[i];
+                    }
+                    FMCP2FIsCalibrated = true;
+                    log_ok("load pressure to force calibrated data from config file!");
+                }
+                else {
+                    FMCP2FIsCalibrated = false;
+                    log_nok("pressure to force calibrated data in config file is invalid!");
+                }
+
+            }
+            else {
+                FMCP2FIsCalibrated = false;
+                log_nok("Can not convert ini config content to calibrated table(pressure to force) data!");
+            }
+        }
+        else {
+            FMCP2FIsCalibrated = false;
+            log_nok("TServo.Create: Pressure to force Table Not Calibrated");
+        }
+
+        FMCMaxPressure = vTIOConfig.FPFCMCMaxPressure;
+    }
 }
 
 TServo::~TServo() {
     if(FS7IsConnected) {
-        if (plcPedal == FPLCType || plcPedalCylinder == FPLCType || plcTurnTable == FPLCType) {
-            if (FS1IsReady)
+        if(plcPedal == FPLCType || plcPedalCylinder == FPLCType || plcTurnTable == FPLCType) {
+            if(FS1IsReady)
                 S1_Run_Off();
-            if (FS1IsServoOn)
+            if(FS1IsServoOn)
                 S1_ServoON(false, 2000);
         }
-        else if (plcPedalSlope == FPLCType) {
-            if (FS2IsReady)
+        else if(plcPedalSlope == FPLCType) {
+            if(FS2IsReady)
                 S2_Run_Off();
-            if (FS2IsServoOn)
+            if(FS2IsServoOn)
                 S2_ServoON(false, 2000);
         }
-        else if (plcPumpStation == FPLCType) {
+        else if(plcPumpStation == FPLCType) {
             // todo: add finialize process
         }
         if(FS7IsHandShaked)
@@ -1162,17 +1386,29 @@ void TServo::GetDataStopThread() {
 
 void TServo::RegisterSystemVars() {
     // todo: need set property or not
-    if (plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
+    if(plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
         app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
         app.create_system_var((vMP_Name + ".pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
+        app.set_system_var_logging((vMP_Name + ".pedal_speed").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_position").c_str(), true);
+        if(FPedalForceControlEnabled) {
+            app.create_system_var((vMP_Name + ".pedal_pressure").c_str(), svtDouble, 0, "Master Cylinder Pressure");
+            app.create_system_var((vMP_Name + ".pedal_cal_force").c_str(), svtDouble, 0, "Force using Master Cylinder Pressure Calculated");
+            app.set_system_var_logging((vMP_Name + ".pedal_pressure").c_str(), true);
+            app.set_system_var_logging((vMP_Name + ".pedal_cal_force").c_str(), true);
+        }
     }
-    else if (plcPedalSlope == FPLCType) {
+    else if(plcPedalSlope == FPLCType) {
         app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
         app.create_system_var((vMP_Name + ".pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
         app.create_system_var((vMP_Name + ".rotate_degree").c_str(), svtDouble, 0, "Servo Slope Rotate Degree");
         app.create_system_var((vMP_Name + ".slope_grad").c_str(), svtDouble, 0, "Servo Slope Gradient");
+        app.set_system_var_logging((vMP_Name + ".pedal_speed").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_position").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".rotate_degree").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".slope_grad").c_str(), true);
     }
-    else if (plcPumpStation == FPLCType) {
+    else if(plcPumpStation == FPLCType) {
         app.create_system_var((vMP_Name + ".ps_power_state").c_str(), svtInt32, 0, "Pump servo system power state, 0 - power off, 1 - power on.");
         app.create_system_var((vMP_Name + ".ps_has_fault").c_str(), svtInt32, 0, "Pump servo system fault state, 0 - no fault, 1 - has fault.");
         app.create_system_var((vMP_Name + ".ps_is_runing").c_str(), svtInt32, 0, "Pump station, 0 - stop, 1 - running.");
@@ -1185,24 +1421,43 @@ void TServo::RegisterSystemVars() {
         app.create_system_var((vMP_Name + ".ps_pump_pressure").c_str(), svtDouble, 0, "Pump output pressure, bar.");
         app.create_system_var((vMP_Name + ".ps_reservior_pressure").c_str(), svtDouble, 0, "Reservior pressure, bar.");
         app.create_system_var((vMP_Name + ".ps_target_pressure").c_str(), svtDouble, 0, "Pressure control proportional valve target output pressure, bar.");
+        app.set_system_var_logging((vMP_Name + ".ps_power_state").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_has_fault").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_is_runing").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_relief_valve_is_power_on").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_reservior_valve_is_power_on").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_proportional_valve_is_power_on").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_fan_is_running").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_output_pressure").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_output_flow").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_pump_pressure").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_reservior_pressure").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".ps_target_pressure").c_str(), true);
     }
-    else if (plcTurnTable == FPLCType) {
+    else if(plcTurnTable == FPLCType) {
         app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
+        app.set_system_var_logging((vMP_Name + ".pedal_speed").c_str(), true);
     }
 }
 
 void TServo::UnregisterSystemVars() {
-    if (plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
+    if(plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
         app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
         app.delete_system_var((vMP_Name + ".pedal_position").c_str());
+        if(FPedalForceControlEnabled) {
+            app.delete_system_var((vMP_Name + ".pedal_position").c_str());
+            app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
+            app.delete_system_var((vMP_Name + ".pedal_pressure").c_str());
+            app.delete_system_var((vMP_Name + ".pedal_cal_force").c_str());
+        }
     }
-    else if (plcPedalSlope == FPLCType) {
+    else if(plcPedalSlope == FPLCType) {
         app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
         app.delete_system_var((vMP_Name + ".pedal_position").c_str());
         app.delete_system_var((vMP_Name + ".rotate_degree").c_str());
         app.delete_system_var((vMP_Name + ".slope_grad").c_str());
     }
-    else if (plcPumpStation == FPLCType) {
+    else if(plcPumpStation == FPLCType) {
         app.delete_system_var((vMP_Name + ".ps_power_state").c_str());
         app.delete_system_var((vMP_Name + ".ps_has_fault").c_str());
         app.delete_system_var((vMP_Name + ".ps_is_runing").c_str());
@@ -1215,11 +1470,10 @@ void TServo::UnregisterSystemVars() {
         app.delete_system_var((vMP_Name + ".ps_pump_pressure").c_str());
         app.delete_system_var((vMP_Name + ".ps_reservior_pressure").c_str());
         app.delete_system_var((vMP_Name + ".ps_target_pressure").c_str());
-    }                                      
-    else if (plcTurnTable == FPLCType) {
+    }
+    else if(plcTurnTable == FPLCType) {
         app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
     }
-    
 }
 
 // todo: 原始代码中设置了最长互锁时长
@@ -1321,7 +1575,7 @@ int TServo::S7_ClearFault(int ATimeout) {
 
 int TServo::S7_Connection() {
     int PingTime = 0;
-    if (FS7IsConnected) {
+    if(FS7IsConnected) {
         log_hint("Device has already connnected, if there are problem, you should disconnect first then connect again.");
         return 0;
     }
@@ -1346,7 +1600,7 @@ int TServo::S7_Connection() {
 }
 
 int TServo::S7_Disconnection() {
-    if (!FS7IsConnected) {
+    if(!FS7IsConnected) {
         log_hint("Device has already disconnnected, if there are problem, you should connect first then disconnect again.");
         return 0;
     }
@@ -1382,11 +1636,11 @@ int TServo::S7_GetAllData() {
             SetFPSActFlow(S7.ValReal(&FS7Buffer[8]));
             SetFPSPumpPressure(S7.ValReal(&FS7Buffer[12]));
             SetFPSReserviorPressure(S7.ValReal(&FS7Buffer[16]));
-            if (FEnablePVProtection) {
+            if(FEnablePVProtection) {
                 std::lock_guard<std::mutex> lock(mtx_time);
                 auto current_time = std::chrono::steady_clock::now();
                 auto elapsed_time = std::chrono::duration_cast<std::chrono::minutes>(current_time - pv_last_execution_time).count();
-                if (elapsed_time >= 10) {
+                if(elapsed_time >= 10) {
                     log_hint("There is no operation over 10 minutes, the target pressurre was set to zero to protect the proportional valve.");
                     PS_Set_Pressure_Asyn(0, false);
                 }
@@ -1423,6 +1677,10 @@ int TServo::S7_GetAllData() {
                 SetFS2ActPosition(S7.ValReal(&FS7Buffer[10]));
                 SetFS2ActSpeed(S7.ValReal(&FS7Buffer[14]));
             }
+            if(FPedalForceControlEnabled) {
+                SetFMCActPressure(S7.ValReal(&FS7Buffer[10]));
+            }
+
         }
         return 0;
     }
@@ -3261,7 +3519,7 @@ int TServo::PS_Set_Pressure_Asyn(float APressureBar, bool AEnableProtection) {
     }
     else {
         log("pump station target pressure send out"); // LVL_INFO
-        if (AEnableProtection || (ASetPressure > 0)) SetFEnablePVProtection(true);
+        if(AEnableProtection || (ASetPressure > 0)) SetFEnablePVProtection(true);
         else SetFEnablePVProtection(false);
         return 0;
     }
@@ -3870,18 +4128,179 @@ void TServo::SetFPSIsFanRunning(bool AEnable) {
 }
 
 void TServo::SetFEnablePVProtection(bool AEnable) {
-    if (FEnablePVProtection != AEnable) {
-        if (AEnable) {
+    if(FEnablePVProtection != AEnable) {
+        if(AEnable) {
             log_hint("Proportional valve safety protection is enabled, ifthe target pressure is over 0 bar and no more operation over 10 minutes, the target pressure will be set to zero automatically!"); // LVL_INFO
         }
         else {
             log_hint("Proportional valve safety protection is disabled!"); // LVL_INFO
         }
     }
-    if (AEnable) {
+    if(AEnable) {
         std::lock_guard<std::mutex> lock(mtx_time);
         pv_last_execution_time = std::chrono::steady_clock::now();
     }
     FEnablePVProtection = AEnable;
 }
 // Additional helper functions and classes can be defined here as needed
+
+// add for pedal force control
+void TServo::SetFMCActPressure(float Value) {
+    if(Value < 0) Value = 0;
+    FMCActPressure = Value;
+    app.set_system_var_double((vMP_Name + ".pedal_pressure").c_str(), Value);
+    if(FMCP2FIsCalibrated) {
+        FMCCalibratedForce = lookup_table_1D(FMCActPressure, FMCPresForceTablePressure, FMCPresForceTableForce, 10);
+        app.set_system_var_double((vMP_Name + ".pedal_cal_force").c_str(), FMCCalibratedForce);
+    }
+}
+
+int TServo::S1_GoTargetForce_AutoMode_Syn(float AForceN, float ASpeedMMS, int ATimeout) {
+    if(!FPedalForceControlEnabled) {
+        log_nok("Please enable Pedal Force Control First!"); // LVL_INFO
+        return -1;
+    }
+    if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
+        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        return -3;
+    }
+    if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        return S1_GoAbsPos_AutoMode_Syn(APosition, ASpeedMMS, ATimeout);
+
+    }
+    else {
+        log_nok("Please Calibrate Force Pressure and Position Relationship Table First!"); // LVL_INFO
+        return -2;
+    }
+
+}
+
+int TServo::S1_GoTargetForce_AutoMode_Asyn(float AForceN, float ASpeedMMS) {
+    if(!FPedalForceControlEnabled) {
+        log_nok("Please enable Pedal Force Control First!");
+        return -1;
+    }
+    if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
+        log_nok("The calibrated table size is %d, not in valid range", FMCPosPresTableSize);
+        return -3;
+    }
+    if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        return S1_GoAbsPos_AutoMode_Asyn(APosition, ASpeedMMS);
+
+    }
+    else {
+        log_nok("Please Calibrate Force Pressure and Position Relationship Table First!");
+        return -2;
+    }
+
+}
+
+int TServo::S1_GoTargetForce_MMode_Syn(float AForceN, float ASpeedMMS, int ATimeout) {
+    if(!FPedalForceControlEnabled) {
+        log_nok("Please enable Pedal Force Control First!");
+        return -1;
+    }
+    if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
+        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        return -3;
+    }
+    if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        return S1_GoAbsPos_MMode_Syn(APosition, ASpeedMMS, ATimeout);
+
+    }
+    else {
+        log_nok("Please Calibrate Force Pressure and Position Relationship Table First!");
+        return -2;
+    }
+
+}
+
+int TServo::S1_GoTargetForce_MMode_Asyn(float AForceN, float ASpeedMMS) {
+    if(!FPedalForceControlEnabled) {
+        log_nok("Please enable Pedal Force Control First!"); // LVL_INFO
+        return -1;
+    }
+    if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
+        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        return -3;
+    }
+    if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        return S1_GoAbsPos_MMode_Asyn(APosition, ASpeedMMS);
+
+    }
+    else {
+        log_nok("Please Calibrate Force Pressure and Position Relationship Table First!"); // LVL_INFO
+        return -2;
+    }
+
+}
+
+int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS) {
+    if(!FPedalForceControlEnabled) {
+        log_nok("Please enable Pedal Force Control First!");
+        return -1;
+    }
+    FMCPos2PIsCalibrated = false;
+    // vTIOConfig.SaveConfig();
+
+    float APosition = APostionStepMM;
+    float APressure = 0;
+    int index = 0;
+    float APosPresPressure[100] = {0.0f};
+    float APosPresPosition[100] = {0.0f};
+    APosPresPressure[0] = 0.0f;
+    APosPresPosition[0] = 0.0f;
+    while((APosition < FS1MaxPosition) && (APressure < FMCMaxPressure)) {
+        if(0 != S1_GoAbsPos_AutoMode_Syn(APosition, ASpeedMMpS, 10000)) {
+            log_nok("Calibration Process Failed!");
+            return -99;
+        }
+        index = index + 1;
+        if(index >= 100) {
+            log_nok("Calibrate Failed!");
+            return -9;
+        }
+        APosPresPressure[index] = APosition;
+        APosPresPressure[index] = FMCActPressure;
+        APosition = APosition + APostionStepMM;
+        APressure = FMCActPressure;
+        Sleep(50);
+        if(0 != S1_GoAbsPos_AutoMode_Syn(0, ASpeedMMpS, 10000)) {
+            log_nok("Calibration Process Failed!");
+            return -99;
+        }
+        Sleep(50);
+    }
+    if(APosPresPressure[index] < 150.0) {
+        log_nok("the max pressure in calibration is %f, smaller than 150bar, please check!");
+        return -80;
+    }
+    if((index >= 2) && (index < 100)) {
+        FMCPosPresTableSize = index + 1;
+        for(int i = 0; i < FMCPosPresTableSize; i++) {
+            FMCPosPresPressure[i] = APosPresPressure[i];
+            FMCPosPresPosition[i] = APosPresPosition[i];
+        }
+
+
+        vTIOConfig.FPFCPosVSPresPosition = floatArrayToString(&FMCPosPresPosition[0], FMCPosPresTableSize);
+        vTIOConfig.FPFCPosVSPresPressure = floatArrayToString(&FMCPosPresPressure[0], FMCPosPresTableSize);
+        vTIOConfig.SaveConfig();
+        FMCPos2PIsCalibrated = true;
+        log_ok("Calibrate Successful!");
+        return 0;
+    }
+    else {
+        FMCPos2PIsCalibrated = false;
+        log_nok("Calibrate Failed, old table is used!");
+        return -2;
+    }
+}

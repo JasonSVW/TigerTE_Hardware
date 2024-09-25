@@ -1,0 +1,663 @@
+object frmVCLFormDesigner_1: TfrmVCLFormDesigner
+  Left = 178
+  Top = 195
+  ActiveControl = StringGrid1
+  Caption = 
+    'TOSUN Toolbox Form Designer - pnlCenter: TPanel; Rect (1, 64, 12' +
+    '47, 368); Width: 1246, Height: 304 [Pedal_Control.TSUI]'
+  ClientHeight = 502
+  ClientWidth = 998
+  Color = clBtnFace
+  DoubleBuffered = True
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  KeyPreview = True
+  Position = poDesigned
+  Visible = True
+  TextHeight = 15
+  object pnlGround: TPanel
+    Left = 0
+    Top = 0
+    Width = 998
+    Height = 502
+    Cursor = crArrow
+    Align = alClient
+    Caption = 'pnlGround'
+    ParentBackground = False
+    ShowCaption = False
+    TabOrder = 0
+    object pnlTop: TPanel
+      Left = 1
+      Top = 1
+      Width = 996
+      Height = 50
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlTop'
+      Color = clWhite
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 0
+      ExplicitWidth = 997
+      object svgbtnStart: TTSSvgImageButton
+        Left = 13
+        Top = 0
+        Width = 70
+        Height = 46
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 0
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_start.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMTczNzUzOTI1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjM3Njk0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTUxMiA1' +
+          'MTJtLTUxMiAwYTUxMiA1MTIgMCAxIDAgMTAyNCAwIDUxMiA1MTIgMCAxIDAtMTAy' +
+          'NCAwWiIgZmlsbD0iIzEyOTZkYiIgcC1pZD0iMzc2OTUiIGRhdGEtc3BtLWFuY2hv' +
+          'ci1pZD0iYTMxM3guNzc4MTA2OS4wLmk0NCIgY2xhc3M9InNlbGVjdGVkIj48L3Bh' +
+          'dGg+PHBhdGggZD0iTTY5MS45NjggNTkxLjIwNjRsLTEyMy45MDQtNjMuMzg1NmEz' +
+          'Ny40Nzg0IDM3LjQ3ODQgMCAwIDAtMTQuNzQ1Ni0zLjA3Mkg1MzIuNDhWMzU2LjUw' +
+          'NTZhNDEuNDcyIDQxLjQ3MiAwIDAgMC00MS4wMTEyLTQyLjA4NjQgNDEuNDcyIDQx' +
+          'LjQ3MiAwIDAgMC00MC45NiA0Mi4wODY0djMwMS4xNTg0bC05My42OTYtMjAuMTcy' +
+          'OGMtMi4yMDE2LTAuMjU2LTQuMDk2LTAuODcwNC02LjUwMjQtMC44NzA0YTMwLjAw' +
+          'MzIgMzAuMDAzMiAwIDAgMC0yMS41NTUyIDkuMzE4NEwzMDcuMiA2NjguMzEzNmwx' +
+          'MzQuODYwOCAxMzguNDk2QTQwLjY1MjggNDAuNjUyOCAwIDAgMCA0NzEuMDQgODE5' +
+          'LjJoMTg1LjM0NGMyMC40OCAwIDM2LjM1Mi0xNS40NjI0IDM5LjM3MjgtMzUuODRs' +
+          'MjAuNDgtMTQ3Ljg2NTZjMC4yNTYtMS45NDU2IDAuNTYzMi0zLjg5MTIgMC41NjMy' +
+          'LTUuNTI5NmE0Mi4wODY0IDQyLjA4NjQgMCAwIDAtMjQuODMyLTM4Ljc1ODRNNDIz' +
+          'LjI3MDQgNDYxLjMxMlYzNTYuNTU2OGMwLTM4LjcwNzIgMzAuNjE3Ni03MC4wOTI4' +
+          'IDY4LjI0OTYtNzAuMDkyOHM2OC4yNDk2IDMxLjM4NTYgNjguMjQ5NiA3MC4wOTI4' +
+          'djEwNC44NTc2YTEyNi43MiAxMjYuNzIgMCAwIDAgNTQuNTc5Mi0xMDQuODU3NkM2' +
+          'MTQuNCAyODYuNzIgNTU5LjUxMzYgMjMwLjQgNDkxLjUyIDIzMC40Yy02Ny45NDI0' +
+          'IDAtMTIyLjc3NzYgNTYuMzItMTIyLjc3NzYgMTI2LjE1NjggMCA0My43MjQ4IDIx' +
+          'LjUwNCA4Mi4xNzYgNTQuNTc5MiAxMDQuODU3NiIgZmlsbD0iI0ZGRkZGRiIgcC1p' +
+          'ZD0iMzc2OTYiPjwvcGF0aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton2: TTSSvgImageButton
+        Left = 102
+        Top = 0
+        Width = 71
+        Height = 46
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 1
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_stop.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMTc0MzE3MDU4IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9Ijc4MTQ4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTY2Ny44' +
+          'ODY5MzMgMzk4LjQzODRoLTMxMS43NzM4NjZhNDUuNzcyOCA0NS43NzI4IDAgMSAx' +
+          'IDAtOTEuNTc5NzMzaDMxMS43NzM4NjZhNDUuODA2OTMzIDQ1LjgwNjkzMyAwIDAg' +
+          'MSAwIDkxLjU3OTczM00wIDUxMmMwIDI4Mi43NjA1MzMgMjI5LjIzOTQ2NyA1MTIg' +
+          'NTEyIDUxMiA1Ny4yNzU3MzMgMCAxMTIuMjk4NjY3LTkuNTU3MzMzIDE2My43MDM0' +
+          'NjctMjYuODk3MDY3LTMuNzU0NjY3LTUuMDE3Ni02MS41NDI0LTE3Ni45ODEzMzMt' +
+          'NzUuOTEyNTM0LTIyMS40OTEyLTE0LjM3MDEzMy00NC41MDk4NjcgMTYuNjU3MDY3' +
+          'LTczLjI1MDEzMyAzNy40NDQyNjctODQuMDM2MjY2IDIwLjgyMTMzMy0xMC43ODYx' +
+          'MzMgNjEuNzgxMzMzLTEwLjc4NjEzMyA3OC4xNjUzMzMgOC44MDY0bC0wLjE3MDY2' +
+          'Ni0xNTEuMjQ0OGMwLTAuODUzMzMzIDAuMDY4MjY3LTEuNzA2NjY3IDAuMTcwNjY2' +
+          'LTIuNTk0MTM0IDUuMzI0OC0zOS45MzYgMjkuNjI3NzMzLTYyLjcwMjkzMyA2OC4x' +
+          'OTg0LTYyLjcwMjkzM3M2Mi44Mzk0NjcgMjIuNzY2OTMzIDY4LjE2NDI2NyA2Mi43' +
+          'MDI5MzNjMC4xMDI0IDAuODUzMzMzIDAuMTcwNjY3IDEuNzA2NjY3IDAuMTcwNjY3' +
+          'IDIuNTk0MTM0djE3Ny4zNTY4bDExNy44MjgyNjYgMTQuNzc5NzMzQTUwOS42Nzg5' +
+          'MzMgNTA5LjY3ODkzMyAwIDAgMCAxMDI0IDUxMmMwLTI4Mi43NjA1MzMtMjI5LjIz' +
+          'OTQ2Ny01MTItNTEyLTUxMkMyMjkuMjM5NDY3IDAgMCAyMjkuMjM5NDY3IDAgNTEy' +
+          'eiIgZmlsbD0iI2Q4MWUwNiIgcC1pZD0iNzgxNDkiIGRhdGEtc3BtLWFuY2hvci1p' +
+          'ZD0iYTMxM3guNzc4MTA2OS4wLmk1NSIgY2xhc3M9InNlbGVjdGVkIj48L3BhdGg+' +
+          'PHBhdGggZD0iTTc1NC4yNzg0IDc3OS45NDY2NjdjMCAyMS4yOTkyLTI5LjI1MjI2' +
+          'NyAyNy4yMDQyNjctMzcuNTQ2NjY3IDcuNTc3Ni0xMS43NzYtMTkuNDkwMTMzLTIx' +
+          'LjE2MjY2Ny0zNC4wOTkyLTI4LjIyODI2Ni00My43OTMwNjctMTAuNTgxMzMzLTE0' +
+          'LjU0MDgtMjAuMDM2MjY3LTE4LjQ2NjEzMy0zMy43NTc4NjctMTIuNjI5MzMzLTEz' +
+          'LjY4NzQ2NyA1Ljg3MDkzMy0xOC41MzQ0IDE2LjQ1MjI2Ny0xNC4yNjc3MzMgMzEu' +
+          'OTQ4OCA0LjI2NjY2NyAxNS40OTY1MzMgNTAuODU4NjY3IDE3OC43MjIxMzMgNjAu' +
+          'ODI1NiAyMDAuOTQyOTMzIDcuMTY4IDE1LjkwNjEzMyAxNi4wNDI2NjcgMjEuMTk2' +
+          'OCAzMC43ODgyNjYgMTkuMTgyOTMzYTIwLjgyMTMzMyAyMC44MjEzMzMgMCAwIDEg' +
+          'Mi42NjI0LTAuMjA0OGgxNzcuMDE1NDY3YzAuMzQxMzMzIDAgMS4xMjY0IDAgMi4x' +
+          'ODQ1MzMtMC4wNjgyNjZhMjA2LjQ3MjUzMyAyMDYuNDcyNTMzIDAgMCAwIDE2LjM4' +
+          'NC0xLjcwNjY2N2M0LjUzOTczMy0wLjY4MjY2NyA4LjY2OTg2Ny0xLjQzMzYgMTIu' +
+          'MDgzMi0yLjI4NjkzMyAyLjY2MjQtMC42ODI2NjcgNC42NzYyNjctMS4zMzEyIDUu' +
+          'NzM0NC0xLjc3NDkzNGExNS4yNTc2IDE1LjI1NzYgMCAwIDAgMS43MDY2NjctMi45' +
+          'Njk2IDc0LjQxMDY2NyA3NC40MTA2NjcgMCAwIDAgNS4wMTc2LTE4LjM2MzczM2wy' +
+          'Ni44NjI5MzMtMTI4LjE3MDY2N2ExNy44MTc2IDE3LjgxNzYgMCAwIDEgMC41MTIt' +
+          'MS45Nzk3MzNjNS42MzItMTcuNTEwNCA1LjYzMi0yOC4yMjgyNjcgMi42NjI0LTMy' +
+          'LjQyNjY2Ny00LjMzNDkzMy02LjE0NC0xMS4wMjUwNjctMTAuNTgxMzMzLTIwLjgy' +
+          'MTMzMy0xMy4zMTJsLTEzNC4xNDQtMTYuNzkzNmExOS41MjQyNjcgMTkuNTI0MjY3' +
+          'IDAgMCAxLTE3LjA2NjY2Ny0xOS4zODc3MzN2LTE4My4xMjUzMzNjLTIuOTY5Ni0y' +
+          'MC4xMzg2NjctMTEuMjY0LTI3LjYxMzg2Ny0yOS4yODY0LTI3LjYxMzg2Ny0xOC4w' +
+          'NTY1MzMgMC0yNi4zNTA5MzMgNy40NDEwNjctMjkuMzIwNTMzIDI3LjYxMzg2N3Yy' +
+          'MTkuMzQwOHoiIGZpbGw9IiNkODFlMDYiIHAtaWQ9Ijc4MTUwIiBkYXRhLXNwbS1h' +
+          'bmNob3ItaWQ9ImEzMTN4Ljc3ODEwNjkuMC5pNTYiIGNsYXNzPSJzZWxlY3RlZCI+' +
+          'PC9wYXRoPjwvc3ZnPg0K'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton3: TTSSvgImageButton
+        Left = 186
+        Top = 0
+        Width = 70
+        Height = 45
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 2
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_init.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMyMzg4NjM0NzczIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjU4NzQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x' +
+          'OTk5L3hsaW5rIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+PGRlZnM+PHN0eWxl' +
+          'IHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNTEzLjAx' +
+          'MiA2MS45NzljLTI0NS4zNi0wLjQ4NS00NTAuMzg3IDIwMS44ODEtNDUxLjAxIDQ0' +
+          'NS4xNTctMC42NDIgMjUwLjUyIDE5OS44ODEgNDU0LjA2NyA0NDguMTI3IDQ1NC44' +
+          'ODQgMjQ1LjkwNyAwLjgwOSA0NTIuMjg0LTIwNC4wMDggNDUxLjg3MS00NDguNDU1' +
+          'LTAuNDE5LTI0Ny4wODgtMjAzLjI1Ny00NTEuMS00NDguOTg4LTQ1MS41ODZ6IG0x' +
+          'MzEuMjQxIDYwMi45MThjLTM2LjY4NSAxMC43NzMtNzEuNjU4LTAuMTczLTEwMy4y' +
+          'OTYtMTYuOTkzLTIwLjkyOC0xMS4xMjYtMzEuNTA2LTUuODM5LTQ2LjExNSA5LjIz' +
+          'Mi01OC45NDIgNjAuODA2LTEyMC4xOTEgMTE5LjQwMi0xNzguMzQzIDE4MC45MzUt' +
+          'MTguNjM1IDE5LjcxOS0zMC44MTIgMTguOTctNTAuMTcyIDMuMjY5LTMyLjI0NC0y' +
+          'Ni4xNTEtNjAuODY1LTU1LjI0NS04Ni41MzktODcuODM3LTEzLjA2OC0xNi41ODkt' +
+          'MTMuMzI5LTI2LjgwMiAyLjgxNi00Mi40MzlDMjQ1Ljc3MyA2NDkuODg3IDMwNi44' +
+          'NzYgNTg2LjU4MSAzNjkuNjYzIDUyNWMxMi45MzQtMTIuNjg2IDE0LjkxMi0yMS40' +
+          'MjggNi4zOS0zOC40NzQtNDAuMzU5LTgwLjcyNi0yMi45NTItMTQyLjczOSA1MS45' +
+          'MTItMTkzLjQwOSA0Ni42MzMtMzEuNTYyIDk3LjcxLTUxLjA4NCAxNTQuMTUyLTU0' +
+          'LjczOCAxMi42NTEtMC44MTkgMjYuMjYyLTIuNDMyIDQwLjUxMyA4LjkwOC0zMS41' +
+          'MzYgMzEuNTE1LTYxLjYwOSA2MS4xNTItOTEuMTk4IDkxLjI2My0yNi41MTQgMjYu' +
+          'OTgyLTI2LjkzMiA0MS45NzctMC43MTMgNjkuMDI1IDI5LjQ2OCAzMC40MDEgNTku' +
+          'OTc3IDU5Ljc5MSA4OS45NjMgODkuNjkyIDIxLjEwNyAyMS4wNDcgNDEuNjA3IDIw' +
+          'LjA0NSA2MS44NzMtMS4yMjMgMzAuNTc0LTMyLjA4NSA2MS4yMjgtNjQuMDk0IDkx' +
+          'LjY0Mi05NS45MTkgNS4xOTUgNC43NjcgNi40NTkgNS4zNjEgNi43MjkgNi4yNTUg' +
+          'MjUuNDQgODQuMjIyLTUzLjQyNSAyMzQuMDctMTM2LjY3MyAyNTguNTE3eiIgZmls' +
+          'bD0iIzEyOTZkYiIgcC1pZD0iNTg3NSI+PC9wYXRoPjwvc3ZnPg0K'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton4: TTSSvgImageButton
+        Left = 288
+        Top = 0
+        Width = 70
+        Height = 45
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 3
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_jog_in.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMyMzg0MTYyMjY3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjMzOTIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x' +
+          'OTk5L3hsaW5rIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+PGRlZnM+PHN0eWxl' +
+          'IHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNTk3LjMz' +
+          'MzMzMyA4NS4zMzMzMzN2ODUzLjMzMzMzNGg0Mi42NjY2NjdjNDcuMDE4NjY3IDAg' +
+          'ODUuMzMzMzMzLTM4LjMxNDY2NyA4NS4zMzMzMzMtODUuMzMzMzM0di0yMTMuMzMz' +
+          'MzMzaDIxMy4zMzMzMzRWMzg0aC0yMTMuMzMzMzM0VjE3MC42NjY2NjdjMC00Ny4w' +
+          'MTg2NjctMzguMzE0NjY3LTg1LjMzMzMzMy04NS4zMzMzMzMtODUuMzMzMzM0ek0y' +
+          'NTYgMzg0bC0xNzAuNjY2NjY3IDEyOCAxNzAuNjY2NjY3IDEyOHYtODUuMzMzMzMz' +
+          'aDI1NnYtODUuMzMzMzM0SDI1NnoiIGZpbGw9IiMxMjk2ZGIiIHAtaWQ9IjMzOTMi' +
+          'PjwvcGF0aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton5: TTSSvgImageButton
+        Left = 358
+        Top = 0
+        Width = 71
+        Height = 45
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 4
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_jog_out.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMyMzg0MTY5NTExIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjM1ODciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x' +
+          'OTk5L3hsaW5rIiB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCI+PGRlZnM+PHN0eWxl' +
+          'IHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMzg0IDg1' +
+          'LjMzMzMzM2MtNDcuMDE4NjY3IDAtODUuMzMzMzMzIDM4LjMxNDY2Ny04NS4zMzMz' +
+          'MzMgODUuMzMzMzM0djIxMy4zMzMzMzNIODUuMzMzMzMzdjI1NmgyMTMuMzMzMzM0' +
+          'djIxMy4zMzMzMzNjMCA0Ny4wMTg2NjcgMzguMzE0NjY3IDg1LjMzMzMzMyA4NS4z' +
+          'MzMzMzMgODUuMzMzMzM0aDQyLjY2NjY2N1Y4NS4zMzMzMzN6IG0zODQgMjk4LjY2' +
+          'NjY2N3Y4NS4zMzMzMzNoLTI1NnY4NS4zMzMzMzRoMjU2djg1LjMzMzMzM2wxNzAu' +
+          'NjY2NjY3LTEyOHoiIGZpbGw9IiMxMjk2ZGIiIHAtaWQ9IjM1ODgiPjwvcGF0aD48' +
+          'L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton6: TTSSvgImageButton
+        Left = 429
+        Top = 0
+        Width = 70
+        Height = 45
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 5
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_set_zero.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxNDQ5NDA1MTMxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjMxMjkzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTgzNi4y' +
+          'NjY2NjcgMEgxODcuNzMzMzMzQTE4Ny43MzMzMzMgMTg3LjczMzMzMyAwIDAgMCAw' +
+          'IDE4Ny43MzMzMzN2NjQ4LjUzMzMzNGExODcuNzMzMzMzIDE4Ny43MzMzMzMgMCAw' +
+          'IDAgMTg3LjczMzMzMyAxODcuNzMzMzMzaDY0OC41MzMzMzRhMTg3LjczMzMzMyAx' +
+          'ODcuNzMzMzMzIDAgMCAwIDE4Ny43MzMzMzMtMTg3LjczMzMzM1YxODcuNzMzMzMz' +
+          'QTE4Ny43MzMzMzMgMTg3LjczMzMzMyAwIDAgMCA4MzYuMjY2NjY3IDB6IG04NS4z' +
+          'MzMzMzMgODM2LjI2NjY2N2E4NS4zMzMzMzMgODUuMzMzMzMzIDAgMCAxLTg1LjMz' +
+          'MzMzMyA4NS4zMzMzMzNIMTg3LjczMzMzM2E4NS4zMzMzMzMgODUuMzMzMzMzIDAg' +
+          'MCAxLTg1LjMzMzMzMy04NS4zMzMzMzNWMTg3LjczMzMzM2E4NS4zMzMzMzMgODUu' +
+          'MzMzMzMzIDAgMCAxIDg1LjMzMzMzMy04NS4zMzMzMzNoNjQ4LjUzMzMzNGE4NS4z' +
+          'MzMzMzMgODUuMzMzMzMzIDAgMCAxIDg1LjMzMzMzMyA4NS4zMzMzMzN6IiBmaWxs' +
+          'PSIjMTI5NmRiIiBwLWlkPSIzMTI5NCI+PC9wYXRoPjxwYXRoIGQ9Ik01MTcuOTcz' +
+          'MzMzIDI1NnE5MS4xMzYgMCAxNDcuMjg1MzM0IDgzLjYyNjY2N2EzMTguMjkzMzMz' +
+          'IDMxOC4yOTMzMzMgMCAwIDEgNTEuMiAxODEuOTMwNjY2IDI4MS4yNTg2NjcgMjgx' +
+          'LjI1ODY2NyAwIDAgMS00OS40OTMzMzQgMTcwLjY2NjY2N0ExODAuMjI0IDE4MC4y' +
+          'MjQgMCAwIDEgNTEyIDc2OGExNzkuNTQxMzMzIDE3OS41NDEzMzMgMCAwIDEtMTUz' +
+          'LjYtNzkuNzAxMzMzIDI5MC4xMzMzMzMgMjkwLjEzMzMzMyAwIDAgMS01MS4yLTE3' +
+          'NC41OTIgMjkyLjAxMDY2NyAyOTIuMDEwNjY3IDAgMCAxIDUyLjkwNjY2Ny0xNzcu' +
+          'MzIyNjY3QTE4NC42NjEzMzMgMTg0LjY2MTMzMyAwIDAgMSA1MTcuOTczMzMzIDI1' +
+          'NnpNNTEyIDM2Ny40NDUzMzNhNzUuOTQ2NjY3IDc1Ljk0NjY2NyAwIDAgMC02OC4y' +
+          'NjY2NjcgNDYuMDggMjExLjk2OCAyMTEuOTY4IDAgMCAwLTIyLjM1NzMzMyAxMDEu' +
+          'Mzc2QTIxMC43NzMzMzMgMjEwLjc3MzMzMyAwIDAgMCA0NDMuNzMzMzMzIDYxNS43' +
+          'NjUzMzNhNzcuODI0IDc3LjgyNCAwIDAgMCA2OS40NjEzMzQgNDUuNTY4cTM5Ljc2' +
+          'NTMzMyAwIDY0LTQ4LjEyOGEyMzAuOTEyIDIzMC45MTIgMCAwIDAgMjEuODQ1MzMz' +
+          'LTEwNC4xMDY2NjYgMjAyLjA2OTMzMyAyMDIuMDY5MzMzIDAgMCAwLTIxLjE2MjY2' +
+          'Ny05Ny42MjEzMzRBNzIuODc0NjY3IDcyLjg3NDY2NyAwIDAgMCA1MTIgMzY3LjQ0' +
+          'NTMzM3oiIGZpbGw9IiMxMjk2ZGIiIHAtaWQ9IjMxMjk1Ij48L3BhdGg+PC9zdmc+' +
+          'DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+      object TSSvgImageButton7: TTSSvgImageButton
+        Left = 499
+        Top = 0
+        Width = 71
+        Height = 45
+        Cursor = crArrow
+        Caption = 'Start'
+        TabOrder = 6
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_exhaust.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjQ5NDEwNTA3NzgxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjU5NzYiIGRhdGEtZGFya3JlYWRlci1pbmxpbmUtZmlsbD0iIiB4' +
+          'bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9' +
+          'IjIwMCIgaGVpZ2h0PSIyMDAiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+' +
+          'QGZvbnQtZmFjZSB7IGZvbnQtZmFtaWx5OiBmZWVkYmFjay1pY29uZm9udDsgc3Jj' +
+          'OiB1cmwoIi8vYXQuYWxpY2RuLmNvbS90L2ZvbnRfMTAzMTE1OF91Njl3OHloeGR1' +
+          'LndvZmYyP3Q9MTYzMDAzMzc1OTk0NCIpIGZvcm1hdCgid29mZjIiKSwgdXJsKCIv' +
+          'L2F0LmFsaWNkbi5jb20vdC9mb250XzEwMzExNThfdTY5dzh5aHhkdS53b2ZmP3Q9' +
+          'MTYzMDAzMzc1OTk0NCIpIGZvcm1hdCgid29mZiIpLCB1cmwoIi8vYXQuYWxpY2Ru' +
+          'LmNvbS90L2ZvbnRfMTAzMTE1OF91Njl3OHloeGR1LnR0Zj90PTE2MzAwMzM3NTk5' +
+          'NDQiKSBmb3JtYXQoInRydWV0eXBlIik7IH0NCjwvc3R5bGU+PC9kZWZzPjxwYXRo' +
+          'IGQ9Ik0xNjAgMjg4SDEyOFY5NmgzMnYzMmgzMmExMjggMTI4IDAgMCAxIDEyOCAx' +
+          'Mjh2MzUySDE5MlYyODhjMC0zMiAwLTMyLTMyLTMydjMyeiBtNTEyIDYwOGg2NHYz' +
+          'MmgtNjR2LTMyeiBtOTYgMGg2NHYzMmgtNjR2LTMyeiBtOTYgMGg2NHYzMmgtNjR2' +
+          'LTMyeiBtMC02NGgzMnYzMmgtMTkydi0zMmgzMnYtMjg4aDEyOHYyODh6TTQxNiA0' +
+          'MTZoMTI4djI3MmExNzYgMTc2IDAgMCAxLTM1MiAwdi00OC41MTJoMTMxLjcxMnY1' +
+          'MC4zNjhhNDYuMTQ0IDQ2LjE0NCAwIDAgMCA5Mi4yODggMFY0MTZ6IG0zMiAyNzMu' +
+          'ODU2YTc4LjE0NCA3OC4xNDQgMCAxIDEtMTU2LjI4OCAwdi0xOC4zNjhIMjI0djE2' +
+          'LjUxMmExNDQgMTQ0IDAgMSAwIDI4OCAwVjQ0OGgtNjR2MjQxLjg1NnpNNzM2IDM4' +
+          'NHYtMzJjMC0zMiAwLTMyLTMyLTMyaC0xMjhjLTMyIDAtMzIgMC0zMiAzMnYzMmgt' +
+          'MTI4di02NGExMjggMTI4IDAgMCAxIDEyOC0xMjhoMTkyYTEyOCAxMjggMCAwIDEg' +
+          'MTI4IDEyOHY2NGgtMTI4eiBtOTYtMzJ2LTMyYTk2IDk2IDAgMCAwLTk2LTk2aC0x' +
+          'OTJhOTYgOTYgMCAwIDAtOTYgOTZ2MzJoNjRjMC00OS42NjQgMTQuMzM2LTY0IDY0' +
+          'LTY0aDEyOGM0OS42NjQgMCA2NCAxNC4zMzYgNjQgNjRoNjR6IG0tMTI4IDY0aDE5' +
+          'MnY5NmgtMTkydi05NnogbTMyIDMydjMyaDEyOHYtMzJoLTEyOHogbTMyIDEyOHYy' +
+          'NTZoNjR2LTI1NmgtNjR6TTI4OCAyNTZhOTYgOTYgMCAwIDAtOTYtOTZIMTYwdjY0' +
+          'aDMyYTMyIDMyIDAgMCAxIDMyIDMydjMyMGg2NFYyNTZ6IiBwLWlkPSI1OTc3IiBm' +
+          'aWxsPSIjMTI5NmRiIiBkYXRhLWRhcmtyZWFkZXItaW5saW5lLWZpbGw9IiIgc3R5' +
+          'bGU9Ii0tZGFya3JlYWRlci1pbmxpbmUtZmlsbDojMGU3OGFmOyI+PC9wYXRoPjwv' +
+          'c3ZnPg0K'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+      end
+    end
+    object pnlCenter: TPanel
+      Left = 1
+      Top = 51
+      Width = 996
+      Height = 243
+      Cursor = crArrow
+      Align = alTop
+      Caption = 'pnlCenter'
+      ShowCaption = False
+      TabOrder = 1
+      ExplicitWidth = 997
+      object LabeledEdit2: TLabeledEdit
+        Left = 19
+        Top = 45
+        Width = 136
+        Height = 30
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 105
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pedal Position(mm)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -18
+        Font.Name = 'Consolas'
+        Font.Style = [fsBold]
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+        Text = '10.00'
+      end
+      object LabeledEdit3: TLabeledEdit
+        Left = 198
+        Top = 45
+        Width = 136
+        Height = 30
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 104
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pedal Speed(mm/s)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -18
+        Font.Name = 'Consolas'
+        Font.Style = [fsBold]
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+        Text = '10.00'
+      end
+      object LabeledEdit4: TLabeledEdit
+        Left = 390
+        Top = 45
+        Width = 136
+        Height = 30
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 91
+        EditLabel.Height = 15
+        EditLabel.Caption = 'MC Pressure(bar)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -18
+        Font.Name = 'Consolas'
+        Font.Style = [fsBold]
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 2
+        Text = '10.00'
+      end
+      object LabeledEdit5: TLabeledEdit
+        Left = 390
+        Top = 122
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 81
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Target Force(N)'
+        TabOrder = 3
+        Text = 'LabeledEdit5'
+      end
+      object LabeledEdit6: TLabeledEdit
+        Left = 570
+        Top = 45
+        Width = 136
+        Height = 30
+        Cursor = crArrow
+        TabStop = False
+        Alignment = taRightJustify
+        Color = 4210752
+        EditLabel.Width = 103
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Calibrated Force(N)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clLime
+        Font.Height = -18
+        Font.Name = 'Consolas'
+        Font.Style = [fsBold]
+        NumbersOnly = True
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 4
+        Text = '10.00'
+      end
+      object LabeledEdit7: TLabeledEdit
+        Left = 198
+        Top = 122
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 108
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Target Position(mm)'
+        TabOrder = 5
+        Text = 'LabeledEdit5'
+      end
+      object LabeledEdit8: TLabeledEdit
+        Left = 13
+        Top = 122
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 107
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Target Speed(mm/s)'
+        TabOrder = 6
+        Text = 'LabeledEdit5'
+      end
+      object Button1: TButton
+        Left = 13
+        Top = 186
+        Width = 134
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Goto Target Force'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 7
+      end
+      object Button2: TButton
+        Left = 198
+        Top = 186
+        Width = 141
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Goto Target Position'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 8
+      end
+      object Button3: TButton
+        Left = 390
+        Top = 186
+        Width = 141
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Go Home'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 9
+      end
+      object LabeledEdit9: TLabeledEdit
+        Left = 717
+        Top = 115
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 131
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pedal Max Position(mm)'
+        TabOrder = 10
+        Text = 'LabeledEdit5'
+      end
+      object LabeledEdit10: TLabeledEdit
+        Left = 858
+        Top = 115
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 129
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pedal Min Position(mm)'
+        TabOrder = 11
+        Text = 'LabeledEdit5'
+      end
+      object Button4: TButton
+        Left = 717
+        Top = 186
+        Width = 141
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Set Pedal Range'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 12
+      end
+    end
+    object Panel11: TPanel
+      Left = 1
+      Top = 294
+      Width = 996
+      Height = 207
+      Cursor = crArrow
+      Align = alClient
+      Caption = 'Panel11'
+      ShowCaption = False
+      TabOrder = 2
+      ExplicitWidth = 997
+      ExplicitHeight = 208
+      object Label1: TLabel
+        Left = 19
+        Top = 32
+        Width = 134
+        Height = 15
+        Cursor = crArrow
+        Caption = 'Table Position to Pressure'
+      end
+      object Label2: TLabel
+        Left = 19
+        Top = 128
+        Width = 120
+        Height = 15
+        Cursor = crArrow
+        Caption = 'Table Pressure to Force'
+      end
+      object Button5: TButton
+        Left = 474
+        Top = 19
+        Width = 192
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Excute Position Calibration'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 0
+      end
+      object StringGrid1: TStringGrid
+        Left = 19
+        Top = 58
+        Width = 653
+        Height = 51
+        Cursor = crArrow
+        ColCount = 10
+        RowCount = 2
+        ScrollBars = ssNone
+        TabOrder = 1
+      end
+      object Button6: TButton
+        Left = 256
+        Top = 19
+        Width = 179
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Apply New Value'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 2
+      end
+      object Button7: TButton
+        Left = 474
+        Top = 115
+        Width = 198
+        Height = 32
+        Cursor = crArrow
+        Caption = 'Enable Force Calibration'
+        ImageIndex = 20
+        Images = dmIcons.imgLstSmall
+        TabOrder = 3
+      end
+      object StringGrid2: TStringGrid
+        Left = 19
+        Top = 147
+        Width = 653
+        Height = 51
+        Cursor = crArrow
+        ColCount = 10
+        RowCount = 2
+        ScrollBars = ssNone
+        TabOrder = 4
+      end
+    end
+  end
+end

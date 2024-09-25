@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.vcxproj": "plaintext",
+    "xstring": "cpp",
+    "mutex": "cpp",
+    "chrono": "cpp",
+    "filesystem": "cpp",
+    "sstream": "cpp",
+    "iosfwd": "cpp",
+    "fstream": "cpp"
+  }
+}

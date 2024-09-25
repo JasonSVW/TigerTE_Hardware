@@ -8,8 +8,8 @@
 // GEN BLOCK END Include
 
 // CODE BLOCK BEGIN Step_Function  NQ__
-// 主step函数，执行周期 5 ms
-void step(void) { try { // 周期 = 5 ms
+// Main step function being executed every 5 ms
+void step(void) { try { // interval = 5 ms
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END Step_Function 
