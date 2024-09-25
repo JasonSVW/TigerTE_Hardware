@@ -20,3 +20,4 @@
 *.vcxproj.user
 *.pdb
 *.mp64
+/src/MPLib/config/MiniProgram/

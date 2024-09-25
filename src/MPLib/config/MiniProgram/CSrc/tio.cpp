@@ -8,12 +8,12 @@
 // GEN BLOCK END Include
 
 // CODE BLOCK BEGIN Variable demoVar MSwwLCw_
-// 变量文档 "demoVar"
+// Variable Comment for "demoVar"
 TMPVarDouble demoVar;
 // CODE BLOCK END Variable demoVar
 
 // CODE BLOCK BEGIN Timer DemoTimer MTAw
-// 定时器文档 "DemoTimer"
+// Timer Comment for "DemoTimer"
 TMPTimerMS DemoTimer;
 // CODE BLOCK END Timer DemoTimer
 
@@ -22,68 +22,68 @@ s32 demo_function(s32 A1, s32 A2);
 // GEN BLOCK END Custom_Function
 
 // CODE BLOCK BEGIN On_CAN_Rx On_CAN_Rx_Demo MCwtMSwyOTE_
-// CAN报文接收事件 "On_CAN_Rx_Demo" 针对标识符 = 0x123
-void on_can_rx_On_CAN_Rx_Demo(const TCAN* ACAN) { try {  // 针对标识符 = 0x123
+// On CAN message reception handler "On_CAN_Rx_Demo" for identifier = 0x123
+void on_can_rx_On_CAN_Rx_Demo(const TCAN* ACAN) { try {  // for identifier = 0x123
 // if (ACAN->FIdxChn != CH1) return; // if you want to filter channel
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_CAN_Rx On_CAN_Rx_Demo
 
 // CODE BLOCK BEGIN On_CAN_Tx On_CAN_Tx_Demo MCwtMSwyOTE_
-// CAN报文发送成功事件 "On_CAN_Tx_Demo" 针对标识符 = 0x123
-void on_can_tx_On_CAN_Tx_Demo(const TCAN* ACAN) { try {  // 针对标识符 = 0x123
+// On CAN message transmission handler "On_CAN_Tx_Demo" for identifier = 0x123
+void on_can_tx_On_CAN_Tx_Demo(const TCAN* ACAN) { try {  // for identifier = 0x123
 // if (ACAN->FIdxChn != CH1) return; // if you want to filter channel
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_CAN_Tx On_CAN_Tx_Demo
 
 // CODE BLOCK BEGIN On_CAN_PreTx On_CAN_PreTx_Demo MCwtMSwyOTE_
-// CAN报文预发送事件 "On_CAN_PreTx_Demo" 针对标识符 = 0x123
-void on_can_pretx_On_CAN_PreTx_Demo(const PCAN ACAN) { try {  // 针对标识符 = 0x123
+// On CAN message pre-transmission hack handler "On_CAN_PreTx_Demo" for identifier = 0x123
+void on_can_pretx_On_CAN_PreTx_Demo(const PCAN ACAN) { try {  // for identifier = 0x123
 // if (ACAN->FIdxChn != CH1) return; // if you want to filter channel
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_CAN_PreTx On_CAN_PreTx_Demo
 
 // CODE BLOCK BEGIN On_Var_Change On_Var_Change_demoVar ZGVtb1ZhciwtMQ__
-// 变量变化事件 "On_Var_Change_demoVar" 针对变量 "demoVar" [On Written]
-void on_var_change_On_Var_Change_demoVar(void) { try { // 变量 = demoVar
+// On variable change handler "On_Var_Change_demoVar" for variable "demoVar" [On Written]
+void on_var_change_On_Var_Change_demoVar(void) { try { // variable = demoVar
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Var_Change On_Var_Change_demoVar
 
 // CODE BLOCK BEGIN On_Timer On_DemoTimer RGVtb1RpbWVy
-// 定时器触发事件 "On_DemoTimer" for Timer DemoTimer
-void on_timer_On_DemoTimer(void) { try { // 定时器 = DemoTimer
+// Timer event handler "On_DemoTimer" for Timer DemoTimer
+void on_timer_On_DemoTimer(void) { try { // timer = DemoTimer
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Timer On_DemoTimer
 
 // CODE BLOCK BEGIN On_Start On_Start
-// 启动事件 "On_Start"
-void on_start_On_Start(void) { try { // 程序启动事件
+// On start handler "On_Start"
+void on_start_On_Start(void) { try { // on start event
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Start On_Start
 
 // CODE BLOCK BEGIN On_Stop On_Stop
-// 停止事件 "On_Stop"
-void on_stop_On_Stop(void) { try { // 程序停止事件
+// On stop handler "On_Stop"
+void on_stop_On_Stop(void) { try { // on stop event
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Stop On_Stop
 
 // CODE BLOCK BEGIN Custom_Function demo_function czMyIEExLCBzMzIgQTI_
-// 自定义函数 "demo_function"
-s32 demo_function(s32 A1, s32 A2) { try { // 自定义函数: new demo
+// Custom Function "demo_function"
+s32 demo_function(s32 A1, s32 A2) { try { // Custom Function: new demo
   return IDX_ERR_OK;
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); return(IDX_ERR_MP_CODE_CRASH); }}
 // CODE BLOCK END Custom_Function demo_function
 
 // CODE BLOCK BEGIN Step_Function  MQ__
-// 主step函数，执行周期 1 ms
-void step(void) { try { // 周期 = 1 ms
+// Main step function being executed every 1 ms
+void step(void) { try { // interval = 1 ms
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END Step_Function 

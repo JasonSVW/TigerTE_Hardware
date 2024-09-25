@@ -137,6 +137,7 @@ private:
     bool FMCP2FIsCalibrated = false;
     bool FMCPos2PIsCalibrated = false;
     float FMCMaxPressure = 200.0f;
+    float FMCMinForce = 2000.0f;
     float FMCActPressure = 0.0f;
     float FMCCalibratedForce = 0.0f;
     int FMCPosPresTableSize = 0;

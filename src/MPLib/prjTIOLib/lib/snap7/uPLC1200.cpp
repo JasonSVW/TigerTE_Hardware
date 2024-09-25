@@ -1204,12 +1204,7 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceCo
         int AT1PressureSize = 0;
         int AT2PressureSize = 0;
         int AT2ForceSize = 0;
-        //         int FMCPosPresTableSize = 0;
-                    // int FMCPresForceTableSize = 0;
-                    // float FMCPosPresPressure[100] = {0};
-                    // float FMCPosPresPosition[100] = {0};
-                    // float FMCPresForceTablePressure[100] = {0};
-                    // float FMCPresForceTableForce[100] = {0};
+
         if(vTIOConfig.FPFCPosVSPresIsCalibrated) {
             if((0 == stringToFloatArray(vTIOConfig.FPFCPosVSPresPosition, &AT1Position[0], &AT1PositionSize)) && (0 == stringToFloatArray(vTIOConfig.FPFCPosVSPresPressure, &AT1Pressure[0], &AT1PressureSize))) {
                 if((AT1PositionSize == AT1PressureSize) && (AT1PressureSize <= 100) && (AT1PressureSize > 2)) {
@@ -1234,7 +1229,7 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceCo
         }
         else {
             FMCPos2PIsCalibrated = false;
-            log_nok("TServo.Create: Position to Pressure Table Not Calibrated");
+            log_nok("Position to Pressure Table Not Calibrated");
         }
         //table pressure to force
         if(vTIOConfig.FPFCPresVSForceIsCalibrated) {
@@ -1261,10 +1256,11 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceCo
         }
         else {
             FMCP2FIsCalibrated = false;
-            log_nok("TServo.Create: Pressure to force Table Not Calibrated");
+            log_nok("Pressure to force Table Not Calibrated");
         }
 
         FMCMaxPressure = vTIOConfig.FPFCMCMaxPressure;
+        FMCMinForce = vTIOConfig.FPFCMCMinForce;
     }
 }
 
@@ -4160,13 +4156,20 @@ int TServo::S1_GoTargetForce_AutoMode_Syn(float AForceN, float ASpeedMMS, int AT
         log_nok("Please enable Pedal Force Control First!"); // LVL_INFO
         return -1;
     }
+    if(AForceN < FMCMinForce) {
+        return S1_GoAbsPos_AutoMode_Syn(0, ASpeedMMS, ATimeout);
+    }
     if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
-        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        log_nok("The calibrated table(position vs pressure) size is %d, not in valid range!", FMCPosPresTableSize);
         return -3;
     }
+    if((FMCPresForceTableSize < 2) || (FMCPresForceTableSize >= 100)) {
+        log_nok("The calibrated table(force vs pressure) size is %d, not in valid range!", FMCPresForceTableSize);
+        return -4;
+    }
     if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
-        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
-        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, FMCPresForceTableSize);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, FMCPosPresTableSize);
         return S1_GoAbsPos_AutoMode_Syn(APosition, ASpeedMMS, ATimeout);
 
     }
@@ -4182,13 +4185,20 @@ int TServo::S1_GoTargetForce_AutoMode_Asyn(float AForceN, float ASpeedMMS) {
         log_nok("Please enable Pedal Force Control First!");
         return -1;
     }
+    if(AForceN < FMCMinForce) {
+        return S1_GoAbsPos_AutoMode_Asyn(0, ASpeedMMS);
+    }
     if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
-        log_nok("The calibrated table size is %d, not in valid range", FMCPosPresTableSize);
+        log_nok("The calibrated table(position vs pressure) size is %d, not in valid range!", FMCPosPresTableSize);
         return -3;
     }
+    if((FMCPresForceTableSize < 2) || (FMCPresForceTableSize >= 100)) {
+        log_nok("The calibrated table(force vs pressure) size is %d, not in valid range!", FMCPresForceTableSize);
+        return -4;
+    }
     if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
-        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
-        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, FMCPresForceTableSize);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, FMCPosPresTableSize);
         return S1_GoAbsPos_AutoMode_Asyn(APosition, ASpeedMMS);
 
     }
@@ -4204,13 +4214,21 @@ int TServo::S1_GoTargetForce_MMode_Syn(float AForceN, float ASpeedMMS, int ATime
         log_nok("Please enable Pedal Force Control First!");
         return -1;
     }
+
+    if(AForceN < FMCMinForce) {
+        return S1_GoAbsPos_MMode_Syn(0, ASpeedMMS, ATimeout);
+    }
     if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
-        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        log_nok("The calibrated table(position vs pressure) size is %d, not in valid range!", FMCPosPresTableSize);
         return -3;
     }
+    if((FMCPresForceTableSize < 2) || (FMCPresForceTableSize >= 100)) {
+        log_nok("The calibrated table(force vs pressure) size is %d, not in valid range!", FMCPresForceTableSize);
+        return -4;
+    }
     if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
-        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
-        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, FMCPresForceTableSize);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, FMCPosPresTableSize);
         return S1_GoAbsPos_MMode_Syn(APosition, ASpeedMMS, ATimeout);
 
     }
@@ -4226,13 +4244,21 @@ int TServo::S1_GoTargetForce_MMode_Asyn(float AForceN, float ASpeedMMS) {
         log_nok("Please enable Pedal Force Control First!"); // LVL_INFO
         return -1;
     }
+    if(AForceN < FMCMinForce) {
+        return S1_GoAbsPos_MMode_Asyn(0, ASpeedMMS);
+    }
+
     if((FMCPosPresTableSize < 2) || (FMCPosPresTableSize >= 100)) {
-        log_nok("The calibrated table size is %d, not in valid range!", FMCPosPresTableSize);
+        log_nok("The calibrated table(position vs pressure) size is %d, not in valid range!", FMCPosPresTableSize);
         return -3;
     }
+    if((FMCPresForceTableSize < 2) || (FMCPresForceTableSize >= 100)) {
+        log_nok("The calibrated table(force vs pressure) size is %d, not in valid range!", FMCPresForceTableSize);
+        return -4;
+    }
     if(FMCP2FIsCalibrated && FMCPos2PIsCalibrated) {
-        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, 10);
-        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, 10);
+        float APressure = lookup_table_1D(AForceN, FMCPresForceTableForce, FMCPresForceTablePressure, FMCPresForceTableSize);
+        float APosition = lookup_table_1D(APressure, FMCPosPresPressure, FMCPosPresPosition, FMCPosPresTableSize);
         return S1_GoAbsPos_MMode_Asyn(APosition, ASpeedMMS);
 
     }
@@ -4293,7 +4319,7 @@ int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeed
 
         vTIOConfig.FPFCPosVSPresPosition = floatArrayToString(&FMCPosPresPosition[0], FMCPosPresTableSize);
         vTIOConfig.FPFCPosVSPresPressure = floatArrayToString(&FMCPosPresPressure[0], FMCPosPresTableSize);
-        vTIOConfig.SaveConfig();
+        vTIOConfig.UpdateConfigFile();
         FMCPos2PIsCalibrated = true;
         log_ok("Calibrate Successful!");
         return 0;

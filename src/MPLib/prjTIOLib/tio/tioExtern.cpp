@@ -125,8 +125,8 @@ DLLEXPORT s32 __stdcall initialize_miniprogram(const PTSMasterConfiguration ACon
   std::string vVersion = ".version";
   vMP_Name = GetCurrentModuleName();
   vVersion = vMP_Name + vVersion;
-  //vTIOConfig.InitIniFile();
-  vTIOConfig.LoadConfigValue();
+  vTIOConfig.InitConfigFile();
+  vTIOConfig.LoadConfigFile();
   if(0 != app.set_system_var_string(vVersion.c_str(), LIB_VERSION)) {
     app.create_system_var(vVersion.c_str(), svtString, LIB_VERSION, "mp lib version.");
   }
@@ -141,7 +141,7 @@ DLLEXPORT s32 __stdcall finalize_miniprogram(void) {
     delete vServoObj;
     vServoObj = nullptr;
   }
-  vTIOConfig.SaveConfig();
+  vTIOConfig.UpdateConfigFile();
   return 0;
 
 }

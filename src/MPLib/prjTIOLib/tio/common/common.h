@@ -1,4 +1,5 @@
 #pragma once
+#include "TSMaster.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,6 +12,7 @@
 class TTIOConfig {
 public:
     std::string FConfigIniFile = "";
+    native_int hConfigFile = NULL;
     // form
     bool FServoFormIsActive;
     bool FMappingFormIsActive;
@@ -63,22 +65,13 @@ public:
     std::string FPFCPresVSForcePressure;
     std::string FPFCPresVSForceForce;
     float FPFCMCMaxPressure;
+    float FPFCMCMinForce;
 
     bool GetConfigFile();
-    void InitIniFile();
-    void LoadConfigValue();
-    void SaveConfig();
+    void InitConfigFile();
+    void LoadConfigFile();
+    void UpdateConfigFile();
 
-private:
-    void WriteBoolean(std::ofstream& file, const std::string& section, const std::string& key, bool value, std::string& currentSection);
-    void WriteString(std::ofstream& file, const std::string& section, const std::string& key, const std::string& value, std::string& currentSection);
-    void WriteInteger(std::ofstream& file, const std::string& section, const std::string& key, int32_t value, std::string& currentSection);
-    void WriteFloat(std::ofstream& file, const std::string& section, const std::string& key, float value, std::string& currentSection);
-    bool ReadBoolean(std::ifstream& file, const std::string& section, const std::string& key, bool defaultValue);
-    std::string ReadString(std::ifstream& file, const std::string& section, const std::string& key, const std::string& defaultValue);
-    int32_t ReadInteger(std::ifstream& file, const std::string& section, const std::string& key, int32_t defaultValue);
-    float ReadFloat(std::ifstream& file, const std::string& section, const std::string& key, float defaultValue);
-    bool ValueExists(std::ifstream& file, const std::string& section, const std::string& key);
 };
 
 extern TTIOConfig vTIOConfig;

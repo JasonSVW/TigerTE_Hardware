@@ -92,8 +92,9 @@ void on_shortcut_init(const s32 AShortcut) { try { // On shortcut = Ctrl+R
 } else {
   log("val1 not exists in sec1");
   app.ini_write_bool(h, "sec1", "val1", true);
-  
+     app.ini_write_string()
 }
+app.app.ini_write_float()()
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Shortcut init
@@ -144,6 +145,7 @@ void on_start_NewOn_Start1(void) { try { // on start event
     if (0 == app.ini_create(FConfigIniFile.c_str(), &h)){
   log("ini object created: %x", h);
 }
+
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Start NewOn_Start1
 
@@ -153,6 +155,7 @@ void on_stop_NewOn_Stop1(void) { try { // on stop event
 if (0 == app.ini_close(h)) {
   log("ini object closed: %x", h);
 }
+app.ini_read_bool()
 
 } catch (...) { log_nok("CRASH detected"); app.terminate_application(); }}
 // CODE BLOCK END On_Stop NewOn_Stop1
