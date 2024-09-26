@@ -3,10 +3,11 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   Top = 195
   ActiveControl = StringGrid1
   Caption = 
-    'TOSUN Toolbox Form Designer - pnlCenter: TPanel; Rect (1, 64, 12' +
-    '47, 368); Width: 1246, Height: 304 [Pedal_Control.TSUI]'
+    'TOSUN Toolbox Form Designer - edtShowErrorCode: TLabeledEdit; Re' +
+    'ct (915, 32, 1043, 55); Width: 128, Height: 23 [Pedal_Control.TS' +
+    'UI]'
   ClientHeight = 502
-  ClientWidth = 998
+  ClientWidth = 1109
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +22,7 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
   object pnlGround: TPanel
     Left = 0
     Top = 0
-    Width = 998
+    Width = 1109
     Height = 502
     Cursor = crArrow
     Align = alClient
@@ -32,22 +33,24 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
     object pnlTop: TPanel
       Left = 1
       Top = 1
-      Width = 996
-      Height = 50
+      Width = 1107
+      Height = 44
       Cursor = crArrow
       Align = alTop
+      BevelEdges = [beTop]
+      BevelKind = bkFlat
+      BevelOuter = bvNone
       Caption = 'pnlTop'
-      Color = clWhite
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 997
       object svgbtnStart: TTSSvgImageButton
-        Left = 13
+        Left = 0
         Top = 0
         Width = 70
-        Height = 46
+        Height = 42
         Cursor = crArrow
+        Align = alLeft
         Caption = 'Start'
         TabOrder = 0
         VerticalAlignment = taAlignBottom
@@ -86,14 +89,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
-      object TSSvgImageButton2: TTSSvgImageButton
-        Left = 102
+      object svgbtnStop: TTSSvgImageButton
+        Left = 70
         Top = 0
         Width = 71
-        Height = 46
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Stop'
         TabOrder = 1
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -152,14 +157,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
-      object TSSvgImageButton3: TTSSvgImageButton
-        Left = 186
+      object svgbtnInit: TTSSvgImageButton
+        Left = 141
         Top = 0
-        Width = 70
-        Height = 45
+        Width = 69
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Initialize'
         TabOrder = 2
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -198,14 +205,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
       object TSSvgImageButton4: TTSSvgImageButton
-        Left = 288
+        Left = 210
         Top = 0
-        Width = 70
-        Height = 45
+        Width = 71
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Jog In'
         TabOrder = 3
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -230,14 +239,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
       object TSSvgImageButton5: TTSSvgImageButton
-        Left = 358
+        Left = 281
         Top = 0
-        Width = 71
-        Height = 45
+        Width = 70
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Jog Out'
         TabOrder = 4
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -262,14 +273,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
-      object TSSvgImageButton6: TTSSvgImageButton
-        Left = 429
+      object svgbtnSetZero: TTSSvgImageButton
+        Left = 351
         Top = 0
         Width = 70
-        Height = 45
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Set Zero'
         TabOrder = 5
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -314,14 +327,16 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
       end
-      object TSSvgImageButton7: TTSSvgImageButton
-        Left = 499
+      object svgbtnExhaust: TTSSvgImageButton
+        Left = 421
         Top = 0
-        Width = 71
-        Height = 45
+        Width = 72
+        Height = 42
         Cursor = crArrow
-        Caption = 'Start'
+        Align = alLeft
+        Caption = 'Exhaust'
         TabOrder = 6
         VerticalAlignment = taAlignBottom
         SvgFileName = 
@@ -365,22 +380,226 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         ImageIndex = -1
         ImageStretch = False
         ReadOnly = False
+        ExplicitHeight = 44
+      end
+      object svgShowFault: TTSSvgImageButton
+        Left = 1035
+        Top = 0
+        Width = 72
+        Height = 42
+        Cursor = crArrow
+        Align = alRight
+        Caption = 'Fault'
+        TabOrder = 7
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_fault.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMDg1ODU3MTY1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjM3NzkxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTg1LjMz' +
+          'MyA5NjUuOTczaDg1My4zMzRjMzAuNzIgMCA1OC4wMjYtMTcuMDY2IDcxLjY4LTQw' +
+          'Ljk2IDEzLjY1My0yNy4zMDYgMTMuNjUzLTU4LjAyNiAwLTg1LjMzM0w1ODMuNjgg' +
+          'OTguOTg3Yy0xMy42NTMtMjcuMzA3LTQ0LjM3My00MC45Ni03MS42OC00MC45NnMt' +
+          'NTguMDI3IDE3LjA2Ni03MS42OCA0MC45NkwxMy42NTMgODM5LjY4QzMuNDEzIDg1' +
+          'My4zMzMgMCA4NjYuOTg3IDAgODgwLjY0djMuNDEzYzAgMTMuNjU0IDMuNDEzIDI3' +
+          'LjMwNyAxMC4yNCA0MC45NiAxNy4wNjcgMjcuMzA3IDQ0LjM3MyA0MC45NiA3NS4w' +
+          'OTMgNDAuOTZ6IG0zODkuMTItNjE3LjgxM2MwLTIwLjQ4IDE3LjA2Ny00MC45NiAz' +
+          'Ny41NDctNDAuOTZzMzcuNTQ3IDE3LjA2NyAzNy41NDcgMzcuNTQ3djMwMy43ODZj' +
+          'MCAyMC40OC0xNy4wNjcgMzcuNTQ3LTM3LjU0NyAzNy41NDdzLTM3LjU0Ny0xNy4w' +
+          'NjctMzcuNTQ3LTM3LjU0N1YzNDguMTZ6IG0xMy42NTQgMzk1Ljk0N2MxMy42NTMt' +
+          'Ni44MjcgMzQuMTMzLTYuODI3IDQ3Ljc4NiAwIDEzLjY1NCA2LjgyNiAyMy44OTQg' +
+          'MjMuODkzIDIzLjg5NCA0MC45NnMtMTAuMjQgMzAuNzItMjMuODk0IDQwLjk2Yy0x' +
+          'My42NTMgNi44MjYtMzQuMTMzIDYuODI2LTQ3Ljc4NiAwLTEzLjY1NC02LjgyNy0y' +
+          'My44OTQtMjMuODk0LTIzLjg5NC00MC45NnMxMC4yNC0zMC43MiAyMy44OTQtNDAu' +
+          'OTZ6IiBmaWxsPSIjZDgxZTA2IiBwLWlkPSIzNzc5MiI+PC9wYXRoPjwvc3ZnPg0K'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = False
+        ExplicitHeight = 44
+      end
+      object svgShowServoOn: TTSSvgImageButton
+        Left = 963
+        Top = 0
+        Width = 72
+        Height = 42
+        Cursor = crArrow
+        Align = alRight
+        Caption = 'Servo On'
+        TabOrder = 8
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_servo_on.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMTYwNDYwMzQzIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjE0NDkxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTAgNTA0' +
+          'LjE5MmE1MDQuMTkyIDUwMy4yOTYgOTAgMSAwIDEwMDYuNTkyIDAgNTA0LjE5MiA1' +
+          'MDMuMjk2IDkwIDEgMC0xMDA2LjU5MiAwWiIgZmlsbD0iIzFhZmEyOSIgcC1pZD0i' +
+          'MTQ0OTIiIGRhdGEtc3BtLWFuY2hvci1pZD0iYTMxM3guNzc4MTA2OS4wLmkyOCIg' +
+          'Y2xhc3M9InNlbGVjdGVkIj48L3BhdGg+PHBhdGggZD0iTTY3MiAxOTJhNjQgNjQg' +
+          'MCAwIDEgNjQgNjR2NDE2YTY0IDY0IDAgMCAxLTY0IDY0aC0zMjBhNjQgNjQgMCAw' +
+          'IDEtNjQtNjRWMjU2YTY0IDY0IDAgMCAxIDY0LTY0ek01NzQuMzM2IDMzMi44aC05' +
+          'MC4yNGMtMy44NCAwLTcuNDI0IDEuOTItOS4xNTIgNS4xMmwtNTcuODU2IDEwNC41' +
+          'NzZjLTAuNTEyIDAuOTYgMC4yNTYgMi4xMTIgMS40MDggMi4xMTJoNTAuMTEyYzIu' +
+          'NDk2IDAgNC4zNTIgMi4xMTIgMy44NCA0LjM1MmwtMzEuMzYgMTQ1LjI4IDE2Ny4y' +
+          'OTYtMTkzLjA4OGMxLjI4LTEuNTM2IDAuMTI4LTMuNzc2LTEuOTItMy43NzZoLTYz' +
+          'LjM2Yy0yLjQzMiAwLTMuOTY4LTIuNDMyLTIuNzUyLTQuNDhsMzUuODQtNTcuMDg4' +
+          'YzAuODk2LTEuMjgtMC4xOTItMy4wMDgtMS45Mi0zLjAwOHpNMjU2IDc2OGg1MTJh' +
+          'MzIgMzIgMCAwIDEgMCA2NEgyNTZhMzIgMzIgMCAwIDEgMC02NHogbTU0NC00NDhh' +
+          'MzIgMzIgMCAwIDEgMzIgMzJWNTc2YTMyIDMyIDAgMCAxLTY0IDBWMzUyYTMyIDMy' +
+          'IDAgMCAxIDMyLTMyeiBtLTU3NiAwYTMyIDMyIDAgMCAxIDMyIDMyVjU3NmEzMiAz' +
+          'MiAwIDEgMS02NCAwVjM1MmEzMiAzMiAwIDAgMSAzMi0zMnoiIGZpbGw9IiMwNjM4' +
+          'NTgiIHAtaWQ9IjE0NDkzIj48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = True
+        ExplicitHeight = 44
+      end
+      object svgShowPower: TTSSvgImageButton
+        Left = 891
+        Top = 0
+        Width = 72
+        Height = 42
+        Cursor = crArrow
+        Align = alRight
+        Caption = 'Power'
+        TabOrder = 9
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_power_on.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMTcyNTU2NDMwIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjIzODgwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcv' +
+          'MTk5OS94bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHls' +
+          'ZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTYyOS43' +
+          'NiAyMDkuOTJjMjMuMDQgMCAzOS42OC0xNy45MiAzOS42OC00MC45NlY4Ny4wNGMw' +
+          'LTIzLjA0LTE2LjY0LTQwLjk2LTM5LjY4LTQwLjk2UzU5MC4wOCA2NCA1OTAuMDgg' +
+          'ODcuMDR2ODEuOTJjMCAyMC40OCAxNi42NCA0MC45NiAzOS42OCA0MC45NnpNMzkx' +
+          'LjY4IDgxNy45MmgzOS42OHYxNjMuODRoMTU4LjcyVjgxNy45MmgzOS42OHYtNDAu' +
+          'OTZIMzk0LjI0djQwLjk2aC0yLjU2eiBtMC02MDhjMjMuMDQgMCAzOS42OC0xNy45' +
+          'MiAzOS42OC00MC45NlY4Ny4wNGMwLTIzLjA0LTE2LjY0LTQwLjk2LTM5LjY4LTQw' +
+          'Ljk2UzM1MiA2NCAzNTIgODcuMDR2ODEuOTJjMCAyMC40OCAxOS4yIDQwLjk2IDM5' +
+          'LjY4IDQwLjk2eiBtLTExNi40OCA0MC45NnYzNjYuMDhjMCA2Ny44NCA1My43NiAx' +
+          'MjIuODggMTE5LjA0IDEyMi44OGgyMzUuNTJjNjUuMjggMCAxMTkuMDQtNTUuMDQg' +
+          'MTE5LjA0LTEyMi44OFYyNTAuODhoLTQ3My42eiBtMTk1Ljg0IDQwNS43NlY0OTIu' +
+          'OGgtNzkuMzZMNTUwLjQgMzI4Ljk2djE2My44NGg3OS4zNkw0NzEuMDQgNjU2LjY0' +
+          'eiIgZmlsbD0iIzFhZmEyOSIgcC1pZD0iMjM4ODEiPjwvcGF0aD48L3N2Zz4NCg__'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = True
+        ExplicitHeight = 44
+      end
+      object svgShowConnected: TTSSvgImageButton
+        Left = 819
+        Top = 0
+        Width = 72
+        Height = 42
+        Cursor = crArrow
+        Align = alRight
+        Caption = 'Connected'
+        TabOrder = 10
+        VerticalAlignment = taAlignBottom
+        SvgFileName = 
+          'D:/Projects/TigerTe/Projects/2023-12_TigerTE_Hardware/res/tio_se' +
+          'rvo_connected.svg'
+        SvgFileContent = 
+          'PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBz' +
+          'dmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cu' +
+          'dzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIx' +
+          'NjMxMDg3NjAwNzM0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAy' +
+          'NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9z' +
+          'dmciIHAtaWQ9IjExOTMxNiIgZGF0YS1zcG0tYW5jaG9yLWlkPSJhMzEzeC43Nzgx' +
+          'MDY5LjAuaTUxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94' +
+          'bGluayIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiPjxkZWZzPjxzdHlsZSB0eXBl' +
+          'PSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTUxMi4wMDM0MTMg' +
+          'MTAyMC41ODY2NjdjLTEzNi4zMjE3MDcgMC0yNjQuMTcxNTItNTIuNzczNTQ3LTM1' +
+          'OS45OTQwMjYtMTQ4LjU5MjY0QzU2LjE4MzQ2NyA3NzYuMTcxNTIgMy40MTMzMzMg' +
+          'NjQ4LjMyMTcwNyAzLjQxMzMzMyA1MTIuMDAzNDEzYzAtMTM2LjMyMTcwNyA1Mi43' +
+          'NzAxMzMtMjY0LjE3MTUyIDE0OC41OTYwNTQtMzU5Ljk5NDAyNkMyNDcuODMxODkz' +
+          'IDU2LjE4MzQ2NyAzNzUuNjgxNzA3IDMuNDEzMzMzIDUxMi4wMDM0MTMgMy40MTMz' +
+          'MzNzMjY0LjE2ODEwNyA1Mi43NzAxMzMgMzU5Ljk5MDYxNCAxNDguNTk2MDU0Qzk2' +
+          'Ny44MTMxMiAyNDcuODMxODkzIDEwMjAuNTg2NjY3IDM3NS42ODE3MDcgMTAyMC41' +
+          'ODY2NjcgNTEyLjAwMzQxM3MtNTIuNzczNTQ3IDI2NC4xNjgxMDctMTQ4LjU5MjY0' +
+          'IDM1OS45OTA2MTRDNzc2LjE3MTUyIDk2Ny44MTMxMiA2NDguMzIxNzA3IDEwMjAu' +
+          'NTg2NjY3IDUxMi4wMDM0MTMgMTAyMC41ODY2Njd6IG0tNjAuNTQ5MTItNjAxLjEz' +
+          'NTc4N2MtOC4zNTI0MjcgMC0xNi4zMzI4IDMuMzg2MDI3LTIyLjQ3NjggOS41MjY2' +
+          'MTMtNTMuNjIzNDY3IDU1Ljk1NDc3My01My41NTE3ODcgMTQ0LjkyMzMwNyAwLjAw' +
+          'MzQxNCAxOTguNDgxOTJsMTQwLjU1NDI0IDE0MC41NTA4MjdjMjcuMTk3NDQgMjYu' +
+          'MDcxMDQgNjIuNjcyMjEzIDQwLjM0MjE4NyAxMDAuMDUxNjI2IDQwLjM0MjE4NyAz' +
+          'Ny40NTc5MiAwIDcyLjQxMzg2Ny0xNC4zMjU3NiA5OC40MjY4OC00MC4zNDIxODcg' +
+          'NTMuNjI2ODgtNTUuOTUxMzYgNTMuNTU1Mi0xNDQuOTE5ODkzIDAtMTk4LjQ3NTA5' +
+          'M2wtODAuMDA1MTItODAuMDA4NTM0Yy02LjE0NzQxMy02LjE0MDU4Ny0xNC4xMjc3' +
+          'ODctOS41MzAwMjctMjIuNDc2OC05LjUzMDAyNi04LjM0NTYgMC0xNi4zMjkzODcg' +
+          'My4zODYwMjctMjIuNDczMzg2IDkuNTMwMDI2LTYuMTQ3NDEzIDYuMTQwNTg3LTku' +
+          'NTMwMDI3IDE0LjEyNDM3My05LjUzMDAyNyAyMi40NzMzODcgMCA4LjM0OTAxMyAz' +
+          'LjM4MjYxMyAxNi4zMzI4IDkuNTMwMDI3IDIyLjQ3NjhsODAuMDA1MTIgODAuMDAx' +
+          'NzA3YzE0Ljc2OTQ5MyAxNC43NzI5MDcgMjIuOTA2ODggMzQuMDU4MjQgMjIuOTA2' +
+          'ODggNTQuMjg5MDY2IDAgMjAuMjQxMDY3LTguMTM3Mzg3IDM5LjUxNjE2LTIyLjkw' +
+          'Njg4IDU0LjI4OTA2Ny0xNC43NzYzMiAxNC43NzI5MDctMzQuMDU0ODI3IDIyLjkx' +
+          'MDI5My01NC4yODkwNjcgMjIuOTEwMjkzLTIwLjIzNDI0IDAtMzkuNTEyNzQ3LTgu' +
+          'MTM3Mzg3LTU0LjI4NTY1My0yMi45MTAyOTNsLTE0MC41NTA4MjctMTQwLjU1NDI0' +
+          'Yy0xNC43NzYzMi0xNC43NzI5MDctMjIuOTEwMjkzLTM0LjA1MTQxMy0yMi45MTAy' +
+          'OTMtNTQuMjg1NjUzIDAtMjAuMjM0MjQgOC4xMzM5NzMtMzkuNTE2MTYgMjIuOTEw' +
+          'MjkzLTU0LjI4NTY1NCAxMi41OTg2MTMtMTIuNjEyMjY3IDEyLjU5ODYxMy0zMi4z' +
+          'NTQ5ODcgMC00NC45NTcwMTMtNi4xNTA4MjctNi4xMzcxNzMtMTQuMTMxMi05LjUy' +
+          'MzItMjIuNDgzNjI3LTkuNTIzMnpNMzMzLjYwNTU0NyAyNTYuNDA5NmMyMC4yMzQy' +
+          'NCAwIDM5LjUxOTU3MyA4LjEzMzk3MyA1NC4yOTI0OCAyMi45MDY4OGwxNDAuNTU0' +
+          'MjQgMTQwLjU1NDI0YzMwLjQ0MDEwNyAzMC40NDAxMDcgMzAuNDQwMTA3IDc4LjEz' +
+          'NDYxMyAwIDEwOC41ODE1NDctNi4xNDQgNi4xNDA1ODctOS41MzAwMjcgMTQuMTIw' +
+          'OTYtOS41MzAwMjcgMjIuNDc2OCAwIDguMzQ1NiAzLjM4NjAyNyAxNi4zMzI4IDku' +
+          'NTMzNDQgMjIuNDczMzg2IDYuMTM3MTczIDYuMTQwNTg3IDE0LjEyMDk2IDkuNTI2' +
+          'NjEzIDIyLjQ2OTk3MyA5LjUyNjYxNCA4LjM0NTYgMCAxNi4zMzI4LTMuMzgyNjEz' +
+          'IDIyLjQ3MzM4Ny05LjUzMDAyNyA1My42MzAyOTMtNTUuOTUxMzYgNTMuNTU4NjEz' +
+          'LTE0NC45MTk4OTMgMC0xOTguNDc1MDkzTDQzMi44NDQ4IDIzNC4zNjYyOTNjLTI3' +
+          'LjE5NzQ0LTI2LjA3MTA0LTYyLjY3MjIxMy00MC4zNDIxODctMTAwLjA0ODIxMy00' +
+          'MC4zNDIxODYtMzcuNDU3OTIgMC03Mi40MTM4NjcgMTQuMzI1NzYtOTguNDI2ODgg' +
+          'NDAuMzQyMTg2LTUzLjYyNjg4IDU1Ljk1MTM2LTUzLjU1ODYxMyAxNDQuOTE5ODkz' +
+          'IDAgMTk4LjQ3ODUwN2w4MC4wMDg1MzMgODAuMDA4NTMzYzYuMTQwNTg3IDYuMTQ0' +
+          'IDE0LjEyMDk2IDkuNTMwMDI3IDIyLjQ3MzM4NyA5LjUzMDAyN3MxNi4zMzYyMTMt' +
+          'My4zODYwMjcgMjIuNDc2OC05LjUzMDAyN2MxMi41OTg2MTMtMTIuNjA1NDQgMTIu' +
+          'NTk4NjEzLTMyLjM1MTU3MyAwLTQ0Ljk1MDE4NmwtODAuMDExOTQ3LTgwLjAwODUz' +
+          'NGMtMjguNDMzMDY3LTMwLjMzNDI5My0yOC40MzMwNjctNzguMjQwNDI3IDAuMjMy' +
+          'MTA3LTEwOC44MTcwNjYgMTQuNTQwOC0xNC41MzM5NzMgMzMuODE5MzA3LTIyLjY2' +
+          'Nzk0NyA1NC4wNTY5Ni0yMi42Njc5NDd6IiBmaWxsPSIjMWFmYTI5IiBwLWlkPSIx' +
+          'MTkzMTciIGRhdGEtc3BtLWFuY2hvci1pZD0iYTMxM3guNzc4MTA2OS4wLmk1MCIg' +
+          'Y2xhc3M9InNlbGVjdGVkIj48L3BhdGg+PC9zdmc+DQo_'
+        ImageIndex = -1
+        ImageStretch = False
+        ReadOnly = True
+        ExplicitHeight = 44
       end
     end
     object pnlCenter: TPanel
       Left = 1
-      Top = 51
-      Width = 996
-      Height = 243
+      Top = 45
+      Width = 1107
+      Height = 211
       Cursor = crArrow
       Align = alTop
       Caption = 'pnlCenter'
       ShowCaption = False
       TabOrder = 1
-      ExplicitWidth = 997
-      object LabeledEdit2: TLabeledEdit
+      object edtShowPedalPosition: TLabeledEdit
         Left = 19
-        Top = 45
+        Top = 32
         Width = 136
         Height = 30
         Cursor = crArrow
@@ -401,9 +620,9 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         TabOrder = 0
         Text = '10.00'
       end
-      object LabeledEdit3: TLabeledEdit
+      object edtShowPedalSpeed: TLabeledEdit
         Left = 198
-        Top = 45
+        Top = 32
         Width = 136
         Height = 30
         Cursor = crArrow
@@ -424,9 +643,9 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         TabOrder = 1
         Text = '10.00'
       end
-      object LabeledEdit4: TLabeledEdit
-        Left = 390
-        Top = 45
+      object edtShowMCPressure: TLabeledEdit
+        Left = 378
+        Top = 32
         Width = 136
         Height = 30
         Cursor = crArrow
@@ -447,21 +666,23 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         TabOrder = 2
         Text = '10.00'
       end
-      object LabeledEdit5: TLabeledEdit
-        Left = 390
-        Top = 122
+      object edtTargetForce: TLabeledEdit
+        Left = 378
+        Top = 110
         Width = 128
         Height = 23
         Cursor = crArrow
+        Alignment = taRightJustify
         EditLabel.Width = 81
         EditLabel.Height = 15
         EditLabel.Caption = 'Target Force(N)'
+        NumbersOnly = True
         TabOrder = 3
-        Text = 'LabeledEdit5'
+        Text = '0'
       end
-      object LabeledEdit6: TLabeledEdit
-        Left = 570
-        Top = 45
+      object edtShowCalibratedForce: TLabeledEdit
+        Left = 557
+        Top = 32
         Width = 136
         Height = 30
         Cursor = crArrow
@@ -482,33 +703,39 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         TabOrder = 4
         Text = '10.00'
       end
-      object LabeledEdit7: TLabeledEdit
+      object edtTargetPosition: TLabeledEdit
+        Tag = 10027256
         Left = 198
-        Top = 122
+        Top = 110
         Width = 128
         Height = 23
         Cursor = crArrow
+        Alignment = taRightJustify
         EditLabel.Width = 108
         EditLabel.Height = 15
         EditLabel.Caption = 'Target Position(mm)'
+        NumbersOnly = True
         TabOrder = 5
-        Text = 'LabeledEdit5'
+        Text = '0'
       end
-      object LabeledEdit8: TLabeledEdit
-        Left = 13
-        Top = 122
+      object edtTargetSpeed: TLabeledEdit
+        Tag = 10027024
+        Left = 19
+        Top = 110
         Width = 128
         Height = 23
         Cursor = crArrow
+        Alignment = taRightJustify
         EditLabel.Width = 107
         EditLabel.Height = 15
         EditLabel.Caption = 'Target Speed(mm/s)'
+        NumbersOnly = True
         TabOrder = 6
-        Text = 'LabeledEdit5'
+        Text = '5'
       end
-      object Button1: TButton
-        Left = 13
-        Top = 186
+      object btnGotoTargetForce: TButton
+        Left = 378
+        Top = 160
         Width = 134
         Height = 32
         Cursor = crArrow
@@ -517,9 +744,9 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Images = dmIcons.imgLstSmall
         TabOrder = 7
       end
-      object Button2: TButton
+      object btnGotoTargetPosition: TButton
         Left = 198
-        Top = 186
+        Top = 160
         Width = 141
         Height = 32
         Cursor = crArrow
@@ -528,9 +755,9 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Images = dmIcons.imgLstSmall
         TabOrder = 8
       end
-      object Button3: TButton
-        Left = 390
-        Top = 186
+      object btnGoHome: TButton
+        Left = 19
+        Top = 160
         Width = 141
         Height = 32
         Cursor = crArrow
@@ -540,33 +767,37 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         TabOrder = 9
       end
       object LabeledEdit9: TLabeledEdit
-        Left = 717
-        Top = 115
+        Left = 915
+        Top = 110
         Width = 128
         Height = 23
         Cursor = crArrow
+        Alignment = taRightJustify
         EditLabel.Width = 131
         EditLabel.Height = 15
         EditLabel.Caption = 'Pedal Max Position(mm)'
+        NumbersOnly = True
         TabOrder = 10
-        Text = 'LabeledEdit5'
+        Text = '40'
       end
-      object LabeledEdit10: TLabeledEdit
-        Left = 858
-        Top = 115
+      object edtMinPosition: TLabeledEdit
+        Left = 736
+        Top = 110
         Width = 128
         Height = 23
         Cursor = crArrow
+        Alignment = taRightJustify
         EditLabel.Width = 129
         EditLabel.Height = 15
         EditLabel.Caption = 'Pedal Min Position(mm)'
+        NumbersOnly = True
         TabOrder = 11
-        Text = 'LabeledEdit5'
+        Text = '-10'
       end
-      object Button4: TButton
-        Left = 717
-        Top = 186
-        Width = 141
+      object btnSetPedalRange: TButton
+        Left = 736
+        Top = 160
+        Width = 142
         Height = 32
         Cursor = crArrow
         Caption = 'Set Pedal Range'
@@ -574,38 +805,53 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Images = dmIcons.imgLstSmall
         TabOrder = 12
       end
+      object edtShowErrorCode: TLabeledEdit
+        Left = 915
+        Top = 32
+        Width = 128
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 56
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Error Code'
+        Enabled = False
+        NumbersOnly = True
+        ReadOnly = True
+        TabOrder = 13
+        Text = '0'
+      end
     end
     object Panel11: TPanel
       Left = 1
-      Top = 294
-      Width = 996
-      Height = 207
+      Top = 256
+      Width = 1107
+      Height = 245
       Cursor = crArrow
       Align = alClient
       Caption = 'Panel11'
       ShowCaption = False
       TabOrder = 2
-      ExplicitWidth = 997
-      ExplicitHeight = 208
       object Label1: TLabel
         Left = 19
-        Top = 32
+        Top = 24
         Width = 134
         Height = 15
         Cursor = crArrow
         Caption = 'Table Position to Pressure'
+        Layout = tlCenter
       end
       object Label2: TLabel
         Left = 19
-        Top = 128
+        Top = 120
         Width = 120
         Height = 15
         Cursor = crArrow
         Caption = 'Table Pressure to Force'
+        Layout = tlCenter
       end
-      object Button5: TButton
-        Left = 474
-        Top = 19
+      object btnExcuteCalibration: TButton
+        Left = 852
+        Top = 24
         Width = 192
         Height = 32
         Cursor = crArrow
@@ -616,18 +862,18 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       end
       object StringGrid1: TStringGrid
         Left = 19
-        Top = 58
-        Width = 653
-        Height = 51
+        Top = 56
+        Width = 1024
+        Height = 50
         Cursor = crArrow
         ColCount = 10
         RowCount = 2
         ScrollBars = ssNone
         TabOrder = 1
       end
-      object Button6: TButton
-        Left = 256
-        Top = 19
+      object btnApplyNewPosVSPressTable: TButton
+        Left = 634
+        Top = 24
         Width = 179
         Height = 32
         Cursor = crArrow
@@ -636,10 +882,10 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
         Images = dmIcons.imgLstSmall
         TabOrder = 2
       end
-      object Button7: TButton
-        Left = 474
-        Top = 115
-        Width = 198
+      object btnEnableForceCalibration: TButton
+        Left = 846
+        Top = 120
+        Width = 197
         Height = 32
         Cursor = crArrow
         Caption = 'Enable Force Calibration'
@@ -649,14 +895,42 @@ object frmVCLFormDesigner_1: TfrmVCLFormDesigner
       end
       object StringGrid2: TStringGrid
         Left = 19
-        Top = 147
-        Width = 653
+        Top = 152
+        Width = 1024
         Height = 51
         Cursor = crArrow
         ColCount = 10
         RowCount = 2
         ScrollBars = ssNone
         TabOrder = 4
+      end
+      object edtPositionVSPressureTableSize: TLabeledEdit
+        Left = 263
+        Top = 24
+        Width = 70
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 50
+        EditLabel.Height = 23
+        EditLabel.Caption = 'Table Size'
+        LabelPosition = lpLeft
+        NumbersOnly = True
+        TabOrder = 5
+        Text = '10'
+      end
+      object edtPresVSForceTableSize: TLabeledEdit
+        Left = 263
+        Top = 120
+        Width = 70
+        Height = 23
+        Cursor = crArrow
+        EditLabel.Width = 50
+        EditLabel.Height = 23
+        EditLabel.Caption = 'Table Size'
+        LabelPosition = lpLeft
+        NumbersOnly = True
+        TabOrder = 6
+        Text = '10'
       end
     end
   end

@@ -300,6 +300,48 @@ int pedal_go_position_manual_mode_asyn(float AAbsPositionMM, float ASpeedMMpS) {
     return 0;
 }
 
+int pedal_go_position_manual_mode_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_GoAbsPos_MMode_Syn(AAbsPositionMM, ASpeedMMpS, ATimeout);
+    }
+    return 0;
+}
+
+int pedal_jog_in(void) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_Manual_JogIn();
+    }
+    return 0;
+}
+
+int pedal_jog_out(void) {
+    int result = servo_check();
+    if(result != 0)
+        return result;
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        return vServoObj->S1_Manual_JogOut();
+    }
+    return 0;
+}
+
 
 int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS) {
     int result = servo_check();
@@ -794,7 +836,7 @@ int ps_set_pressure_syn(float APressureBar, float AMaxTol, bool AEnableProtectio
 
 
 // add for pedal force control
-int pedal_force_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
+int pedal_force_apply_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
     int result = servo_check();
     if(result != 0)
         return result;
@@ -807,7 +849,7 @@ int pedal_force_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
     }
 }
 
-int pedal_force_apllied_asyn(float AForceN, float ASpeedMMpS) {
+int pedal_force_apply_asyn(float AForceN, float ASpeedMMpS) {
     int result = servo_check();
     if(result != 0)
         return result;
@@ -820,7 +862,7 @@ int pedal_force_apllied_asyn(float AForceN, float ASpeedMMpS) {
     }
 }
 
-int pedal_force_manual_mode_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
+int pedal_force_manual_mode_apply_syn(float AForceN, float ASpeedMMpS, int ATimeout) {
     int result = servo_check();
     if(result != 0)
         return result;
@@ -833,7 +875,7 @@ int pedal_force_manual_mode_apllied_syn(float AForceN, float ASpeedMMpS, int ATi
     }
 }
 
-int pedal_force_manual_mode_apllied_asyn(float AForceN, float ASpeedMMpS) {
+int pedal_force_manual_mode_apply_asyn(float AForceN, float ASpeedMMpS) {
     int result = servo_check();
     if(result != 0)
         return result;
@@ -846,7 +888,7 @@ int pedal_force_manual_mode_apllied_asyn(float AForceN, float ASpeedMMpS) {
     }
 }
 
-int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS) {
+int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS, float AMaxForce) {
     int result = servo_check();
     if(result != 0)
         return result;
@@ -855,9 +897,41 @@ int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS) {
         return -20;
     }
     else {
-        return vServoObj->S1_Force_Position_Table_Calibrate(APostionStepMM, ASpeedMMpS);
+        return vServoObj->S1_Force_Position_Table_Calibrate(APostionStepMM, ASpeedMMpS, AMaxForce);
     }
 
+}
+
+int pedal_excute_exhaust(float ATargetPositionMM, float ASpeedMMpS, int ACycleCount, bool AIsHold) {
+    int result = servo_check();
+    if(result != 0) {
+        app.make_toast("no servo object", lvlError);
+        return result;
+    }
+    if(vServoObj->FPedalIsSysMode) {
+        log_nok("pedal_go_position_asyn: pedal controlled by tio.PedalTargetPosition/PedalTargetPercent, using pedal_position_auto_mode(false) to disable first");
+        return -20;
+    }
+    else {
+        for(int i = 0; i < ACycleCount; i++) {
+            result = vServoObj->S1_GoAbsPos_MMode_Syn(ATargetPositionMM, ASpeedMMpS, 20000);
+            if(result != 0) {
+                app.make_toast("pedal exhaust process excuted failed!", lvlError);
+                return result;
+            }
+            if(AIsHold && (i == (ACycleCount - 1))) {
+                app.make_toast("pedal exhaust excute finished and holded", lvlOK);
+                return 0;
+            }
+            result = vServoObj->S1_GoAbsPos_MMode_Syn(0, ASpeedMMpS, 20000);
+            if(result != 0) {
+                app.make_toast("pedal exhaust process excuted failed!", lvlError);
+                return result;
+            }
+        }
+        app.make_toast("pedal exhaust excute finished", lvlOK);
+        return 0;
+    }
 }
 
 // linear 1-D lookup table
@@ -1258,9 +1332,12 @@ TServo::TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceCo
             FMCP2FIsCalibrated = false;
             log_nok("Pressure to force Table Not Calibrated");
         }
-
-        FMCMaxPressure = vTIOConfig.FPFCMCMaxPressure;
-        FMCMinForce = vTIOConfig.FPFCMCMinForce;
+        SetFMCIdleStroke(vTIOConfig.FPFCMCIdleStroke);
+        SetFMCMaxPressure(vTIOConfig.FPFCMCMaxPressure);
+        SetFMCMinForce(vTIOConfig.FPFCMCMinForce);
+        SetFMCMaxPressureDownLimit(vTIOConfig.FPFCMCMaxPressureDownLimit);
+        SetFMCMaxCalibratedForce(vTIOConfig.FFPCMCMaxCalibratedForce);
+        SetFMCMinCalibratedForce(vTIOConfig.FFPCMCMinCalibratedForce);
     }
 }
 
@@ -1732,48 +1809,43 @@ int TServo::S7_HandsShake(bool AEnable, int ATimeout) {
 int TServo::S1_GoAbsPos_AutoMode_Asyn(float AAbsPosMM, float ASpeedMMS) {
     std::array<unsigned char, 8> AWriteByte = {0};
 
-    //if(!FS1IsReady) {
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo 1 is not ready");
-    //    return -1;
-    //}
+    if(!FS1IsReady) {
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo 1 is not ready");
+        return -1;
+    }
 
-    //if(!FS7IsAutoMode) {
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo is in manual mode, switch to auto first");
-    //    return -1;
-    //}
+    if(!FS7IsAutoMode) {
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: Servo is in manual mode, switch to auto first");
+        return -1;
+    }
 
-    //float ASetPosition = AAbsPosMM;
-    //if(AAbsPosMM > FS1MaxPosition) {
-    //    ASetPosition = FS1MaxPosition;
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%0.2f), and the target value used the max value instead", FS1MaxPosition);
-    //}
-    //else if(AAbsPosMM < FS1MinPosition) {
-    //    ASetPosition = FS1MinPosition;
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(%0.2f), and the target value used the min value instead", FS1MinPosition);
-    //}
+    float ASetPosition = AAbsPosMM;
+    if(AAbsPosMM > FS1MaxPosition) {
+        ASetPosition = FS1MaxPosition;
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%0.2f), and the target value used the max value instead", FS1MaxPosition);
+    }
+    else if(AAbsPosMM < FS1MinPosition) {
+        ASetPosition = FS1MinPosition;
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(%0.2f), and the target value used the min value instead", FS1MinPosition);
+    }
 
-    //float ASetSpeed = ASpeedMMS;
-    //if(ASpeedMMS > FS1MaxSpeed) {
-    //    ASetSpeed = FS1MaxSpeed;
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%0.2f), and the target value used the max value instead", FS1MaxSpeed);
-    //}
-    //else if(ASpeedMMS < 0) {
-    //    ASetSpeed = 0;
-    //    log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
-    //}
+    float ASetSpeed = ASpeedMMS;
+    if(ASpeedMMS > FS1MaxSpeed) {
+        ASetSpeed = FS1MaxSpeed;
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is greater than the max value(%0.2f), and the target value used the max value instead", FS1MaxSpeed);
+    }
+    else if(ASpeedMMS < 0) {
+        ASetSpeed = 0;
+        log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 Set positon is smaller than the min value(0), and the target value used the min value instead");
+    }
 
-    //SetFS1TargetPositionAuto(ASetPosition);
-    //SetFS1TargetSpeedAuto(ASetSpeed);
-//    float AAbsPosMM, float ASpeedMMS
-    /*SetFS1TargetPositionAuto(ASetPosition);
-    SetFS1TargetSpeedAuto(ASetSpeed);*/
+    SetFS1TargetPositionAuto(ASetPosition);
+    SetFS1TargetSpeedAuto(ASetSpeed);
+
     S7.ValReal(&AWriteByte[0], AAbsPosMM);
     S7.ValReal(&AWriteByte[4], ASpeedMMS);
 
-    // *(float*) AWriteByte.data() = ASetPosition;
-    // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
 
-    // // if(S7Write(AddrSetS1APosSpd, &AWriteByte[0], false) != 0) {
     if(S7Write(AddrSetS1APosSpd, &AWriteByte[0], false) != 0) {
         log_nok("S1_GoAbsPos_AutoMode_Asyn: S1 auto mode goto abs. position write error");
         return -2;
@@ -1824,10 +1896,6 @@ int TServo::S1_GoAbsPos_AutoMode_Syn(float AAbsPosMM, float ASpeedMMS, int ATime
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
 
-    // *(float*) AWriteByte.data() = ASetPosition;
-    // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
-
-    // if(S7Write(AddrSetS1APosSpd, &AWriteByte[0], false) != 0) {
     if(S7Write(AddrSetS1APosSpd, &AWriteByte[0], false) != 0) {
         log_nok("S1_GoAbsPos_AutoMode_Syn: S1 auto mode goto abs. position write error");
         return -2;
@@ -1981,8 +2049,6 @@ int TServo::S1_GoAbsPos_MMode_Asyn(float AAbsPosMM, float ASpeedMMS) {
     S7.ValReal(&AWriteByte[0], ASetPosition);
     S7.ValReal(&AWriteByte[4], ASetSpeed);
 
-    // *(float*) AWriteByte.data() = ASetPosition;
-    // *(float*) (AWriteByte.data() + 4) = ASetSpeed;
 
     if(S7Write(AddrSetS1MPosSpd, &AWriteByte[0], false) != 0) {
         log_nok("S1_GoAbsPostion_MMode_Asyn: S1 manual mode goto abs. position write error");
@@ -4146,7 +4212,7 @@ void TServo::SetFMCActPressure(float Value) {
     FMCActPressure = Value;
     app.set_system_var_double((vMP_Name + ".pedal_pressure").c_str(), Value);
     if(FMCP2FIsCalibrated) {
-        FMCCalibratedForce = lookup_table_1D(FMCActPressure, FMCPresForceTablePressure, FMCPresForceTableForce, 10);
+        FMCCalibratedForce = lookup_table_1D(FMCActPressure, FMCPresForceTablePressure, FMCPresForceTableForce, FMCPresForceTableSize);
         app.set_system_var_double((vMP_Name + ".pedal_cal_force").c_str(), FMCCalibratedForce);
     }
 }
@@ -4269,22 +4335,28 @@ int TServo::S1_GoTargetForce_MMode_Asyn(float AForceN, float ASpeedMMS) {
 
 }
 
-int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS) {
+int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS, float AMaxCalibrateForce) {
     if(!FPedalForceControlEnabled) {
         log_nok("Please enable Pedal Force Control First!");
         return -1;
     }
     FMCPos2PIsCalibrated = false;
     // vTIOConfig.SaveConfig();
+    if((AMaxCalibrateForce < FMCMinCalibratedForce) || (AMaxCalibrateForce > FMCMaxCalibratedForce)) {
+        log_nok("The Calibrated Force should in range [%0.2f, %0.2f]", FMCMinCalibratedForce, FMCMaxCalibratedForce);
+        return -80;
+    }
+    float AMaxCalibratePressure = lookup_table_1D(AMaxCalibrateForce, FMCPresForceTableForce, FMCPresForceTablePressure, FMCPresForceTableSize);
 
-    float APosition = APostionStepMM;
+    float AMaxPressure = (AMaxCalibratePressure < FMCMaxPressure) ? AMaxCalibratePressure : FMCMaxPressure;
     float APressure = 0;
     int index = 0;
     float APosPresPressure[100] = {0.0f};
     float APosPresPosition[100] = {0.0f};
     APosPresPressure[0] = 0.0f;
-    APosPresPosition[0] = 0.0f;
-    while((APosition < FS1MaxPosition) && (APressure < FMCMaxPressure)) {
+    APosPresPosition[0] = FMCIdleStroke;
+    float APosition = FMCIdleStroke + APostionStepMM;
+    while((APosition < FS1MaxPosition) && (APressure < AMaxPressure)) {
         if(0 != S1_GoAbsPos_AutoMode_Syn(APosition, ASpeedMMpS, 10000)) {
             log_nok("Calibration Process Failed!");
             return -99;
@@ -4294,18 +4366,18 @@ int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeed
             log_nok("Calibrate Failed!");
             return -9;
         }
-        APosPresPressure[index] = APosition;
+        Sleep(1500);
+        APosPresPosition[index] = APosition;
         APosPresPressure[index] = FMCActPressure;
         APosition = APosition + APostionStepMM;
         APressure = FMCActPressure;
-        Sleep(50);
         if(0 != S1_GoAbsPos_AutoMode_Syn(0, ASpeedMMpS, 10000)) {
             log_nok("Calibration Process Failed!");
             return -99;
         }
-        Sleep(50);
+        Sleep(1500);
     }
-    if(APosPresPressure[index] < 150.0) {
+    if(APosPresPressure[index] < FMCMaxPressureDownLimit) {
         log_nok("the max pressure in calibration is %f, smaller than 150bar, please check!");
         return -80;
     }
@@ -4330,3 +4402,36 @@ int TServo::S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeed
         return -2;
     }
 }
+
+void TServo::SetFMCIdleStroke(float Value) {
+    FMCIdleStroke = Value;
+    log("Pedal idle stroke is: %0.2f mm", Value); // LVL_INFO
+}
+
+void TServo::SetFMCMaxPressure(float Value) {
+    FMCMaxPressure = Value;
+    log("Pedal cylinder max pressure set is: %0.2f bar", Value); // LVL_INFO
+}
+
+void TServo::SetFMCMinForce(float Value) {
+    FMCMinForce = Value;
+    log("The pedal min control force is: %0.2f N", Value); // LVL_INFO
+}
+
+void TServo::SetFMCMaxPressureDownLimit(float Value) {
+    FMCMaxPressureDownLimit = Value;
+    log("The pedal cylinder max pressure down limit is: %0.2f bar", Value); // LVL_INFO
+}
+
+void TServo::SetFMCMaxCalibratedForce(float Value) {
+    FMCMaxCalibratedForce = Value;
+    log("The max force can be set in calibration: %0.2f N", Value); // LVL_INFO
+}
+
+void TServo::SetFMCMinCalibratedForce(float Value) {
+    FMCMinCalibratedForce = Value;
+    log("The max force can be set in calibration: %0.2f N", Value); // LVL_INFO
+}
+
+
+

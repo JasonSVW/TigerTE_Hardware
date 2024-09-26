@@ -66,6 +66,11 @@ public:
     std::string FPFCPresVSForceForce;
     float FPFCMCMaxPressure;
     float FPFCMCMinForce;
+    float FPFCMCIdleStroke;
+    float FPFCMCMinControledForce;
+    float FPFCMCMaxPressureDownLimit;
+    float FFPCMCMaxCalibratedForce;
+    float FFPCMCMinCalibratedForce;
 
     bool GetConfigFile();
     void InitConfigFile();
@@ -78,3 +83,5 @@ extern TTIOConfig vTIOConfig;
 extern std::string vMP_Name;
 
 std::string GetCurrentModuleName();
+
+int update_config_from_configure_file();

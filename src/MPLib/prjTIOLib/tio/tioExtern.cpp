@@ -208,8 +208,12 @@ DLLEXPORT s32 __stdcall retrieve_mp_abilities(const void* AObj, const TRegTSMast
   if(!AReg(AObj, "on_custom_callback", "pedal_go_step_syn", "const float ARelPositionMM, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_step_syn), "pedal step synchronouslly"))  return -1;
   if(!AReg(AObj, "on_custom_callback", "pedal_go_step_asyn", "const float ARelPositionMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_step_asyn), "pedal step asynchronouslly"))  return -1;
   if(!AReg(AObj, "on_custom_callback", "pedal_go_position_syn", "const float AAbsPositionMM, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_position_syn), "pedal go synchronouslly"))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_go_position_asyn", "const float AAbsPositionMM, const float ASpeedMMpS ", reinterpret_cast<const void*>(&pedal_go_position_asyn), "pedal go asynchronouslly"))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_go_position_manual_mode_asyn", "const float AAbsPositionMM, const float ASpeedMMpS ", reinterpret_cast<const void*>(&pedal_go_position_manual_mode_asyn), "pedal go asynchronouslly in manual mode(used for UI control)"))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_go_position_asyn", "const float AAbsPositionMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_position_asyn), "pedal go asynchronouslly"))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_go_position_manual_mode_asyn", "const float AAbsPositionMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_position_manual_mode_asyn), "pedal go asynchronouslly in manual mode(used for UI control)"))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_go_position_manual_mode_syn", "const float AAbsPositionMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_position_manual_mode_syn), "pedal go synchronouslly in manual mode(used for UI control)"))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_jog_in", "void", reinterpret_cast<const void*>(&pedal_jog_in), "pedal jog in in manual mode(used for UI control)"))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_jog_out", "void", reinterpret_cast<const void*>(&pedal_jog_out), "pedal jog out in manual mode(used for UI control)"))  return -1;
+
   if(!AReg(AObj, "on_custom_callback", "pedal_go_step_percent_syn", "const float ARelPositionPercent, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_step_percent_syn), "pedal percent step synchronouslly"))  return -1;
   if(!AReg(AObj, "on_custom_callback", "pedal_go_step_percent_asyn", "const float ARelPositionPercent, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_go_step_percent_asyn), "pedal percent step asynchronouslly"))  return -1;
   if(!AReg(AObj, "on_custom_callback", "pedal_go_position_percent_syn", "const float AAbsPositionPercent, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_go_position_percent_syn), "pedal go percent position synchronouslly"))  return -1;
@@ -261,12 +265,17 @@ DLLEXPORT s32 __stdcall retrieve_mp_abilities(const void* AObj, const TRegTSMast
 
   // pedal force control//
   // 5
-  if(!AReg(AObj, "on_custom_callback", "pedal_force_apllied_syn", "const float AForceN, const float ASpeedMMpS, const int ATimeout", reinterpret_cast<const void*>(&pedal_force_apllied_syn), "synchronouslly apllied force to target with target speed, api used in auto mode."))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_force_apllied_asyn", "const float AForceN, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_force_apllied_asyn), "Asynchronouslly apllied force to target with target speed, api used in auto mode."))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_force_manual_mode_apllied_syn", "const float AForceN, const float ASpeedMMpS, const int ATimeout", reinterpret_cast<const void*>(&pedal_force_manual_mode_apllied_syn), "synchronouslly apllied force to target with target speed, api used in manual mode."))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_force_manual_mode_apllied_asyn", "const float AForceN, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_force_manual_mode_apllied_asyn), "Asynchronouslly apllied force to target with target speed, api used in manual mode."))  return -1;
-  if(!AReg(AObj, "on_custom_callback", "pedal_force_excute_calibration", "const float APostionStepMM, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_force_excute_calibration), "Calibrated the relation 1-D table of MC Pressure vs pedal postion."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_force_apply_syn", "const float AForceN, const float ASpeedMMpS, const u32 ATimeout", reinterpret_cast<const void*>(&pedal_force_apply_syn), "synchronouslly apllied force to target with target speed."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_force_apply_asyn", "const float AForceN, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_force_apply_asyn), "Asynchronouslly apllied force to target with target speed, api used in auto mode."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_force_manual_mode_apply_syn", "const float AForceN, const float ASpeedMMpS, const int ATimeout", reinterpret_cast<const void*>(&pedal_force_manual_mode_apply_syn), "synchronouslly apllied force to target with target speed, api used in manual mode."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_force_manual_mode_apply_asyn", "const float AForceN, const float ASpeedMMpS", reinterpret_cast<const void*>(&pedal_force_manual_mode_apply_asyn), "Asynchronouslly apllied force to target with target speed, api used in manual mode."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_force_excute_calibration", "const float APostionStepMM, const float ASpeedMMpS, const float AMaxForceN", reinterpret_cast<const void*>(&pedal_force_excute_calibration), "Calibrated the relation 1-D table of MC Pressure vs pedal postion."))  return -1;
+  if(!AReg(AObj, "on_custom_callback", "pedal_excute_exhaust", "float ATargetPositionMM, float ASpeedMMpS, int ACycleCount, bool AIsHold", reinterpret_cast<const void*>(&pedal_excute_exhaust), "exhaust the air in cylinder with target position, speed and cycle count."))  return -1;
+
+  // common
+  if (!AReg(AObj, "on_custom_callback", "update_config_from_configure_file", "void", reinterpret_cast<const void*>(&update_config_from_configure_file), "update the config value from configuration file."))  return -1;
+
   // MP library functions
   // return 66;
-  return 72;
+  return 77;
 }

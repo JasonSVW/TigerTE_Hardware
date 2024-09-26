@@ -137,6 +137,8 @@ private:
     bool FMCP2FIsCalibrated = false;
     bool FMCPos2PIsCalibrated = false;
     float FMCMaxPressure = 200.0f;
+    float FMCMaxPressureDownLimit = 150.0f;
+    float FMCIdleStroke = 3.0f;
     float FMCMinForce = 2000.0f;
     float FMCActPressure = 0.0f;
     float FMCCalibratedForce = 0.0f;
@@ -146,6 +148,9 @@ private:
     float FMCPosPresPosition[100] = {0};
     float FMCPresForceTablePressure[100] = {0};
     float FMCPresForceTableForce[100] = {0};
+    float FMCMaxCalibratedForce = 80000.0f;
+    float FMCMinCalibratedForce = 80000.0f;
+
 
 
 
@@ -259,7 +264,12 @@ private:
     void SetFEnablePVProtection(bool AEnable);
     // add for pedal force control
     void SetFMCActPressure(float Value);
-
+    void SetFMCIdleStroke(float Value);
+    void SetFMCMaxPressure(float Value);
+    void SetFMCMinForce(float Value);
+    void SetFMCMaxPressureDownLimit(float Value);
+    void SetFMCMaxCalibratedForce(float Value);
+    void SetFMCMinCalibratedForce(float Value);
 
 public:
     TServo(TPLCType APLCType, bool AOnlyPedalServo, bool AEnablePedalForceControl);
@@ -330,7 +340,7 @@ public:
     int S1_GoTargetForce_AutoMode_Asyn(float AForceN, float ASpeedMMS);
     int S1_GoTargetForce_MMode_Syn(float AForceN, float ASpeedMMS, int ATimeout);
     int S1_GoTargetForce_MMode_Asyn(float AForceN, float ASpeedMMS);
-    int S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS);
+    int S1_Force_Position_Table_Calibrate(float APostionStepMM, float ASpeedMMpS, float AMaxCalibrateForce);
 };
 
 extern TServo* vServoObj;
@@ -352,6 +362,9 @@ int pedal_go_step_asyn(float ARelPositionMM, float ASpeedMMpS);
 int pedal_go_position_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout);
 int pedal_go_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
 int pedal_go_position_manual_mode_asyn(float AAbsPositionMM, float ASpeedMMpS);
+int pedal_go_position_manual_mode_syn(float AAbsPositionMM, float ASpeedMMpS, int ATimeout);
+int pedal_jog_in(void);
+int pedal_jog_out(void);
 int pedal_sys_position_asyn(float AAbsPositionMM, float ASpeedMMpS);
 int pedal_go_step_percent_syn(float ARelPositionPercent, float ASpeedMMpS, int ATimeout);
 int pedal_go_step_percent_asyn(float ARelPositionPercent, float ASpeedMMpS);
@@ -399,8 +412,9 @@ int ps_reset();
 int ps_set_pressure_asyn(float APressureBar, bool AEnableProtection);
 int ps_set_pressure_syn(float APressureBar, float AMaxTol, bool AEnableProtection, int ATimeout);
 // add for force control
-int pedal_force_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout);
-int pedal_force_apllied_asyn(float AForceN, float ASpeedMMpS);
-int pedal_force_manual_mode_apllied_syn(float AForceN, float ASpeedMMpS, int ATimeout);
-int pedal_force_manual_mode_apllied_asyn(float AForceN, float ASpeedMMpS);
-int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS);
+int pedal_force_apply_syn(float AForceN, float ASpeedMMpS, int ATimeout);
+int pedal_force_apply_asyn(float AForceN, float ASpeedMMpS);
+int pedal_force_manual_mode_apply_syn(float AForceN, float ASpeedMMpS, int ATimeout);
+int pedal_force_manual_mode_apply_asyn(float AForceN, float ASpeedMMpS);
+int pedal_force_excute_calibration(float APostionStepMM, float ASpeedMMpS, float AMaxForceN);
+int pedal_excute_exhaust(float ATargetPositionMM, float ASpeedMMpS, int ACycleCount, bool AIsHold);

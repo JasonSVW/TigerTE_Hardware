@@ -12590,3 +12590,7 @@
 3;TIO.SERVO_TYPE_PEDAL_CYLINDER;used to create a pedal with cylinder servo object.
 4;TIO.SERVO_TYPE_TURNTABLE;used to create a truntable control servo object.
 5;TIO.SERVO_TYPE_PUMP;used to create a pump station control servo object.
+6;TIO.SERVO_TYPE_PEDAL_FORCE_CONTROL;used to create a pump station control servo object.
+6;TIO.SERVO_TYPE_PEDAL_FORCE_CONTROL;used to create a pump station control servo object.
+6;TIO.SERVO_TYPE_PEDAL_FORCE_CONTROL;used to create a pump station control servo object.
+6;TIO.SERVO_TYPE_PEDAL_FORCE_CONTROL;used to create a pump station control servo object.

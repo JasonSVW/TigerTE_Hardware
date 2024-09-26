@@ -12,6 +12,11 @@ std::string vMP_Name = "tio";
 
 #define INI_FILE "TIO\\TIOConfiguration.ini"
 
+int update_config_from_configure_file() {
+    vTIOConfig.LoadConfigFile();
+    return 0;
+}
+
 bool ensureFileExists(const std::string& filePath) {
     bool IsFileExist = false;
     fs::path pathObj(filePath);
@@ -150,6 +155,11 @@ void TTIOConfig::UpdateConfigFile() {
     app.ini_write_bool(hConfigFile, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED", FPFCPosVSPresIsCalibrated);
     app.ini_write_bool(hConfigFile, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", FPFCPresVSForceIsCalibrated);
     app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_FORCE", FPFCMCMinForce);
+    app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_IDLE_STROKE", FPFCMCIdleStroke);
+    app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE_DOWN_LIMIT", FPFCMCMaxPressureDownLimit);
+    app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_CALIBRATED_FORCE", FFPCMCMaxCalibratedForce);
+    app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_CALIBRATED_FORCE", FFPCMCMinCalibratedForce);
+
     if(0 == app.ini_close(hConfigFile)) {
         log("config file updated");
         hConfigFile = NULL;
@@ -253,7 +263,10 @@ void TTIOConfig::LoadConfigFile() {
     if(0 == app.ini_read_bool(hConfigFile, "SERVO_CONFIG", "PFC_MM2BAR_CALIBRATED", &aReadBoolValue, false)) FPFCPosVSPresIsCalibrated = aReadBoolValue;
     if(0 == app.ini_read_bool(hConfigFile, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", &aReadBoolValue, false)) FPFCPresVSForceIsCalibrated = aReadBoolValue;
     if(0 == app.ini_read_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_FORCE", &aReadFloatValue, 0.0f)) FPFCMCMinForce = float(aReadFloatValue);
-
+    if(0 == app.ini_read_float(hConfigFile, "SERVO_CONFIG", "PFC_IDLE_STROKE", &aReadFloatValue, 3.0f)) FPFCMCIdleStroke = float(aReadFloatValue);
+    if(0 == app.ini_read_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE_DOWN_LIMIT", &aReadFloatValue, 3.0f)) FPFCMCMaxPressureDownLimit = float(aReadFloatValue);
+    if(0 == app.ini_read_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_CALIBRATED_FORCE", &aReadFloatValue, 80000.0f)) FFPCMCMaxCalibratedForce = float(aReadFloatValue);
+    if(0 == app.ini_read_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_CALIBRATED_FORCE", &aReadFloatValue, 20000.0f)) FFPCMCMinCalibratedForce = float(aReadFloatValue);
 
     if(0 == app.ini_close(hConfigFile)) {
         log("config file loaded");
@@ -373,6 +386,14 @@ void TTIOConfig::InitConfigFile() {
             app.ini_write_bool(hConfigFile, "SERVO_CONFIG", "PFC_BAR2N_CALIBRATED", false);
         if(app.ini_key_exists(hConfigFile, "SERVO_CONFIG", "PFC_MIN_FORCE"))
             app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_FORCE", 2000.0f);
+        if(app.ini_key_exists(hConfigFile, "SERVO_CONFIG", "PFC_IDLE_STROKE"))
+            app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_IDLE_STROKE", 3.0f);
+        if(app.ini_key_exists(hConfigFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE_DOWN_LIMIT"))
+            app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_PRESSURE_DOWN_LIMIT", 150.0f);
+        if(app.ini_key_exists(hConfigFile, "SERVO_CONFIG", "PFC_MAX_CALIBRATED_FORCE"))
+            app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MAX_CALIBRATED_FORCE", 80000.0f);
+        if(app.ini_key_exists(hConfigFile, "SERVO_CONFIG", "PFC_MIN_CALIBRATED_FORCE"))
+            app.ini_write_float(hConfigFile, "SERVO_CONFIG", "PFC_MIN_CALIBRATED_FORCE", 20000.0f);
 
         if(0 == app.ini_close(hConfigFile)) {
             log("config file initilized");

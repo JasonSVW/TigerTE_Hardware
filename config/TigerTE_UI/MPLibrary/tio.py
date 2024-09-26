@@ -135,6 +135,34 @@ def pedal_go_position_asyn(AAbsPositionMM,ASpeedMMpS):
         return None
     pedal_go_position_asyn_ = cast(funcaddr,_pedal_go_position_asyn)
     return pedal_go_position_asyn_(AAbsPositionMM,ASpeedMMpS)
+_pedal_go_position_manual_mode_asyn = CFUNCTYPE(s32,single,single,)
+def pedal_go_position_manual_mode_asyn(AAbsPositionMM,ASpeedMMpS):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_go_position_manual_mode_asyn')
+    if funcaddr == 0:
+        return None
+    pedal_go_position_manual_mode_asyn_ = cast(funcaddr,_pedal_go_position_manual_mode_asyn)
+    return pedal_go_position_manual_mode_asyn_(AAbsPositionMM,ASpeedMMpS)
+_pedal_go_position_manual_mode_syn = CFUNCTYPE(s32,single,single,)
+def pedal_go_position_manual_mode_syn(AAbsPositionMM,ASpeedMMpS):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_go_position_manual_mode_syn')
+    if funcaddr == 0:
+        return None
+    pedal_go_position_manual_mode_syn_ = cast(funcaddr,_pedal_go_position_manual_mode_syn)
+    return pedal_go_position_manual_mode_syn_(AAbsPositionMM,ASpeedMMpS)
+_pedal_jog_in = CFUNCTYPE(s32,)
+def pedal_jog_in():
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_jog_in')
+    if funcaddr == 0:
+        return None
+    pedal_jog_in_ = cast(funcaddr,_pedal_jog_in)
+    return pedal_jog_in_()
+_pedal_jog_out = CFUNCTYPE(s32,)
+def pedal_jog_out():
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_jog_out')
+    if funcaddr == 0:
+        return None
+    pedal_jog_out_ = cast(funcaddr,_pedal_jog_out)
+    return pedal_jog_out_()
 _pedal_go_step_percent_syn = CFUNCTYPE(s32,single,single,u32,)
 def pedal_go_step_percent_syn(ARelPositionPercent,ASpeedMMpS,ATimeout):
     funcaddr,flag = app.retrieve_api_address('tio.pedal_go_step_percent_syn')
@@ -436,3 +464,45 @@ def ps_set_pressure_syn(APressureBar,AMaxTolBar,AEnableProtection,ATimeout):
         return None
     ps_set_pressure_syn_ = cast(funcaddr,_ps_set_pressure_syn)
     return ps_set_pressure_syn_(APressureBar,AMaxTolBar,AEnableProtection,ATimeout)
+_pedal_force_apply_syn = CFUNCTYPE(s32,single,single,u32,)
+def pedal_force_apply_syn(AForceN,ASpeedMMpS,ATimeout):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_force_apply_syn')
+    if funcaddr == 0:
+        return None
+    pedal_force_apply_syn_ = cast(funcaddr,_pedal_force_apply_syn)
+    return pedal_force_apply_syn_(AForceN,ASpeedMMpS,ATimeout)
+_pedal_force_apply_asyn = CFUNCTYPE(s32,single,single,)
+def pedal_force_apply_asyn(AForceN,ASpeedMMpS):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_force_apply_asyn')
+    if funcaddr == 0:
+        return None
+    pedal_force_apply_asyn_ = cast(funcaddr,_pedal_force_apply_asyn)
+    return pedal_force_apply_asyn_(AForceN,ASpeedMMpS)
+_pedal_force_manual_mode_apply_syn = CFUNCTYPE(s32,single,single,pvoid,)
+def pedal_force_manual_mode_apply_syn(AForceN,ASpeedMMpS,ATimeout):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_force_manual_mode_apply_syn')
+    if funcaddr == 0:
+        return None
+    pedal_force_manual_mode_apply_syn_ = cast(funcaddr,_pedal_force_manual_mode_apply_syn)
+    return pedal_force_manual_mode_apply_syn_(AForceN,ASpeedMMpS,ATimeout)
+_pedal_force_manual_mode_apply_asyn = CFUNCTYPE(s32,single,single,)
+def pedal_force_manual_mode_apply_asyn(AForceN,ASpeedMMpS):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_force_manual_mode_apply_asyn')
+    if funcaddr == 0:
+        return None
+    pedal_force_manual_mode_apply_asyn_ = cast(funcaddr,_pedal_force_manual_mode_apply_asyn)
+    return pedal_force_manual_mode_apply_asyn_(AForceN,ASpeedMMpS)
+_pedal_force_excute_calibration = CFUNCTYPE(s32,single,single,single,)
+def pedal_force_excute_calibration(APostionStepMM,ASpeedMMpS,AMaxForceN):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_force_excute_calibration')
+    if funcaddr == 0:
+        return None
+    pedal_force_excute_calibration_ = cast(funcaddr,_pedal_force_excute_calibration)
+    return pedal_force_excute_calibration_(APostionStepMM,ASpeedMMpS,AMaxForceN)
+_pedal_excute_exhaust = CFUNCTYPE(s32,single,single,pvoid,cbool,)
+def pedal_excute_exhaust(ATargetPositionMM,ASpeedMMpS,ACycleCount,AIsHold):
+    funcaddr,flag = app.retrieve_api_address('tio.pedal_excute_exhaust')
+    if funcaddr == 0:
+        return None
+    pedal_excute_exhaust_ = cast(funcaddr,_pedal_excute_exhaust)
+    return pedal_excute_exhaust_(ATargetPositionMM,ASpeedMMpS,ACycleCount,AIsHold)

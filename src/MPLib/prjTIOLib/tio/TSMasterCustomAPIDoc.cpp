@@ -68,6 +68,18 @@ DLLEXPORT void __stdcall write_api_document_auto(const void* AOpaque, const TWri
     AParaFunc(AOpaque, 0, "pedal_go_position_asyn", "AAbsPositionMM", true, "float", base64_encode("pedal position (mm)").c_str());
     AParaFunc(AOpaque, 1, "pedal_go_position_asyn", "ASpeedMMpS", true, "float", base64_encode("pedal speed(mm/s)").c_str());
 
+    AAPIFunc(AOpaque, "pedal_go_position_manual_mode_syn", vMP_Name.c_str(), base64_encode("go to position synchronouslly  in manual mode(UI Control)").c_str(), base64_encode("tio.pedal_go_position_manual_mode_syn(30,10,5000); //go to 30mm with speed 10mm/s synchronouslly, time out is 5000ms").c_str(), 3);
+    AParaFunc(AOpaque, 0, "pedal_go_position_manual_mode_syn", "AAbsPositionMM", true, "float", base64_encode("pedal position (mm)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_go_position_manual_mode_syn", "ASpeedMMpS", true, "float", base64_encode("pedal speed(mm/s)").c_str());
+    AParaFunc(AOpaque, 2, "pedal_go_position_manual_mode_syn", "ATimeout", true, "u32", base64_encode("timeout(ms)").c_str());
+
+    AAPIFunc(AOpaque, "pedal_go_position_manual_mode_asyn", vMP_Name.c_str(), base64_encode("go to position asynchronouslly in manual mode(UI Control)").c_str(), base64_encode("tio.pedal_go_position_manual_mode_asyn(30,10); //go 30mm forward with speed 10mm/s asynchronouslly").c_str(), 2);
+    AParaFunc(AOpaque, 0, "pedal_go_position_manual_mode_asyn", "AAbsPositionMM", true, "float", base64_encode("pedal position (mm)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_go_position_manual_mode_asyn", "ASpeedMMpS", true, "float", base64_encode("pedal speed(mm/s)").c_str());
+
+    AAPIFunc(AOpaque, "pedal_jog_in", vMP_Name.c_str(), base64_encode("pedal jog in in manual mode(UI Control)").c_str(), base64_encode("tio.pedal_jog_in(); //pedal jog in").c_str(), 0);
+    AAPIFunc(AOpaque, "pedal_jog_out", vMP_Name.c_str(), base64_encode("pedal jog out in manual mode(UI Control)").c_str(), base64_encode("tio.pedal_jog_out(); //pedal jog out").c_str(), 0);
+
     AAPIFunc(AOpaque, "pedal_go_step_percent_syn", vMP_Name.c_str(), base64_encode("go step forward/backward relative with current position synchronouslly").c_str(), base64_encode("tio.pedal_go_step_percent_syn(5,10,5000); //go 5% forward with speed 10mm/s synchronouslly, time out is 5000ms").c_str(), 3);
     AParaFunc(AOpaque, 0, "pedal_go_step_percent_syn", "ARelPositionPercent", true, "float", base64_encode("pedal step (%), the step(mm) is ARelPositionPercent * MaxPosition").c_str());
     AParaFunc(AOpaque, 1, "pedal_go_step_percent_syn", "ASpeedMMpS", true, "float", base64_encode("pedal speed(mm/s)").c_str());
@@ -216,26 +228,36 @@ DLLEXPORT void __stdcall write_api_document_auto(const void* AOpaque, const TWri
     AParaFunc(AOpaque, 3, "ps_set_pressure_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
 
     //add for pedal force control
-    AAPIFunc(AOpaque, "pedal_force_apllied_syn", vMP_Name.c_str(), base64_encode("synchronouslly apllied force to target with target speed, api used in auto mode.").c_str(), base64_encode("tio.pedal_force_apllied_syn(1000, 100, 2000); //set out force to 1000N with speed 100mm/s, timeout is 2000ms.").c_str(), 3);
-    AParaFunc(AOpaque, 0, "pedal_force_apllied_syn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
-    AParaFunc(AOpaque, 1, "pedal_force_apllied_syn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
-    AParaFunc(AOpaque, 2, "pedal_force_apllied_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
+    AAPIFunc(AOpaque, "pedal_force_apply_syn", vMP_Name.c_str(), base64_encode("synchronouslly apllied force to target with target speed, api used in auto mode.").c_str(), base64_encode("tio.pedal_force_apply_syn(1000, 100, 2000); //set out force to 1000N with speed 100mm/s, timeout is 2000ms.").c_str(), 3);
+    AParaFunc(AOpaque, 0, "pedal_force_apply_syn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_force_apply_syn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AParaFunc(AOpaque, 2, "pedal_force_apply_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
 
-    AAPIFunc(AOpaque, "pedal_force_apllied_asyn", vMP_Name.c_str(), base64_encode("asynchronouslly apllied force to target with target speed, api used in auto mode.").c_str(), base64_encode("tio.pedal_force_apllied_asyn(1000, 100); //set out force to 1000N with speed 100mm/s.").c_str(), 2);
-    AParaFunc(AOpaque, 0, "pedal_force_apllied_asyn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
-    AParaFunc(AOpaque, 1, "pedal_force_apllied_asyn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AAPIFunc(AOpaque, "pedal_force_apply_asyn", vMP_Name.c_str(), base64_encode("asynchronouslly apllied force to target with target speed, api used in auto mode.").c_str(), base64_encode("tio.pedal_force_apply_asyn(1000, 100); //set out force to 1000N with speed 100mm/s.").c_str(), 2);
+    AParaFunc(AOpaque, 0, "pedal_force_apply_asyn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_force_apply_asyn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
 
-    AAPIFunc(AOpaque, "pedal_force_manual_mode_apllied_syn", vMP_Name.c_str(), base64_encode("synchronouslly apllied force to target with target speed, api used in manual mode.").c_str(), base64_encode("tio.pedal_force_manual_mode_apllied_syn(1000, 100, 2000); //set out force to 1000N with speed 100mm/s, timeout is 2000ms.").c_str(), 3);
-    AParaFunc(AOpaque, 0, "pedal_force_manual_mode_apllied_syn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
-    AParaFunc(AOpaque, 1, "pedal_force_manual_mode_apllied_syn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
-    AParaFunc(AOpaque, 2, "pedal_force_manual_mode_apllied_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
+    AAPIFunc(AOpaque, "pedal_force_manual_mode_apply_syn", vMP_Name.c_str(), base64_encode("synchronouslly apllied force to target with target speed, api used in manual mode.").c_str(), base64_encode("tio.pedal_force_manual_mode_apply_syn(1000, 100, 2000); //set out force to 1000N with speed 100mm/s, timeout is 2000ms.").c_str(), 3);
+    AParaFunc(AOpaque, 0, "pedal_force_manual_mode_apply_syn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_force_manual_mode_apply_syn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AParaFunc(AOpaque, 2, "pedal_force_manual_mode_apply_syn", "ATimeout", true, "u32", base64_encode("timeout set(ms)").c_str());
 
-    AAPIFunc(AOpaque, "pedal_force_manual_mode_apllied_asyn", vMP_Name.c_str(), base64_encode("asynchronouslly apllied force to target with target speed, api used in manual mode.").c_str(), base64_encode("tio.pedal_force_manual_mode_apllied_asyn(1000, 100); //set out force to 1000N with speed 100mm/s.").c_str(), 2);
-    AParaFunc(AOpaque, 0, "pedal_force_manual_mode_apllied_asyn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
-    AParaFunc(AOpaque, 1, "pedal_force_manual_mode_apllied_asyn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AAPIFunc(AOpaque, "pedal_force_manual_mode_apply_asyn", vMP_Name.c_str(), base64_encode("asynchronouslly apllied force to target with target speed, api used in manual mode.").c_str(), base64_encode("tio.pedal_force_manual_mode_apply_asyn(1000, 100); //set out force to 1000N with speed 100mm/s.").c_str(), 2);
+    AParaFunc(AOpaque, 0, "pedal_force_manual_mode_apply_asyn", "AForceN", true, "float", base64_encode("target force(N)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_force_manual_mode_apply_asyn", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
 
-    AAPIFunc(AOpaque, "pedal_force_excute_calibration", vMP_Name.c_str(), base64_encode("Calibrated the relation 1-D table of MC Pressure vs pedal postion..").c_str(), base64_encode("tio.pedal_force_excute_calibration(2, 10); //calibrate the relation wtih 2mm a step, speed is 10mm/s.").c_str(), 2);
+    AAPIFunc(AOpaque, "pedal_force_excute_calibration", vMP_Name.c_str(), base64_encode("Calibrated the relation 1-D table of MC Pressure vs pedal postion.").c_str(), base64_encode("tio.pedal_force_excute_calibration(2, 10, 70000); //calibrate the relation wtih 2mm a step, speed is 10mm/s, max calibration force is 70000N.").c_str(), 3);
     AParaFunc(AOpaque, 0, "pedal_force_excute_calibration", "APostionStepMM", true, "float", base64_encode("calibration step(mm)").c_str());
     AParaFunc(AOpaque, 1, "pedal_force_excute_calibration", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AParaFunc(AOpaque, 2, "pedal_force_excute_calibration", "AMaxForceN", true, "float", base64_encode("The Max Apllied Force(N) during Calibration").c_str());
+
+    AAPIFunc(AOpaque, "pedal_excute_exhaust", vMP_Name.c_str(), base64_encode("Exhaust the air in cylinder with target position, speed and cycle count.").c_str(), base64_encode("tio.pedal_excute_exhaust(15, 20, 7, true); //push the pedal with position 15mm, speed 20mm/s. Total 7 cycle, and finially hold at 15mm.").c_str(), 4);
+    AParaFunc(AOpaque, 0, "pedal_excute_exhaust", "ATargetPositionMM", true, "float", base64_encode("push out position(mm)").c_str());
+    AParaFunc(AOpaque, 1, "pedal_excute_exhaust", "ASpeedMMpS", true, "float", base64_encode("target speed(mm/s)").c_str());
+    AParaFunc(AOpaque, 2, "pedal_excute_exhaust", "ACycleCount", true, "int", base64_encode("cycle count").c_str());
+    AParaFunc(AOpaque, 3, "pedal_excute_exhaust", "AIsHold", true, "bool", base64_encode("holded in last cycle").c_str());
+
+    //common
+    AAPIFunc(AOpaque, "update_config_from_configure_file", vMP_Name.c_str(), base64_encode("update the config value from configuration file.").c_str(), base64_encode("tio.update_config_from_configure_file(); //update the config value from configuration file.").c_str(), 0);
 
 }

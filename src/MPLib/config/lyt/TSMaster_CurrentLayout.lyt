@@ -54,7 +54,7 @@ M3=-1,1,5,-1,3,TfrmStrEncoderDecoder,Deleted: StrEncoderDecoder
 M4=0,1,180,-1,4,TfrmAutomationModule,图形程序 1764
 M5=-1,1,117,-1,5,TfrmServo,Deleted: Servo
 M6=0,1,124,-1,6,TfrmGraphics,Graphics
-M7=1,1,146,-1,7,TfrmCCodeEditor,C Code Editor [CCode8994*]
+M7=1,1,146,-1,7,TfrmCCodeEditor,C Code Editor [CCode8994]
 M8=0,1,181,-1,8,TfrmGPBuilder,Graphic Program Builder
 M9=0,1,177,-1,9,TfrmNumeric,Numeric Display
 M10=1,1,124,-1,10,TfrmGraphics,Graphics [#2]
@@ -62,7 +62,7 @@ M11=-1,1,18,-1,11,TfrmDocuments,Deleted: Documents
 
 [SystemMsgOptions]
 MaxLines=100000
-UICommon=0,-1,0,0,U3lzdGVtIE1lc3NhZ2Vz,100,297,4788452324757911351
+UICommon=0,-1,0,0,U3lzdGVtIE1lc3NhZ2Vz,100,303,4788452324757911351
 UIFilter=
 
 [ChannelMappings]
@@ -170,7 +170,7 @@ MPs0=testdd.mp64
 MPs1=tio.mp64
 
 [SysVarMgmt]
-UICommon=0,-1,0,0,U3lzdGVtIFZhcmlhYmxlIE1hbmFnZW1lbnQ_,100,239,3055692389547924782
+UICommon=0,-1,0,0,U3lzdGVtIFZhcmlhYmxlIE1hbmFnZW1lbnQ_,100,242,3055692389547924782
 UIFilter=
 
 [TfrmStrEncoderDecoder]
@@ -197,7 +197,7 @@ ConstantsWidths=63,250,626
 UsersWidths=63,250,626
 
 [TfrmGPBuilder]
-UICommon=0,-1,0,0,R3JhcGhpYyBQcm9ncmFtIEJ1aWxkZXI_,100,151,2411396356833755715
+UICommon=0,-1,0,0,R3JhcGhpYyBQcm9ncmFtIEJ1aWxkZXI_,100,163,2411396356833755715
 UIFilter=
 
 [Documents]
@@ -210,7 +210,7 @@ Cnt=0
 [MDIInstances]
 TfrmBasePluginSingle.TfrmLicenseClient=0
 TfrmSystemMsgs=1
-TfrmGraphics=2
+TfrmGraphics=3
 TfrmCANStatistics=0
 TfrmCANDatabase=0
 TfrmHardware=0
@@ -252,41 +252,48 @@ TfrmAutomationModule=1
 TfrmGPBuilder=1
 TfrmInitValues=0
 TfrmDocuments=0
+TfrmToolboxBuilder=1
+TfrmTSForm=0
+TfrmPythonCodeEditor=0
 
 [Pg0]
-Count=5
-HiddenCount=8
-f0=TfrmGraphics,1,960,518,960,259,0,0,1358,756,1
+Count=4
+HiddenCount=10
+f0=TfrmSystemMsgs,0,0,122,1504,561,0,0,1294,328,1
 h0=TfrmSystemVarMgmt,0,96,96,802,747,96,96,802,747,1
 h1=TfrmStrEncoderDecoder,0,887,174,658,456,64,64,658,456,1
-f1=TfrmCCodeEditor,1,846,464,1899,758,64,64,1298,877,1
-f2=TfrmAutomationModule,0,1002,559,960,645,160,160,1254,748,1
-f3=TfrmCCodeEditor,0,902,122,1018,740,32,32,1040,703,1
+f1=TfrmGraphics,2,86,122,1358,756,0,0,1358,756,1
+f2=TfrmAutomationModule,0,865,53,960,645,160,160,1254,748,1
+f3=TfrmCCodeEditor,0,169,29,877,697,32,32,1040,703,1
 f4=TfrmSystemMsgs,0,0,314,1111,443,0,0,1294,328,1
 h2=TfrmGraphics,0,0,0,1088,606,0,0,1088,606,1
 h3=TfrmCCodeEditor,0,512,1,877,677,32,32,1040,703,1
-h4=TfrmCCodeEditor,1,64,0,1298,783,64,64,1298,877,1
-h5=TfrmSystemMsgs,0,0,314,1491,389,0,0,1294,328,1
+h4=TfrmCCodeEditor,1,85,187,1378,643,64,64,1298,877,1
+h5=TfrmSystemMsgs,0,0,122,1504,561,0,0,1294,328,1
 h6=TfrmGPBuilder,0,0,0,1006,752,0,0,1006,752,1
 f5=TfrmSystemMsgs,0,0,314,1491,389,0,0,1294,328,1
 h7=TfrmNumeric,0,488,49,960,389,0,0,1154,520,1
+h8=TfrmToolboxBuilder,0,128,87,946,757,128,128,946,757,1
+h9=TfrmGraphics,1,365,-12,960,259,0,0,1358,756,1
 
 [RTL_Form_Position_MDI]
-TfrmSystemMsgs=0,314,1111,757
-CCodeEditor=902,122,1920,862
+TfrmSystemMsgs=0,122,1504,683
+CCodeEditor=169,29,1046,726
 TfrmSystemVarMgmt=224,224,1225,1156
 TfrmStrEncoderDecoder=887,174,1545,630
-TfrmAutomationModule=1002,559,1962,1204
+TfrmAutomationModule=865,53,1825,698
 TfrmServo=32,32,1371,484
 Graphics=0,0,1358,756
-CCodeEditor1=846,464,2745,1222
+CCodeEditor1=85,187,1807,991
 TfrmGPBuilder=0,0,1006,752
-TfrmNumeric=0,0,1154,520
-Graphics1=960,518,1920,777
+TfrmNumeric=0,0,1155,520
+Graphics1=365,-12,1325,247
 TfrmDocuments=160,0,1878,783
+TfrmToolboxBuilder=128,87,1310,1033
+Graphics2=86,122,1444,878
 
 [RTL_Form_Position]
-TfrmTSMaster_0=0,-9,1938,1051
+TfrmTSMaster_0=-9,2,1929,1062
 TfrmMPLibrary=359,219,1561,822
 TfrmSettings=2520,261,3387,796
 TfrmSystemVarMgmt1=459,55,1460,987

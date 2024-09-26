@@ -148,7 +148,7 @@ extern void on_start_On_Start(void);
 extern void on_stop_On_Stop(void);
 extern s32 demo_function(s32 A1, s32 A2);
 DLLEXPORT s32 __stdcall retrieve_mp_abilities(const void* AObj, const TRegTSMasterFunction AReg) {
-  #define TSMASTER_VERSION "2024.7.30.1156"
+  #define TSMASTER_VERSION "2024.9.23.1185"
   if (!AReg(AObj, "check_mp_internal", "version", TSMASTER_VERSION, 0, "")) return -1;
   if (!AReg(AObj, "check_mp_internal", "struct_size", "struct_size_app", (void *)sizeof(TTSMasterConfiguration), "")) return -1;
   if (!AReg(AObj, "check_mp_internal", "struct_size", "struct_size_tcan", (void *)sizeof(TCAN), "")) return -1;
