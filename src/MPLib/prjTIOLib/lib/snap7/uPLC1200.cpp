@@ -1462,8 +1462,18 @@ void TServo::RegisterSystemVars() {
     if(plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
         app.create_system_var((vMP_Name + ".pedal_speed").c_str(), svtDouble, 0, "Servo Pedal Speed");
         app.create_system_var((vMP_Name + ".pedal_position").c_str(), svtDouble, 0, "Servo Pedal Position");
+        app.create_system_var((vMP_Name + ".pedal_is_connected").c_str(), svtInt32, 0, "Servo pedal is connected");
+        app.create_system_var((vMP_Name + ".pedal_is_power_on").c_str(), svtInt32, 0, "Servo pedal is power on");
+        app.create_system_var((vMP_Name + ".pedal_is_servo_on").c_str(), svtInt32, 0, "Servo pedal is servo on");
+        app.create_system_var((vMP_Name + ".pedal_has_fault").c_str(), svtInt32, 0, "Servo Pedal has fault");
+        app.create_system_var((vMP_Name + ".pedal_fault_code").c_str(), svtInt32, 0, "Servo pedal fault code");
         app.set_system_var_logging((vMP_Name + ".pedal_speed").c_str(), true);
         app.set_system_var_logging((vMP_Name + ".pedal_position").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_is_connected").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_is_power_on").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_is_servo_on").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_has_fault").c_str(), true);
+        app.set_system_var_logging((vMP_Name + ".pedal_fault_code").c_str(), true);
         if(FPedalForceControlEnabled) {
             app.create_system_var((vMP_Name + ".pedal_pressure").c_str(), svtDouble, 0, "Master Cylinder Pressure");
             app.create_system_var((vMP_Name + ".pedal_cal_force").c_str(), svtDouble, 0, "Force using Master Cylinder Pressure Calculated");
@@ -1517,6 +1527,11 @@ void TServo::UnregisterSystemVars() {
     if(plcPedal == FPLCType || plcPedalCylinder == FPLCType) {
         app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
         app.delete_system_var((vMP_Name + ".pedal_position").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_is_connected").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_is_power_on").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_is_servo_on").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_has_fault").c_str());
+        app.delete_system_var((vMP_Name + ".pedal_fault_code").c_str());
         if(FPedalForceControlEnabled) {
             app.delete_system_var((vMP_Name + ".pedal_position").c_str());
             app.delete_system_var((vMP_Name + ".pedal_speed").c_str());
@@ -3750,6 +3765,7 @@ void TServo::SetFS1IsServoOn(bool Value) {
             log("SetFS1IsServoOn: Servo 1 servo off"); // LVL_INFO
     }
     FS1IsServoOn = Value;
+    app.set_system_var_double((vMP_Name + ".pedal_is_servo_on").c_str(), int(Value));
 }
 
 void TServo::SetFS1MaxPosition(float Value) {
@@ -3992,6 +4008,7 @@ void TServo::SetFS7IsFault(bool Value) {
             log("SetFS7IsFault: Servo fault cleared"); // LVL_INFO
     }
     FS7IsFault = Value;
+    app.set_system_var_int32((vMP_Name + ".pedal_has_fault").c_str(), int(Value));
 }
 
 void TServo::SetFS7IsHandShaked(bool Value) {
@@ -4040,6 +4057,7 @@ void TServo::SetFS7IsPowerOn(bool Value) {
             log_hint("SetFS7IsPowerOn: Servo power is off"); // LVL_HINT
     }
     FS7IsPowerOn = Value;
+    app.set_system_var_int32((vMP_Name + ".pedal_is_power_on").c_str(), int(Value));
 }
 
 void TServo::SetFS7IsAutoMode(bool Value) {
@@ -4066,6 +4084,7 @@ void TServo::SetFS7IsConnected(bool Value) {
         GetDataStopThread();
         log_hint("SetFS7IsConnected: Servo is disconnected, Getdata thread suspended"); // LVL_HINT
     }
+    app.set_system_var_int32((vMP_Name + ".pedal_is_connected").c_str(), int(Value));
 }
 
 void TServo::SetFPSTargetPressure(float Value) {

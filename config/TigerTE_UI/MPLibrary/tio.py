@@ -506,3 +506,10 @@ def pedal_excute_exhaust(ATargetPositionMM,ASpeedMMpS,ACycleCount,AIsHold):
         return None
     pedal_excute_exhaust_ = cast(funcaddr,_pedal_excute_exhaust)
     return pedal_excute_exhaust_(ATargetPositionMM,ASpeedMMpS,ACycleCount,AIsHold)
+_update_config_from_configure_file = CFUNCTYPE(s32,)
+def update_config_from_configure_file():
+    funcaddr,flag = app.retrieve_api_address('tio.update_config_from_configure_file')
+    if funcaddr == 0:
+        return None
+    update_config_from_configure_file_ = cast(funcaddr,_update_config_from_configure_file)
+    return update_config_from_configure_file_()
